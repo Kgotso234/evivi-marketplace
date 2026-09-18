@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
-import EviviLogo from "@/assets/images/evivi-logo.png";
 import { CTA, NAV_LINKS, selectSellerRole } from "@/constants/copy";
 
 export default function Navbar() {
@@ -117,7 +116,7 @@ export default function Navbar() {
             <nav className="mx-auto flex max-w-[1280px] items-center justify-between px-5 py-4 md:px-8 md:py-0 md:h-20">
                 <Link href="/" className="flex items-center gap-2 shrink-0">
                     <Image
-                        src={EviviLogo}
+                        src="/images/evivi-logo.png"
                         alt="Evivi"
                         priority
                         className="h-12 w-auto md:h-14 object-contain"
