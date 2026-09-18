@@ -1,26 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* ==========================================================
+     Evivi Brand Colors (spec section 4)
+     Raw palette — use these as the source of truth for hex values.
+     ========================================================== */
+  --color-deep-plum: #3B0D5C;
+  --color-royal-purple: #6A1B9A;
+  --color-vibrant-magenta: #C2185B;
+  --color-coral-rose: #E8607E;
+  --color-soft-peach: #FFB3A7;
+  --color-blush-white: #FDF6FB;
+  --color-warm-lilac: #F9F0F7;
+  --color-lavender-border: #EAD6E8;
+  --color-near-black: #1A1225;
+  --color-muted-purple: #6B5C78;
+  --color-success-green: #5BAF7A;
+  --color-footer-plum: #130920;
+
+  /* ==========================================================
+     Semantic aliases (shadcn-style)
+     Use THESE in components, not the raw brand names above —
+     keeps component code readable and makes future re-theming
+     a one-line change instead of a find/replace.
+
+     Note: --color-plum = royal-purple (mid-tone)
+           --color-plum-deep = deep-plum (darkest)
+           Double-check which one you mean before using —
+           "plum" alone is the lighter of the two.
+     ========================================================== */
+  --color-magenta: var(--color-vibrant-magenta);
+  --color-plum-deep: var(--color-deep-plum);
+  --color-plum: var(--color-royal-purple);
+
+  --color-card: #ffffff;
+  --color-secondary: var(--color-warm-lilac);
+  --color-accent: var(--color-warm-lilac);
+  --color-primary: var(--color-vibrant-magenta);
+  --color-primary-foreground: #ffffff;
+  --color-border: var(--color-lavender-border);
+  --color-muted-foreground: var(--color-muted-purple);
+
+  /* Feedback states — for form validation (registration forms) */
+  --color-success: var(--color-success-green);
+  --color-success-foreground: #ffffff;
+
+  --shadow-soft: 0 20px 40px -12px rgba(59, 13, 92, 0.18);
+
+  /* === Type === */
+  --font-display: "Cormorant Garamond", ui-serif, Georgia, serif;
+  --font-body: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+
+  /* === Radii per spec === */
+  --radius-btn: 999px;
+  --radius-card: 20px;
+  --radius-input: 12px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    font-family: var(--font-body);
+    color: var(--color-near-black);
+    background-color: #ffffff;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: var(--font-display);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-vibrant-magenta);
+    outline-offset: 2px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* === Gradients === */
+  .evivi-gradient {
+    background: linear-gradient(135deg, #3B0D5C 0%, #6A1B9A 45%, #C2185B 80%, #E8607E 100%);
+  }
+
+  .bg-brand-gradient {
+    background: linear-gradient(135deg, #22012E 0%, #560661 55%, #C51583 100%);
+  }
+
+  .bg-soft-gradient {
+    background: linear-gradient(160deg, var(--color-warm-lilac) 0%, var(--color-blush-white) 45%, #ffffff 100%);
+  }
+
+  /* === Buttons === */
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-full px-7 py-3.5 font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#6A1B9A]/30;
+    background: linear-gradient(135deg, #3B0D5C 0%, #6A1B9A 45%, #C2185B 80%, #E8607E 100%);
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-full border px-7 py-3.5 font-medium transition-all duration-300 hover:-translate-y-0.5;
+    border-color: var(--color-lavender-border);
+    color: var(--color-deep-plum);
+    background: #ffffff;
+  }
+
+  .btn-secondary:hover {
+    background: var(--color-warm-lilac);
+  }
+
+  /* === Badges / labels === */
+  .section-eyebrow {
+    @apply inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-medium tracking-wide uppercase;
+    background: var(--color-warm-lilac);
+    color: var(--color-vibrant-magenta);
+    border: 1px solid var(--color-lavender-border);
+  }
+
+  /* === Form feedback states (registration forms) === */
+  .input-success {
+    border-color: var(--color-success);
+  }
+
+  .input-error {
+    border-color: var(--color-vibrant-magenta);
+  }
+
+  .text-success {
+    color: var(--color-success);
+  }
+
+  /* === Motion === */
+  .fade-up {
+    animation: fadeUp 0.7s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
