@@ -27,7 +27,7 @@ export const NAV_LINKS = [
     }
 ];
 
-export function sellectSellerRole() {
+export function selectSellerRole() {
     if (typeof window === "undefined") return;
 
     try {
