@@ -1,5 +1,5 @@
 import Navbar from "@/components/Navbar";
-import "./global.css";
+import "./globals.css";
 
 export const metadata = {
     title: "Evivi - Valentine Gifting & celebration Marketplace",

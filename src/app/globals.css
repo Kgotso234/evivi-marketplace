@@ -141,6 +141,17 @@
     from { opacity: 0; transform: translateY(16px); }
     to { opacity: 1; transform: translateY(0); }
   }
+
+  /* Hero background image entrance — subtle zoom + settle ("bounce") on load */
+  .hero-bg-bounce {
+    animation: heroBounceIn 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @keyframes heroBounceIn {
+    0%   { opacity: 0; transform: scale(1.08); }
+    60%  { opacity: 1; transform: scale(0.99); }
+    100% { opacity: 1; transform: scale(1); }
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
