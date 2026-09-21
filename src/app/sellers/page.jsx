@@ -214,35 +214,107 @@ function SelectField({
     required = false,
     disabled = false,
 }) {
+    const [open, setOpen] = useState(false);
+
+    const selectedLabel = value || placeholder;
+
+    const handleSelect = (option) => {
+        if (disabled) return;
+
+        onChange(option);
+        setOpen(false);
+    };
+
     return (
         <Field label={label} required={required}>
             <div className="relative">
-                <select
-                    value={value}
-                    onChange={(e) => onChange(e.target.value)}
-                    required={required}
+                <button
+                    type="button"
                     disabled={disabled}
-                    className="w-full appearance-none rounded-xl border bg-white px-4 py-3 pr-10 text-sm text-[var(--color-deep-plum)] outline-none transition focus:border-[var(--color-vibrant-magenta)] disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-400"
+                    onClick={() => setOpen((current) => !current)}
+                    className={`flex w-full items-center justify-between rounded-xl border bg-white px-4 py-3 text-left text-sm transition ${
+                        disabled
+                            ? "cursor-not-allowed bg-gray-50 text-gray-400"
+                            : "text-[var(--color-deep-plum)] hover:border-[var(--color-vibrant-magenta)]"
+                    }`}
                     style={{
                         borderColor:
                             "var(--color-lavender-border)",
                     }}
+                    aria-haspopup="listbox"
+                    aria-expanded={open}
                 >
-                    <option value="">{placeholder}</option>
+                    <span
+                        className={
+                            value
+                                ? "text-[var(--color-deep-plum)]"
+                                : "text-[var(--color-muted-purple)]"
+                        }
+                    >
+                        {selectedLabel}
+                    </span>
 
-                    {options.map((option) => (
-                        <option key={option} value={option}>
-                            {option}
-                        </option>
-                    ))}
-                </select>
+                    <ChevronDown
+                        size={17}
+                        className={`shrink-0 text-[var(--color-muted-purple)] transition-transform ${
+                            open ? "rotate-180" : ""
+                        }`}
+                        aria-hidden="true"
+                    />
+                </button>
 
-                <ChevronDown
-                    size={17}
-                    className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[var(--color-muted-purple)]"
-                    aria-hidden="true"
-                />
+                {open && !disabled && (
+                    <div
+                        className="absolute left-0 right-0 z-40 mt-2 max-h-64 overflow-y-auto rounded-xl border bg-white py-2 shadow-lg"
+                        style={{
+                            borderColor:
+                                "var(--color-lavender-border)",
+                        }}
+                        role="listbox"
+                    >
+                        {options.map((option) => {
+                            const selected = value === option;
+
+                            return (
+                                <button
+                                    key={option}
+                                    type="button"
+                                    onClick={() =>
+                                        handleSelect(option)
+                                    }
+                                    className={`flex w-full items-center justify-between px-4 py-2.5 text-left text-sm transition ${
+                                        selected
+                                            ? "bg-[var(--color-soft-lavender)] text-[var(--color-deep-plum)]"
+                                            : "text-[var(--color-deep-plum)] hover:bg-[var(--color-soft-lavender)]"
+                                    }`}
+                                    role="option"
+                                    aria-selected={selected}
+                                >
+                                    <span>{option}</span>
+
+                                    {selected && (
+                                        <Check
+                                            size={16}
+                                            className="text-[var(--color-vibrant-magenta)]"
+                                            strokeWidth={2.5}
+                                        />
+                                    )}
+                                </button>
+                            );
+                        })}
+                    </div>
+                )}
             </div>
+
+            <input
+                type="text"
+                value={value}
+                required={required}
+                readOnly
+                tabIndex={-1}
+                aria-hidden="true"
+                className="pointer-events-none absolute h-0 w-0 opacity-0"
+            />
         </Field>
     );
 }

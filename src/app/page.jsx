@@ -380,6 +380,12 @@ export default function HomePage() {
                         <Link href={CTA.buyer.href} className="btn-primary text-lg px-9 py-4">
                             {CTA.buyer.label}
                         </Link>
+                        <Link
+                            href={CTA.seller.href}
+                            className="btn-secondary text-lg px-9 py-4 bg-transparent border-white/40 text-white hover:bg-white/10"
+                        >
+                            {CTA.seller.label}
+                        </Link>
                     </div>
                 </div>
             </section>
