@@ -117,11 +117,11 @@ export default function Navbar() {
             className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
                 isTransparent
                     ? isScrolled
-                        ? "bg-[var(--color-deep-plum,#3B0D5C)]/20 backdrop-blur-sm border-b border-white/10"
+                        ? "bg-[var(--color-deep-plum,#3B0D5C)]/20 backdrop-blur-md border-b border-white/10"
                         : "bg-transparent border-b border-transparent"
                     : isDark
-                    ? "bg-[var(--color-deep-plum,#3B0D5C)]/90 backdrop-blur-md border-b border-white/10"
-                    : "bg-white/94 backdrop-blur-md border-b border-[var(--color-lavender-border,#E4D8F0)] shadow-[0_4px_24px_rgba(59,13,92,0.08)]"
+                    ? "bg-[var(--color-deep-plum,#3B0D5C)]/80 backdrop-blur-lg border-b border-white/10"
+                    : "bg-white/80 backdrop-blur-lg border-b border-[var(--color-lavender-border,#E4D8F0)] shadow-[0_4px_24px_rgba(59,13,92,0.08)]"
             }`}
         >
             <nav className="mx-auto flex max-w-[1280px] items-center justify-between px-5 py-4 md:px-8 md:py-0 md:h-20">
@@ -147,7 +147,7 @@ export default function Navbar() {
                                 onMouseLeave={() => setPartnersOpen(false)}
                             >
                                 <button
-                                    className="flex items-center gap-1 text-sm font-medium transition-colors hover:opacity-70"
+                                    className="flex items-center gap-1 text-base font-medium transition-colors hover:opacity-70"
                                     style={{
                                         color: useLightForeground
                                             ? "var(--color-white-90, rgba(255,255,255,0.9))"
@@ -157,7 +157,7 @@ export default function Navbar() {
                                 >
                                     {link.label}
                                     <ChevronDown
-                                        size={16}
+                                        size={18}
                                         className={`transition-transform ${partnersOpen ? "rotate-180" : ""}`}
                                     />
                                 </button>
@@ -168,7 +168,7 @@ export default function Navbar() {
                                                 <Link
                                                     key={child.href}
                                                     href={child.href}
-                                                    className="block px-4 py-2.5 text-sm text-[var(--color-deep-plum)] hover:bg-[var(--color-warm-lilac)]"
+                                                    className="block px-4 py-2.5 text-base text-[var(--color-deep-plum)] hover:bg-[var(--color-warm-lilac)]"
                                                 >
                                                     {child.label}
                                                 </Link>
@@ -181,7 +181,7 @@ export default function Navbar() {
                             <Link
                                 key={link.href}
                                 href={link.href}
-                                className="text-sm font-medium transition-colors hover:opacity-70"
+                                className="text-base font-medium transition-colors hover:opacity-70"
                                 style={{
                                     color: useLightForeground
                                         ? "var(--color-white-90, rgba(255,255,255,0.9))"
@@ -196,7 +196,7 @@ export default function Navbar() {
                     <Link
                         href={CTA.seller.href}
                         onClick={selectSellerRole}
-                        className="text-sm font-medium transition-colors hover:opacity-70"
+                        className="text-base font-medium transition-colors hover:opacity-70"
                         style={{
                             color: useLightForeground
                                 ? "var(--color-white-90, rgba(255,255,255,0.9))"
@@ -205,7 +205,7 @@ export default function Navbar() {
                     >
                         {CTA.seller.label}
                     </Link>
-                    <Link href={CTA.buyer.href} className="btn-primary text-sm py-3 px-6">
+                    <Link href={CTA.buyer.href} className="btn-primary text-base py-3 px-6">
                         {CTA.buyer.label}
                     </Link>
                 </div>
@@ -239,7 +239,7 @@ export default function Navbar() {
                                 <button
                                     onClick={() => setMobilePartnersOpen((v) => !v)}
                                     aria-expanded={mobilePartnersOpen}
-                                    className="flex items-center justify-center gap-1 py-2 text-sm font-medium"
+                                    className="flex items-center justify-center gap-1 py-2 text-base font-medium"
                                     style={mobileLinkStyle}
                                 >
                                     <span>{link.label}</span>
@@ -260,7 +260,7 @@ export default function Navbar() {
                                             <Link
                                                 key={child.href}
                                                 href={child.href}
-                                                className="py-1.5 text-sm text-center"
+                                                className="py-1.5 text-base text-center"
                                                 style={{ color: "var(--color-muted-purple, #4B2E6B)" }}
                                             >
                                                 {child.label}
@@ -273,7 +273,7 @@ export default function Navbar() {
                             <Link
                                 key={link.href}
                                 href={link.href}
-                                className="py-2 text-sm font-medium text-center"
+                                className="py-2 text-base font-medium text-center"
                                 style={mobileLinkStyle}
                             >
                                 {link.label}
@@ -284,7 +284,7 @@ export default function Navbar() {
                     <Link
                         href={CTA.seller.href}
                         onClick={selectSellerRole}
-                        className="py-2 text-sm font-medium text-center"
+                        className="py-2 text-base font-medium text-center"
                         style={mobileLinkStyle}
                     >
                         {CTA.seller.label}
@@ -293,7 +293,7 @@ export default function Navbar() {
                     {/* Primary CTA — the only prominent/pill-styled button in the mobile menu */}
                     <Link
                         href={CTA.buyer.href}
-                        className="btn-primary text-sm py-3 px-6 w-full text-center block mt-2"
+                        className="btn-primary text-base py-3 px-6 w-full text-center block mt-2"
                     >
                         {CTA.buyer.label}
                     </Link>

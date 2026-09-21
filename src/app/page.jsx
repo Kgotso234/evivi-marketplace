@@ -1,8 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Search, Gift, Truck, ClipboardCheck, Store, Bike, CalendarCheck, Package } from "lucide-react";
-import CTASection from "@/components/CTASection";
-import PersonaCard from "@/components/PersonaCard";
+import {
+    Search,
+    Gift,
+    Truck,
+    ClipboardCheck,
+    ChevronRight,
+    Heart,
+    Store,
+    Bike,
+    CalendarCheck,
+    Package,
+} from "lucide-react";
+import { CTA, selectSellerRole } from "@/constants/copy";
 
 export const metadata = {
     title: "Evivi — Find the Right Gift, Make the Moment Happen",
@@ -10,11 +20,29 @@ export const metadata = {
         "Evivi is a marketplace for gifts and celebrations, connecting buyers with local sellers, delivery partners, and event professionals.",
 };
 
-const STEPS = [
-    { icon: Search, title: "Discover", text: "Browse gifts from local sellers near you." },
-    { icon: Gift, title: "Choose", text: "Pick the gift that feels right, and review the details." },
-    { icon: Truck, title: "Choose delivery or collection", text: "Pick the option that works for you and your gift." },
-    { icon: ClipboardCheck, title: "Pay & follow your order", text: "Track your order until it's delivered or ready." },
+const HOW_IT_WORKS_ACCENT = "#E91E63";
+
+const steps = [
+    {
+        icon: Search,
+        title: "Discover",
+        copy: "Browse Valentine gifts from local gift sellers near you or near where the gift needs to go.",
+    },
+    {
+        icon: Gift,
+        title: "Choose",
+        copy: "Pick the gift that feels right and review the product details before ordering.",
+    },
+    {
+        icon: Truck,
+        title: "Choose delivery or collection",
+        copy: "See the options available for your gift and plan for when you need it.",
+    },
+    {
+        icon: ClipboardCheck,
+        title: "Pay and follow your order",
+        copy: "Complete your purchase and follow your gift until it is delivered or ready for collection.",
+    },
 ];
 
 const PERSONAS = [
@@ -65,7 +93,6 @@ export default function HomePage() {
                 id="hero"
                 className="relative overflow-hidden min-h-[92vh] md:min-h-screen flex items-center text-white"
             >
-                {/* Background image — desktop */}
                 <Image
                     src="/images/hero-image.jpg"
                     alt=""
@@ -74,7 +101,6 @@ export default function HomePage() {
                     sizes="100vw"
                     className="hidden md:block object-cover hero-bg-bounce"
                 />
-                {/* Background image — mobile */}
                 <Image
                     src="/images/hero-mobile.jpg"
                     alt=""
@@ -84,7 +110,6 @@ export default function HomePage() {
                     className="block md:hidden object-cover hero-bg-bounce"
                 />
 
-                {/* Gradient scrim over the photo so the headline/CTA stay readable */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-deep-plum)]/85 via-[var(--color-deep-plum)]/45 to-[var(--color-deep-plum)]/10" />
 
                 <div className="relative z-10 mx-auto max-w-[1280px] w-full px-5 md:px-8 py-32 md:py-40">
@@ -95,70 +120,239 @@ export default function HomePage() {
                         >
                             Launching with Valentine gifting
                         </span>
-                        <h1 className="font-display text-4xl md:text-5xl leading-tight mt-4 mb-4">
+                        <h1 className="font-display text-5xl md:text-7xl font-bold leading-[1.05] mt-4 mb-5">
                             Find the right gift.
                             <br />
                             Make the moment happen.
                         </h1>
-                        <p className="text-white/80 max-w-md mb-8">
-                            Evivi is a marketplace for gifts and celebrations. It connects people looking for gifts with local gift sellers, making it easier to find and buy gifts today. As Evivi grows, we plan to bring Event Planners & Coordinators and Event Suppliers onto the platform as well.
+                        <p className="text-white/85 text-lg md:text-xl max-w-md mb-10">
+                            Evivi connects gift buyers with local sellers, delivery partners, and event
+                            professionals — all in one place.
                         </p>
-                        <Link href="/#register" className="btn-primary">
-                            Get Valentine Early Access
-                        </Link>
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                            <Link href={CTA.buyer.href} className="btn-primary text-lg px-9 py-4">
+                                {CTA.buyer.label}
+                            </Link>
+                            <Link
+                                href={CTA.seller.href}
+                                onClick={selectSellerRole}
+                                className="btn-secondary text-lg px-9 py-4 bg-transparent border-white/40 text-white hover:bg-white/10"
+                            >
+                                {CTA.seller.label}
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            {/* 2. How it works — ONE version only */}
-            <section data-navbar-theme="light" className="bg-white">
-                <div className="mx-auto max-w-[1280px] px-5 md:px-8 py-20">
-                    <h2 className="font-display text-3xl text-[var(--color-deep-plum)] mb-10">
-                        How it works
-                    </h2>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
-                        {STEPS.map(({ icon: Icon, title, text }) => (
-                            <div
-                                key={title}
-                                className="rounded-[var(--radius-card)] border p-5"
-                                style={{ borderColor: "var(--color-lavender-border)" }}
-                            >
-                                <Icon size={22} className="mb-3 text-[var(--color-vibrant-magenta)]" />
-                                <h3 className="font-medium text-[var(--color-deep-plum)] mb-1">{title}</h3>
-                                <p className="text-sm text-[var(--color-muted-purple)]">{text}</p>
+            {/* 2. How it works — embedded directly here, includes its own Valentine CTA card */}
+            <section id="how-it-works" data-navbar-theme="light" className="bg-soft-gradient px-5 sm:px-8 py-16 md:py-24">
+                <div className="mx-auto max-w-6xl">
+                    <div className="max-w-2xl">
+                        <p
+                            className="text-sm font-semibold text-magenta uppercase"
+                            style={{ letterSpacing: "1.2px", lineHeight: 1.2 }}
+                        >
+                            How Evivi works
+                        </p>
+                        <h2 className="font-display mt-3 text-3xl md:text-5xl font-bold leading-[1.2] text-plum-deep">
+                            Find, choose and send the perfect gift.{" "}
+                            <Heart
+                                size={30}
+                                fill="currentColor"
+                                className="inline text-[#ff8fa3] align-middle"
+                                aria-hidden="true"
+                            />
+                        </h2>
+                        <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
+                            From discovery to delivery, Evivi makes gifting easy and stress-free
+                        </p>
+                    </div>
+
+                    {/* Mobile: numbered rail with dashed connector */}
+                    <div className="mt-10 max-w-2xl md:hidden">
+                        {steps.map((item, i) => (
+                            <div key={item.title} className="relative flex gap-4 pb-5 last:pb-0">
+                                {i < steps.length - 1 && (
+                                    <span
+                                        className="absolute left-[26px] top-12 bottom-0 border-l-2 border-dashed"
+                                        style={{ borderColor: "#F2B6CC" }}
+                                        aria-hidden="true"
+                                    />
+                                )}
+                                <span
+                                    className="relative z-10 flex size-12 shrink-0 items-center justify-center rounded-full text-base font-semibold"
+                                    style={{ backgroundColor: "#FDE7EF", color: HOW_IT_WORKS_ACCENT }}
+                                >
+                                    {String(i + 1).padStart(2, "0")}
+                                </span>
+                                <div className="flex-1 rounded-2xl border border-border/70 bg-card px-4 py-4">
+                                    <span
+                                        className="flex size-12 items-center justify-center rounded-xl bg-secondary"
+                                        style={{ color: HOW_IT_WORKS_ACCENT }}
+                                    >
+                                        <item.icon className="size-7" aria-hidden="true" />
+                                    </span>
+                                    <h3 className="font-display mt-5 text-2xl leading-[1.3] text-plum-deep">
+                                        {item.title}
+                                    </h3>
+                                    <p className="mt-2 text-base leading-relaxed text-muted-foreground">{item.copy}</p>
+                                </div>
                             </div>
                         ))}
                     </div>
+
+                    {/* Desktop: 4-column grid with badge-on-icon-corner numbering */}
+                    <div className="mt-10 hidden gap-5 md:grid md:grid-cols-2 lg:grid-cols-4">
+                        {steps.map((item, i) => (
+                            <div
+                                key={item.title}
+                                className="rounded-2xl border border-border/70 bg-card p-6 transition-all md:hover:-translate-y-1 md:hover:shadow-soft"
+                            >
+                                <div className="relative inline-flex">
+                                    <span
+                                        className="flex size-12 items-center justify-center rounded-xl bg-secondary"
+                                        style={{ color: HOW_IT_WORKS_ACCENT }}
+                                    >
+                                        <item.icon className="size-7" aria-hidden="true" />
+                                    </span>
+                                    <span
+                                        className="absolute -left-2 -top-2 flex size-7 items-center justify-center rounded-full text-sm font-bold text-white"
+                                        style={{ backgroundColor: HOW_IT_WORKS_ACCENT }}
+                                        aria-hidden="true"
+                                    >
+                                        {i + 1}
+                                    </span>
+                                </div>
+                                <h3 className="font-display mt-5 text-2xl leading-[1.3] text-plum-deep">
+                                    {item.title}
+                                </h3>
+                                <p className="mt-2 text-base leading-relaxed text-muted-foreground">{item.copy}</p>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="mt-6 flex flex-col items-start gap-4 rounded-2xl border border-[#f6c9d6] bg-gradient-to-br from-[#fdf1f5] to-[#fbe4ec] p-6 sm:flex-row sm:items-center md:p-8">
+                        <span
+                            className="flex size-14 shrink-0 items-center justify-center rounded-xl bg-white"
+                            style={{ color: HOW_IT_WORKS_ACCENT }}
+                        >
+                            <Gift className="size-7" aria-hidden="true" />
+                        </span>
+                        <div className="flex-1">
+                            <h3 className="font-display text-2xl text-plum-deep">Valentine's Day doesn't wait.</h3>
+                            <p className="mt-1 text-base leading-relaxed text-muted-foreground">
+                                Find your gift early, choose how you want it delivered, and avoid the last-minute rush.
+                            </p>
+                        </div>
+                        <div className="flex w-full flex-col items-start gap-2 sm:w-auto sm:items-end">
+                            <Link
+                                href={CTA.buyer.href}
+                                className="btn-primary inline-flex w-full items-center justify-center gap-2 px-6 py-3 text-base font-semibold sm:w-auto focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-deep-plum,#3B0D5C)]/40"
+                            >
+                                {CTA.buyer.label}
+                                <span aria-hidden="true">
+                                    <ChevronRight size={16} />
+                                </span>
+                            </Link>
+                            <p className="text-xs leading-snug text-muted-foreground px-6">
+                                Be the first to shop and enjoy early offers.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            {/* 3. Valentine 2027 feature banner */}
-            <section data-navbar-theme="light" className="bg-[var(--color-warm-lilac)] py-16">
-                <CTASection
-                    eyebrow="Valentine 2027"
-                    heading="Valentine's Day doesn't wait."
-                    subtext="Find your gift early, choose how it's delivered, and avoid the last-minute rush."
-                    buttonLabel="Get Valentine Early Access"
-                    buttonHref="/#register"
-                    variant="banner"
-                />
-            </section>
+            {/* 3. Who Evivi is for — same mobile numbered-rail / desktop grid pattern as How it Works,
+                   embedded directly here rather than a separate component. */}
+            <section data-navbar-theme="light" className="bg-white px-5 sm:px-8 py-16 md:py-24">
+                <div className="mx-auto max-w-6xl">
+                    <div className="max-w-2xl">
+                        <p
+                            className="text-sm font-semibold text-magenta uppercase"
+                            style={{ letterSpacing: "1.2px", lineHeight: 1.2 }}
+                        >
+                            Who it's for
+                        </p>
+                        <h2 className="font-display mt-3 text-3xl md:text-5xl font-bold leading-[1.2] text-plum-deep">
+                            Who Evivi is for
+                        </h2>
+                        <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
+                            One marketplace, five ways to be part of it.
+                        </p>
+                    </div>
 
-            {/* 4. Who Evivi is for — persona strip */}
-            <section data-navbar-theme="light" className="bg-white">
-                <div className="mx-auto max-w-[1280px] px-5 md:px-8 py-20">
-                    <h2 className="font-display text-3xl text-[var(--color-deep-plum)] mb-10">
-                        Who Evivi is for
-                    </h2>
-                    <div className="grid grid-cols-2 md:grid-cols-5 gap-5">
-                        {PERSONAS.map((p) => (
-                            <PersonaCard key={p.title} {...p} />
+                    {/* Mobile: numbered rail with dashed connector, same pattern as How it Works */}
+                    <div className="mt-10 max-w-2xl md:hidden">
+                        {PERSONAS.map((p, i) => (
+                            <Link key={p.title} href={p.href} className="relative flex gap-4 pb-5 last:pb-0">
+                                {i < PERSONAS.length - 1 && (
+                                    <span
+                                        className="absolute left-[26px] top-12 bottom-0 border-l-2 border-dashed"
+                                        style={{ borderColor: "var(--color-lavender-border)" }}
+                                        aria-hidden="true"
+                                    />
+                                )}
+                                <span
+                                    className="relative z-10 flex size-12 shrink-0 items-center justify-center rounded-full text-base font-semibold"
+                                    style={{ backgroundColor: `${p.accent}1A`, color: p.accent }}
+                                >
+                                    {String(i + 1).padStart(2, "0")}
+                                </span>
+                                <div className="flex-1 rounded-2xl border border-border/70 bg-card px-4 py-4">
+                                    <span
+                                        className="flex size-12 items-center justify-center rounded-xl bg-secondary"
+                                        style={{ color: p.accent }}
+                                    >
+                                        <p.icon className="size-7" aria-hidden="true" />
+                                    </span>
+                                    <h3 className="font-display mt-5 text-2xl leading-[1.3] text-plum-deep">
+                                        {p.title}
+                                    </h3>
+                                    <p className="mt-2 text-base leading-relaxed text-muted-foreground">
+                                        {p.description}
+                                    </p>
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
+
+                    {/* Desktop: 5-column grid with badge-on-icon-corner numbering */}
+                    <div className="mt-10 hidden gap-5 md:grid md:grid-cols-3 lg:grid-cols-5">
+                        {PERSONAS.map((p, i) => (
+                            <Link
+                                key={p.title}
+                                href={p.href}
+                                className="rounded-2xl border border-border/70 bg-card p-6 transition-all md:hover:-translate-y-1 md:hover:shadow-soft"
+                            >
+                                <div className="relative inline-flex">
+                                    <span
+                                        className="flex size-12 items-center justify-center rounded-xl bg-secondary"
+                                        style={{ color: p.accent }}
+                                    >
+                                        <p.icon className="size-7" aria-hidden="true" />
+                                    </span>
+                                    <span
+                                        className="absolute -left-2 -top-2 flex size-7 items-center justify-center rounded-full text-sm font-bold text-white"
+                                        style={{ backgroundColor: p.accent }}
+                                        aria-hidden="true"
+                                    >
+                                        {i + 1}
+                                    </span>
+                                </div>
+                                <h3 className="font-display mt-5 text-2xl leading-[1.3] text-plum-deep">
+                                    {p.title}
+                                </h3>
+                                <p className="mt-2 text-base leading-relaxed text-muted-foreground">
+                                    {p.description}
+                                </p>
+                            </Link>
                         ))}
                     </div>
                 </div>
             </section>
 
-            {/* 5. Vision teaser — one line, links to /about */}
+            {/* 4. Vision teaser — one line, links to /about */}
             <section data-navbar-theme="light" className="bg-white">
                 <div className="mx-auto max-w-[1280px] px-5 md:px-8 py-10">
                     <div
@@ -175,15 +369,21 @@ export default function HomePage() {
                 </div>
             </section>
 
-            {/* 6. Closing CTA */}
+            {/* 5. Closing CTA */}
             <section data-navbar-theme="light" className="bg-white pb-20">
-                <CTASection
-                    heading="Be there from the beginning."
-                    subtext="Join Evivi early to discover what's coming and shape a better way to celebrate."
-                    buttonLabel="Get Valentine Early Access"
-                    buttonHref="/#register"
-                    variant="plain"
-                />
+                <div className="mx-auto max-w-[1280px] px-5 md:px-8">
+                    <div className="bg-soft-gradient rounded-[var(--radius-card)] px-6 py-12 text-center">
+                        <h3 className="font-display text-3xl md:text-4xl font-bold text-[var(--color-deep-plum)] mb-4">
+                            Be there from the beginning.
+                        </h3>
+                        <p className="text-[var(--color-muted-purple)] text-lg mb-6 max-w-lg mx-auto">
+                            Join Evivi early to discover what's coming and shape a better way to celebrate.
+                        </p>
+                        <Link href={CTA.buyer.href} className="btn-primary text-lg px-9 py-4">
+                            {CTA.buyer.label}
+                        </Link>
+                    </div>
+                </div>
             </section>
         </>
     );

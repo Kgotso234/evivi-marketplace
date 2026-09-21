@@ -1,9 +1,10 @@
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import "./globals.css";
 
 export const metadata = {
-    title: "Evivi - Valentine Gifting & celebration Marketplace",
-    description: "Find the right gift, make the moment happen.",
+    title: "Evivi - ",
+    description: "Valentine Gifting & celebration Marketplace",
 };
 
 export default function RootLayout({children}) {
@@ -12,7 +13,7 @@ export default function RootLayout({children}) {
             <body>
                 <Navbar />
                 <main>{children}</main>
-                {/* <Footer /> */}
+                <Footer />
             </body>
         </html>
     );
