@@ -6,9 +6,6 @@ import {
     Heart,
     Gift,
     Truck,
-    Users2,
-    MapPin,
-    TrendingUp,
     Bike,
     Check,
     ChevronDown,
@@ -18,10 +15,6 @@ import {
     Car,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-
-/* =========================================================
-   DATA
-========================================================= */
 
 const PROVINCES_AND_CITIES = {
     Gauteng: [
@@ -107,33 +100,33 @@ const AVAILABILITY_OPTIONS = [
 const JOURNEY_STEPS = [
     {
         num: "01",
-        title: "Join the waitlist",
+        title: "Register",
         copy: "Tell Evivi about yourself, your transport and the areas where you can provide delivery support.",
     },
     {
         num: "02",
         title: "We review your details",
-        copy: "We will review the information you provide as we build the early delivery partner network.",
+        copy: "We review the information you provide as we build the early delivery partner network.",
     },
     {
         num: "03",
-        title: "Get ready",
-        copy: "If selected, we will share the relevant next steps and expectations before you begin supporting deliveries.",
+        title: "Complete verification",
+        copy: "If required, we will guide you through the relevant verification steps before delivery access is provided.",
     },
     {
         num: "04",
-        title: "Receive eligible opportunities",
-        copy: "As the network develops, participating sellers may have local delivery opportunities that match your availability and coverage.",
+        title: "Get ready",
+        copy: "If selected, we will share the relevant expectations and next steps before you begin supporting deliveries.",
     },
     {
         num: "05",
-        title: "Collect and deliver",
-        copy: "Collect eligible orders from participating sellers and help get them safely to the intended customer or recipient.",
+        title: "Receive opportunities",
+        copy: "Eligible delivery opportunities can be considered based on availability, coverage and network requirements.",
     },
     {
         num: "06",
-        title: "Grow with Evivi",
-        copy: "As Evivi expands, reliable delivery partners can become part of the wider celebration marketplace network.",
+        title: "Deliver with Evivi",
+        copy: "Collect eligible orders from participating sellers and help get them safely to customers or recipients.",
     },
 ];
 
@@ -144,7 +137,7 @@ const DELIVERY_TYPES = [
     },
     {
         title: "Scheduled deliveries",
-        copy: "Some orders may have specific delivery dates or time requirements. Availability will matter when matching opportunities.",
+        copy: "Some orders may have specific delivery dates or time requirements.",
     },
     {
         title: "Seller collections",
@@ -234,14 +227,11 @@ const AFTER_APPLICATION = [
     },
 ];
 
-/* =========================================================
-   FORM FIELD
-========================================================= */
-
-function Field({ label, children, required = false }) {
+function Field({ id, label, children, required = false }) {
     return (
         <div>
             <label
+                htmlFor={id}
                 className="mb-2 block text-sm font-medium"
                 style={{
                     color: "var(--color-near-black, #1A1A1A)",
@@ -266,17 +256,14 @@ function Field({ label, children, required = false }) {
     );
 }
 
-/* =========================================================
-   CUSTOM SELECT
-========================================================= */
-
 function CustomSelect({
+    id,
     value,
     onChange,
     options,
     placeholder,
     disabled = false,
-    required = false,
+    error = false,
 }) {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
@@ -304,8 +291,11 @@ function CustomSelect({
             className="relative"
         >
             <button
+                id={id}
                 type="button"
                 disabled={disabled}
+                aria-haspopup="listbox"
+                aria-expanded={isOpen}
                 onClick={() => {
                     if (!disabled) {
                         setIsOpen((current) => !current);
@@ -317,15 +307,14 @@ function CustomSelect({
                         : "hover:border-[var(--color-vibrant-magenta,#C2185B)]"
                 }`}
                 style={{
-                    borderColor:
-                        "var(--color-lavender-border, #E4D8F0)",
+                    borderColor: error
+                        ? "var(--color-vibrant-magenta,#C2185B)"
+                        : "var(--color-lavender-border,#E4D8F0)",
                 }}
             >
                 <span
                     className={
-                        value
-                            ? "text-gray-900"
-                            : "text-gray-400"
+                        value ? "text-gray-900" : "text-gray-400"
                     }
                 >
                     {value || placeholder}
@@ -341,10 +330,12 @@ function CustomSelect({
 
             {isOpen && !disabled && (
                 <div
+                    role="listbox"
+                    aria-labelledby={id}
                     className="absolute left-0 top-full z-50 mt-2 max-h-64 w-full overflow-y-auto rounded-xl border bg-white py-1 shadow-xl"
                     style={{
                         borderColor:
-                            "var(--color-lavender-border, #E4D8F0)",
+                            "var(--color-lavender-border,#E4D8F0)",
                     }}
                 >
                     {options.map((option) => {
@@ -354,6 +345,8 @@ function CustomSelect({
                             <button
                                 key={option}
                                 type="button"
+                                role="option"
+                                aria-selected={selected}
                                 onClick={() => {
                                     onChange(option);
                                     setIsOpen(false);
@@ -385,32 +378,17 @@ function CustomSelect({
                     })}
                 </div>
             )}
-
-            {required && (
-                <input
-                    type="text"
-                    value={value}
-                    readOnly
-                    required
-                    tabIndex={-1}
-                    aria-hidden="true"
-                    className="pointer-events-none absolute h-0 w-0 opacity-0"
-                />
-            )}
         </div>
     );
 }
 
-/* =========================================================
-   CUSTOM MULTI SELECT
-========================================================= */
-
 function MultiSelect({
+    id,
     value,
     onChange,
     options,
     placeholder,
-    required = false,
+    error = false,
 }) {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
@@ -448,12 +426,16 @@ function MultiSelect({
             className="relative"
         >
             <button
+                id={id}
                 type="button"
+                aria-haspopup="listbox"
+                aria-expanded={isOpen}
                 onClick={() => setIsOpen((current) => !current)}
                 className="flex min-h-[48px] w-full items-center justify-between gap-3 rounded-xl border bg-white px-4 py-2.5 text-left outline-none transition-all hover:border-[var(--color-vibrant-magenta,#C2185B)]"
                 style={{
-                    borderColor:
-                        "var(--color-lavender-border, #E4D8F0)",
+                    borderColor: error
+                        ? "var(--color-vibrant-magenta,#C2185B)"
+                        : "var(--color-lavender-border,#E4D8F0)",
                 }}
             >
                 {value.length === 0 ? (
@@ -489,10 +471,13 @@ function MultiSelect({
 
             {isOpen && (
                 <div
+                    role="listbox"
+                    aria-labelledby={id}
+                    aria-multiselectable="true"
                     className="absolute left-0 top-full z-50 mt-2 max-h-64 w-full overflow-y-auto rounded-xl border bg-white py-1 shadow-xl"
                     style={{
                         borderColor:
-                            "var(--color-lavender-border, #E4D8F0)",
+                            "var(--color-lavender-border,#E4D8F0)",
                     }}
                 >
                     {options.map((option) => {
@@ -502,6 +487,8 @@ function MultiSelect({
                             <button
                                 key={option}
                                 type="button"
+                                role="option"
+                                aria-selected={selected}
                                 onClick={() => toggleOption(option)}
                                 className={`flex w-full items-center gap-3 px-4 py-3 text-left text-sm transition-colors ${
                                     selected
@@ -540,32 +527,14 @@ function MultiSelect({
                     })}
                 </div>
             )}
-
-            {required && (
-                <input
-                    type="text"
-                    value={
-                        value.length > 0
-                            ? "selected"
-                            : ""
-                    }
-                    readOnly
-                    required
-                    tabIndex={-1}
-                    aria-hidden="true"
-                    className="pointer-events-none absolute h-0 w-0 opacity-0"
-                />
-            )}
         </div>
     );
 }
 
-/* =========================================================
-   PAGE
-========================================================= */
-
 export default function DeliveryPartnersPage() {
+    const [registrationStep, setRegistrationStep] = useState(1);
     const [submitted, setSubmitted] = useState(false);
+    const [formError, setFormError] = useState("");
 
     const [form, setForm] = useState({
         fullName: "",
@@ -597,6 +566,8 @@ export default function DeliveryPartnersPage() {
                 [key]: value,
             };
         });
+
+        setFormError("");
     };
 
     const updateInput = (key) => (event) => {
@@ -609,11 +580,103 @@ export default function DeliveryPartnersPage() {
             ...current,
             [key]: value,
         }));
+
+        setFormError("");
+    };
+
+    const validateStep = () => {
+        if (registrationStep === 1) {
+            if (
+                !form.fullName.trim() ||
+                !form.email.trim() ||
+                !form.mobile.trim() ||
+                !form.province ||
+                !form.city
+            ) {
+                setFormError(
+                    "Please complete all required personal and location details."
+                );
+                return false;
+            }
+        }
+
+        if (registrationStep === 2) {
+            if (
+                !form.vehicleType ||
+                form.availability.length === 0
+            ) {
+                setFormError(
+                    "Please select your vehicle type and at least one availability option."
+                );
+                return false;
+            }
+        }
+
+        if (registrationStep === 3) {
+            if (
+                !form.hasSmartphone ||
+                !form.hasDriversLicence ||
+                !form.hasVehicleLicence ||
+                !form.verificationConsent
+            ) {
+                setFormError(
+                    "Please answer all partner requirement questions."
+                );
+                return false;
+            }
+
+            if (!form.consent) {
+                setFormError(
+                    "Please accept the terms and consent before submitting your application."
+                );
+                return false;
+            }
+        }
+
+        setFormError("");
+        return true;
+    };
+
+    const handleContinue = () => {
+        if (!validateStep()) return;
+
+        setRegistrationStep((current) =>
+            Math.min(current + 1, 3)
+        );
+
+        setTimeout(() => {
+            document
+                .getElementById("register")
+                ?.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                });
+        }, 50);
+    };
+
+    const handleBack = () => {
+        setFormError("");
+
+        setRegistrationStep((current) =>
+            Math.max(current - 1, 1)
+        );
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
+
+        if (!validateStep()) return;
+
         setSubmitted(true);
+
+        setTimeout(() => {
+            document
+                .getElementById("register")
+                ?.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                });
+        }, 50);
     };
 
     const resetForm = () => {
@@ -632,6 +695,8 @@ export default function DeliveryPartnersPage() {
             consent: false,
         });
 
+        setRegistrationStep(1);
+        setFormError("");
         setSubmitted(false);
     };
 
@@ -640,11 +705,11 @@ export default function DeliveryPartnersPage() {
 
     const inputStyle = {
         borderColor:
-            "var(--color-lavender-border, #E4D8F0)",
+            "var(--color-lavender-border,#E4D8F0)",
     };
 
     return (
-        <main
+        <div
             className="min-h-screen"
             style={{
                 background:
@@ -653,11 +718,9 @@ export default function DeliveryPartnersPage() {
                     "var(--color-near-black,#1A1A1A)",
             }}
         >
-            {/* =====================================================
-                HERO
-            ===================================================== */}
+            {/* HERO */}
 
-            <section className="px-6 pb-16 pt-10 lg:px-8 lg:pb-24 lg:pt-16">
+            <section className="px-6 pb-12 pt-8 lg:px-8 lg:pb-16 lg:pt-12">
                 <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2 lg:gap-16">
                     <div>
                         <span
@@ -673,13 +736,13 @@ export default function DeliveryPartnersPage() {
                         </span>
 
                         <h1
-                            className="mt-5 font-display text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl"
+                            className="mt-5 font-display text-4xl font-semibold leading-tight sm:text-5xl lg:text-5xl"
                             style={{
                                 color:
                                     "var(--color-deep-plum,#3B0D5C)",
                             }}
                         >
-                            Help local gifts get where they need to go.
+                            Become an Evivi delivery partner.
                         </h1>
 
                         <p
@@ -689,9 +752,9 @@ export default function DeliveryPartnersPage() {
                                     "var(--color-muted-purple,#6B5B7B)",
                             }}
                         >
-                            Evivi is building a network of independent
-                            delivery partners who can help participating
-                            sellers fulfil eligible local orders.
+                            Help local gift sellers deliver gifts and
+                            celebration packages to customers across
+                            supported areas.
                         </p>
 
                         <p
@@ -701,9 +764,9 @@ export default function DeliveryPartnersPage() {
                                     "var(--color-muted-purple,#6B5B7B)",
                             }}
                         >
-                            If you have reliable transport and want to
-                            support local gift deliveries, join the Evivi
-                            delivery partner waitlist.
+                            If you have reliable transport and want flexible
+                            delivery opportunities, register to become part of
+                            the Evivi delivery partner network.
                         </p>
 
                         <div className="mt-8 flex flex-wrap gap-3">
@@ -711,7 +774,7 @@ export default function DeliveryPartnersPage() {
                                 href="#register"
                                 className="btn-primary inline-flex items-center gap-2"
                             >
-                                Join the Delivery Partner Waitlist
+                                Become a Delivery Partner
                                 <ChevronRight size={18} />
                             </a>
 
@@ -732,7 +795,7 @@ export default function DeliveryPartnersPage() {
                                             "var(--color-vibrant-magenta,#C2185B)",
                                     }}
                                 />
-                                Delivery network
+                                Secure registration
                             </span>
 
                             <span className="flex items-center gap-2">
@@ -752,9 +815,9 @@ export default function DeliveryPartnersPage() {
                         <div className="overflow-hidden rounded-[2rem] shadow-soft">
                             <Image
                                 src="/images/delivery-hero.png"
-                                alt="Evivi delivery partner"
+                                alt="Evivi delivery partner delivering gifts"
                                 width={900}
-                                height={700}
+                                height={600}
                                 priority
                                 className="h-auto w-full object-cover"
                             />
@@ -793,9 +856,7 @@ export default function DeliveryPartnersPage() {
                 </div>
             </section>
 
-            {/* =====================================================
-                WHAT IS AN EVIVI DELIVERY PARTNER
-            ===================================================== */}
+            {/* ECOSYSTEM */}
 
             <section
                 className="px-6 py-16 lg:px-8 lg:py-20"
@@ -861,9 +922,7 @@ export default function DeliveryPartnersPage() {
                 </div>
             </section>
 
-            {/* =====================================================
-                DELIVERY JOURNEY
-            ===================================================== */}
+            {/* JOURNEY */}
 
             <section
                 id="delivery-journey"
@@ -888,7 +947,7 @@ export default function DeliveryPartnersPage() {
                                     "var(--color-deep-plum,#3B0D5C)",
                             }}
                         >
-                            From joining the network to delivering the gift.
+                            From registration to delivering the gift.
                         </h2>
 
                         <p className="mt-4 leading-7 text-gray-600">
@@ -937,18 +996,16 @@ export default function DeliveryPartnersPage() {
                 </div>
             </section>
 
-            {/* =====================================================
-                WHAT YOU MAY DELIVER
-            ===================================================== */}
+            {/* DELIVERY TYPES */}
 
             <section className="px-6 py-16 lg:px-8 lg:py-24">
                 <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2">
-                    <div className="overflow-hidden rounded-[2rem]">
+                    <div className="overflow-hidden rounded-[2rem] lg:max-h-[480px]">
                         <Image
                             src="/images/delivery-bag.png"
-                            alt="Gift delivery package"
+                            alt="Gift package ready for local delivery"
                             width={800}
-                            height={700}
+                            height={600}
                             className="h-full w-full object-cover"
                         />
                     </div>
@@ -1023,9 +1080,7 @@ export default function DeliveryPartnersPage() {
                 </div>
             </section>
 
-            {/* =====================================================
-                WHO CAN APPLY
-            ===================================================== */}
+            {/* REQUIREMENTS */}
 
             <section
                 className="px-6 py-16 lg:px-8 lg:py-24"
@@ -1067,7 +1122,7 @@ export default function DeliveryPartnersPage() {
                             href="#register"
                             className="btn-primary mt-7 inline-flex items-center gap-2"
                         >
-                            Apply to the waitlist
+                            Start registration
                             <ChevronRight size={18} />
                         </a>
                     </div>
@@ -1102,9 +1157,7 @@ export default function DeliveryPartnersPage() {
                 </div>
             </section>
 
-            {/* =====================================================
-                AVAILABILITY AND TRANSPORT
-            ===================================================== */}
+            {/* AVAILABILITY */}
 
             <section className="px-6 py-16 lg:px-8 lg:py-24">
                 <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2">
@@ -1182,21 +1235,19 @@ export default function DeliveryPartnersPage() {
                         </div>
                     </div>
 
-                    <div className="overflow-hidden rounded-[2rem]">
+                    <div className="overflow-hidden rounded-[2rem] lg:max-h-[480px]">
                         <Image
                             src="/images/delivery-car.png"
-                            alt="Delivery vehicle"
+                            alt="Vehicle used for local gift deliveries"
                             width={850}
-                            height={700}
+                            height={600}
                             className="h-full w-full object-cover"
                         />
                     </div>
                 </div>
             </section>
 
-            {/* =====================================================
-                PARTNER BENEFITS
-            ===================================================== */}
+            {/* BENEFITS */}
 
             <section
                 className="px-6 py-16 lg:px-8 lg:py-24"
@@ -1245,18 +1296,16 @@ export default function DeliveryPartnersPage() {
                 </div>
             </section>
 
-            {/* =====================================================
-                AFTER APPLYING
-            ===================================================== */}
+            {/* AFTER APPLICATION */}
 
             <section className="px-6 py-16 lg:px-8 lg:py-24">
                 <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2">
-                    <div className="overflow-hidden rounded-[2rem]">
+                    <div className="overflow-hidden rounded-[2rem] lg:max-h-[460px]">
                         <Image
                             src="/images/delivery-city.png"
-                            alt="City delivery network"
+                            alt="Local gift delivery network in the city"
                             width={850}
-                            height={700}
+                            height={600}
                             className="h-full w-full object-cover"
                         />
                     </div>
@@ -1322,9 +1371,7 @@ export default function DeliveryPartnersPage() {
                 </div>
             </section>
 
-            {/* =====================================================
-                SELLER CROSS LINK
-            ===================================================== */}
+            {/* SELLER CTA */}
 
             <section className="px-6 pb-16 lg:px-8">
                 <div
@@ -1371,9 +1418,7 @@ export default function DeliveryPartnersPage() {
                 </div>
             </section>
 
-            {/* =====================================================
-                REGISTRATION
-            ===================================================== */}
+            {/* REGISTRATION */}
 
             <section
                 id="register"
@@ -1404,13 +1449,13 @@ export default function DeliveryPartnersPage() {
                                     "var(--color-deep-plum,#3B0D5C)",
                             }}
                         >
-                            Tell us a little about yourself.
+                            Join the Evivi delivery network.
                         </h2>
 
                         <p className="mt-4 leading-7 text-gray-600">
-                            Join the early Evivi delivery partner waitlist.
-                            Your information will help us understand the
-                            delivery network we are building.
+                            Complete your registration in a few simple steps.
+                            We will use your information to understand where
+                            and when you can support deliveries.
                         </p>
                     </div>
 
@@ -1438,13 +1483,14 @@ export default function DeliveryPartnersPage() {
                                             "var(--color-deep-plum,#3B0D5C)",
                                     }}
                                 >
-                                    You're on the list
+                                    Registration submitted
                                 </h3>
 
                                 <p className="mt-3 max-w-md text-sm leading-6 text-gray-600">
-                                    Thanks for joining the Evivi delivery
-                                    partner waitlist. We will be in touch with
-                                    updates as the delivery network develops.
+                                    Thank you for registering as an Evivi
+                                    delivery partner. Your information has
+                                    been received and can be reviewed as the
+                                    delivery network develops.
                                 </p>
 
                                 <button
@@ -1452,396 +1498,582 @@ export default function DeliveryPartnersPage() {
                                     onClick={resetForm}
                                     className="btn-secondary mt-7"
                                 >
-                                    Submit another response
+                                    Submit another registration
                                 </button>
                             </div>
                         ) : (
                             <form
                                 onSubmit={handleSubmit}
-                                className="space-y-10"
+                                noValidate
                             >
-                                {/* PERSONAL DETAILS */}
+                                {/* PROGRESS */}
 
-                                <div>
-                                    <div className="mb-5">
-                                        <h3
-                                            className="font-display text-xl font-semibold"
+                                <div className="mb-10">
+                                    <div className="flex items-center justify-between text-sm">
+                                        <span
+                                            className="font-semibold"
                                             style={{
                                                 color:
                                                     "var(--color-deep-plum,#3B0D5C)",
                                             }}
                                         >
-                                            Personal details
-                                        </h3>
-
-                                        <p className="mt-1 text-sm text-gray-500">
-                                            Basic information we can use to
-                                            contact you.
-                                        </p>
-                                    </div>
-
-                                    <div className="grid gap-5 md:grid-cols-2">
-                                        <Field
-                                            label="Full name"
-                                            required
-                                        >
-                                            <input
-                                                type="text"
-                                                value={form.fullName}
-                                                onChange={updateInput(
-                                                    "fullName"
-                                                )}
-                                                placeholder="Enter your full name"
-                                                className={inputClass}
-                                                style={inputStyle}
-                                                required
-                                            />
-                                        </Field>
-
-                                        <Field
-                                            label="Email address"
-                                            required
-                                        >
-                                            <input
-                                                type="email"
-                                                value={form.email}
-                                                onChange={updateInput(
-                                                    "email"
-                                                )}
-                                                placeholder="you@example.com"
-                                                className={inputClass}
-                                                style={inputStyle}
-                                                required
-                                            />
-                                        </Field>
-
-                                        <Field
-                                            label="Mobile number"
-                                            required
-                                        >
-                                            <input
-                                                type="tel"
-                                                value={form.mobile}
-                                                onChange={updateInput(
-                                                    "mobile"
-                                                )}
-                                                placeholder="e.g. 082 123 4567"
-                                                className={inputClass}
-                                                style={inputStyle}
-                                                required
-                                            />
-                                        </Field>
-                                    </div>
-                                </div>
-
-                                {/* LOCATION */}
-
-                                <div>
-                                    <div className="mb-5">
-                                        <h3
-                                            className="font-display text-xl font-semibold"
-                                            style={{
-                                                color:
-                                                    "var(--color-deep-plum,#3B0D5C)",
-                                            }}
-                                        >
-                                            Location
-                                        </h3>
-
-                                        <p className="mt-1 text-sm text-gray-500">
-                                            Tell us where you would like to
-                                            provide delivery support.
-                                        </p>
-                                    </div>
-
-                                    <div className="grid gap-5 md:grid-cols-2">
-                                        <Field
-                                            label="Province"
-                                            required
-                                        >
-                                            <CustomSelect
-                                                value={form.province}
-                                                onChange={(value) =>
-                                                    update(
-                                                        "province",
-                                                        value
-                                                    )
-                                                }
-                                                options={Object.keys(
-                                                    PROVINCES_AND_CITIES
-                                                )}
-                                                placeholder="Select province"
-                                                required
-                                            />
-                                        </Field>
-
-                                        <Field
-                                            label="City / Area"
-                                            required
-                                        >
-                                            <CustomSelect
-                                                value={form.city}
-                                                onChange={(value) =>
-                                                    update(
-                                                        "city",
-                                                        value
-                                                    )
-                                                }
-                                                options={
-                                                    form.province
-                                                        ? PROVINCES_AND_CITIES[
-                                                              form.province
-                                                          ]
-                                                        : []
-                                                }
-                                                placeholder={
-                                                    form.province
-                                                        ? "Select city or area"
-                                                        : "Select province first"
-                                                }
-                                                disabled={
-                                                    !form.province
-                                                }
-                                                required
-                                            />
-                                        </Field>
-                                    </div>
-                                </div>
-
-                                {/* TRANSPORT */}
-
-                                <div>
-                                    <div className="mb-5">
-                                        <h3
-                                            className="font-display text-xl font-semibold"
-                                            style={{
-                                                color:
-                                                    "var(--color-deep-plum,#3B0D5C)",
-                                            }}
-                                        >
-                                            Transport and availability
-                                        </h3>
-
-                                        <p className="mt-1 text-sm text-gray-500">
-                                            Help us understand how and when
-                                            you can support deliveries.
-                                        </p>
-                                    </div>
-
-                                    <div className="grid gap-5 md:grid-cols-2">
-                                        <Field
-                                            label="Vehicle type"
-                                            required
-                                        >
-                                            <CustomSelect
-                                                value={
-                                                    form.vehicleType
-                                                }
-                                                onChange={(value) =>
-                                                    update(
-                                                        "vehicleType",
-                                                        value
-                                                    )
-                                                }
-                                                options={
-                                                    VEHICLE_OPTIONS
-                                                }
-                                                placeholder="Select vehicle type"
-                                                required
-                                            />
-                                        </Field>
-
-                                        <Field
-                                            label="Typical availability"
-                                            required
-                                        >
-                                            <MultiSelect
-                                                value={
-                                                    form.availability
-                                                }
-                                                onChange={(value) =>
-                                                    update(
-                                                        "availability",
-                                                        value
-                                                    )
-                                                }
-                                                options={
-                                                    AVAILABILITY_OPTIONS
-                                                }
-                                                placeholder="Select availability"
-                                                required
-                                            />
-                                        </Field>
-                                    </div>
-                                </div>
-
-                                {/* REQUIREMENTS */}
-
-                                <div>
-                                    <div className="mb-5">
-                                        <h3
-                                            className="font-display text-xl font-semibold"
-                                            style={{
-                                                color:
-                                                    "var(--color-deep-plum,#3B0D5C)",
-                                            }}
-                                        >
-                                            Partner requirements
-                                        </h3>
-
-                                        <p className="mt-1 text-sm text-gray-500">
-                                            These questions help us
-                                            understand your readiness for
-                                            delivery work.
-                                        </p>
-                                    </div>
-
-                                    <div className="grid gap-5 md:grid-cols-2">
-                                        <Field
-                                            label="Do you own a smartphone?"
-                                            required
-                                        >
-                                            <CustomSelect
-                                                value={
-                                                    form.hasSmartphone
-                                                }
-                                                onChange={(value) =>
-                                                    update(
-                                                        "hasSmartphone",
-                                                        value
-                                                    )
-                                                }
-                                                options={[
-                                                    "Yes",
-                                                    "No",
-                                                ]}
-                                                placeholder="Select an option"
-                                                required
-                                            />
-                                        </Field>
-
-                                        <Field
-                                            label="Do you have a valid driver's licence?"
-                                            required
-                                        >
-                                            <CustomSelect
-                                                value={
-                                                    form.hasDriversLicence
-                                                }
-                                                onChange={(value) =>
-                                                    update(
-                                                        "hasDriversLicence",
-                                                        value
-                                                    )
-                                                }
-                                                options={[
-                                                    "Yes",
-                                                    "No",
-                                                    "Not applicable",
-                                                ]}
-                                                placeholder="Select an option"
-                                                required
-                                            />
-                                        </Field>
-
-                                        <Field
-                                            label="Does your vehicle have a valid licence?"
-                                            required
-                                        >
-                                            <CustomSelect
-                                                value={
-                                                    form.hasVehicleLicence
-                                                }
-                                                onChange={(value) =>
-                                                    update(
-                                                        "hasVehicleLicence",
-                                                        value
-                                                    )
-                                                }
-                                                options={[
-                                                    "Yes",
-                                                    "No",
-                                                    "Not applicable",
-                                                ]}
-                                                placeholder="Select an option"
-                                                required
-                                            />
-                                        </Field>
-
-                                        <Field
-                                            label="Are you willing to complete identity and driver verification?"
-                                            required
-                                        >
-                                            <CustomSelect
-                                                value={
-                                                    form.verificationConsent
-                                                }
-                                                onChange={(value) =>
-                                                    update(
-                                                        "verificationConsent",
-                                                        value
-                                                    )
-                                                }
-                                                options={[
-                                                    "Yes",
-                                                    "No",
-                                                ]}
-                                                placeholder="Select an option"
-                                                required
-                                            />
-                                        </Field>
-                                    </div>
-                                </div>
-
-                                {/* CONSENT */}
-
-                                <div
-                                    className="rounded-2xl border p-5"
-                                    style={{
-                                        borderColor:
-                                            "var(--color-lavender-border,#E4D8F0)",
-                                        background:
-                                            "var(--color-soft-lavender,#FAF7FC)",
-                                    }}
-                                >
-                                    <label className="flex cursor-pointer items-start gap-3">
-                                        <input
-                                            type="checkbox"
-                                            checked={
-                                                form.consent
-                                            }
-                                            onChange={updateInput(
-                                                "consent"
-                                            )}
-                                            required
-                                            className="mt-1 h-4 w-4 accent-[var(--color-vibrant-magenta,#C2185B)]"
-                                        />
-
-                                        <span className="text-sm leading-6 text-gray-600">
-                                            I agree to the Evivi Terms and
-                                            Privacy Policy and consent to
-                                            Evivi contacting me about the
-                                            Delivery Partner waitlist.
+                                            Step {registrationStep} of 3
                                         </span>
-                                    </label>
+
+                                        <span className="text-gray-500">
+                                            {registrationStep === 1 &&
+                                                "Personal details"}
+
+                                            {registrationStep === 2 &&
+                                                "Transport & availability"}
+
+                                            {registrationStep === 3 &&
+                                                "Partner requirements"}
+                                        </span>
+                                    </div>
+
+                                    <div className="mt-4 h-2 overflow-hidden rounded-full bg-gray-100">
+                                        <div
+                                            className="h-full rounded-full transition-all duration-300"
+                                            style={{
+                                                width: `${
+                                                    registrationStep * 33.333
+                                                }%`,
+                                                background:
+                                                    "var(--color-vibrant-magenta,#C2185B)",
+                                            }}
+                                        />
+                                    </div>
+
+                                    <div className="mt-4 grid grid-cols-3 gap-2">
+                                        {[1, 2, 3].map((step) => (
+                                            <div
+                                                key={step}
+                                                className="text-center text-xs"
+                                            >
+                                                <span
+                                                    className={`mx-auto flex h-8 w-8 items-center justify-center rounded-full font-semibold ${
+                                                        registrationStep >=
+                                                        step
+                                                            ? "text-white"
+                                                            : "text-gray-400"
+                                                    }`}
+                                                    style={{
+                                                        background:
+                                                            registrationStep >=
+                                                            step
+                                                                ? "var(--color-vibrant-magenta,#C2185B)"
+                                                                : "#F1EDF4",
+                                                    }}
+                                                >
+                                                    {registrationStep >
+                                                    step ? (
+                                                        <Check size={15} />
+                                                    ) : (
+                                                        step
+                                                    )}
+                                                </span>
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
 
-                                {/* SUBMIT */}
+                                {formError && (
+                                    <div
+                                        role="alert"
+                                        className="mb-7 rounded-xl border px-4 py-3 text-sm"
+                                        style={{
+                                            borderColor:
+                                                "var(--color-vibrant-magenta,#C2185B)",
+                                            background:
+                                                "#FFF5F9",
+                                            color:
+                                                "var(--color-vibrant-magenta,#C2185B)",
+                                        }}
+                                    >
+                                        {formError}
+                                    </div>
+                                )}
 
-                                <div className="flex flex-col gap-5 border-t pt-7 sm:flex-row sm:items-center sm:justify-between">
+                                {/* STEP 1 */}
+
+                                {registrationStep === 1 && (
+                                    <div className="space-y-10">
+                                        <div>
+                                            <div className="mb-5">
+                                                <h3
+                                                    className="font-display text-xl font-semibold"
+                                                    style={{
+                                                        color:
+                                                            "var(--color-deep-plum,#3B0D5C)",
+                                                    }}
+                                                >
+                                                    Personal details
+                                                </h3>
+
+                                                <p className="mt-1 text-sm text-gray-500">
+                                                    Basic information we can
+                                                    use to contact you.
+                                                </p>
+                                            </div>
+
+                                            <div className="grid gap-5 md:grid-cols-2">
+                                                <Field
+                                                    id="fullName"
+                                                    label="Full name"
+                                                    required
+                                                >
+                                                    <input
+                                                        id="fullName"
+                                                        type="text"
+                                                        value={
+                                                            form.fullName
+                                                        }
+                                                        onChange={updateInput(
+                                                            "fullName"
+                                                        )}
+                                                        placeholder="Enter your full name"
+                                                        className={inputClass}
+                                                        style={inputStyle}
+                                                        autoComplete="name"
+                                                    />
+                                                </Field>
+
+                                                <Field
+                                                    id="email"
+                                                    label="Email address"
+                                                    required
+                                                >
+                                                    <input
+                                                        id="email"
+                                                        type="email"
+                                                        value={
+                                                            form.email
+                                                        }
+                                                        onChange={updateInput(
+                                                            "email"
+                                                        )}
+                                                        placeholder="you@example.com"
+                                                        className={inputClass}
+                                                        style={inputStyle}
+                                                        autoComplete="email"
+                                                    />
+                                                </Field>
+
+                                                <Field
+                                                    id="mobile"
+                                                    label="Mobile number"
+                                                    required
+                                                >
+                                                    <input
+                                                        id="mobile"
+                                                        type="tel"
+                                                        value={
+                                                            form.mobile
+                                                        }
+                                                        onChange={updateInput(
+                                                            "mobile"
+                                                        )}
+                                                        placeholder="e.g. 082 123 4567"
+                                                        className={inputClass}
+                                                        style={inputStyle}
+                                                        autoComplete="tel"
+                                                    />
+                                                </Field>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <div className="mb-5">
+                                                <h3
+                                                    className="font-display text-xl font-semibold"
+                                                    style={{
+                                                        color:
+                                                            "var(--color-deep-plum,#3B0D5C)",
+                                                    }}
+                                                >
+                                                    Location
+                                                </h3>
+
+                                                <p className="mt-1 text-sm text-gray-500">
+                                                    Tell us where you would like
+                                                    to provide delivery
+                                                    support.
+                                                </p>
+                                            </div>
+
+                                            <div className="grid gap-5 md:grid-cols-2">
+                                                <Field
+                                                    id="province"
+                                                    label="Province"
+                                                    required
+                                                >
+                                                    <CustomSelect
+                                                        id="province"
+                                                        value={
+                                                            form.province
+                                                        }
+                                                        onChange={(value) =>
+                                                            update(
+                                                                "province",
+                                                                value
+                                                            )
+                                                        }
+                                                        options={Object.keys(
+                                                            PROVINCES_AND_CITIES
+                                                        )}
+                                                        placeholder="Select province"
+                                                    />
+                                                </Field>
+
+                                                <Field
+                                                    id="city"
+                                                    label="City / Area"
+                                                    required
+                                                >
+                                                    <CustomSelect
+                                                        id="city"
+                                                        value={form.city}
+                                                        onChange={(value) =>
+                                                            update(
+                                                                "city",
+                                                                value
+                                                            )
+                                                        }
+                                                        options={
+                                                            form.province
+                                                                ? PROVINCES_AND_CITIES[
+                                                                      form.province
+                                                                  ]
+                                                                : []
+                                                        }
+                                                        placeholder={
+                                                            form.province
+                                                                ? "Select city or area"
+                                                                : "Select province first"
+                                                        }
+                                                        disabled={
+                                                            !form.province
+                                                        }
+                                                    />
+                                                </Field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* STEP 2 */}
+
+                                {registrationStep === 2 && (
+                                    <div className="space-y-10">
+                                        <div>
+                                            <div className="mb-5">
+                                                <h3
+                                                    className="font-display text-xl font-semibold"
+                                                    style={{
+                                                        color:
+                                                            "var(--color-deep-plum,#3B0D5C)",
+                                                    }}
+                                                >
+                                                    Transport and availability
+                                                </h3>
+
+                                                <p className="mt-1 text-sm text-gray-500">
+                                                    Help us understand how and
+                                                    when you can support
+                                                    deliveries.
+                                                </p>
+                                            </div>
+
+                                            <div className="grid gap-5 md:grid-cols-2">
+                                                <Field
+                                                    id="vehicleType"
+                                                    label="Vehicle type"
+                                                    required
+                                                >
+                                                    <CustomSelect
+                                                        id="vehicleType"
+                                                        value={
+                                                            form.vehicleType
+                                                        }
+                                                        onChange={(value) =>
+                                                            update(
+                                                                "vehicleType",
+                                                                value
+                                                            )
+                                                        }
+                                                        options={
+                                                            VEHICLE_OPTIONS
+                                                        }
+                                                        placeholder="Select vehicle type"
+                                                    />
+                                                </Field>
+
+                                                <Field
+                                                    id="availability"
+                                                    label="Typical availability"
+                                                    required
+                                                >
+                                                    <MultiSelect
+                                                        id="availability"
+                                                        value={
+                                                            form.availability
+                                                        }
+                                                        onChange={(value) =>
+                                                            update(
+                                                                "availability",
+                                                                value
+                                                            )
+                                                        }
+                                                        options={
+                                                            AVAILABILITY_OPTIONS
+                                                        }
+                                                        placeholder="Select availability"
+                                                    />
+                                                </Field>
+                                            </div>
+                                        </div>
+
+                                        <div
+                                            className="rounded-2xl p-6"
+                                            style={{
+                                                background:
+                                                    "var(--color-soft-lavender,#FAF7FC)",
+                                            }}
+                                        >
+                                            <div className="flex gap-4">
+                                                <Clock3
+                                                    size={22}
+                                                    className="mt-1 shrink-0"
+                                                    style={{
+                                                        color:
+                                                            "var(--color-vibrant-magenta,#C2185B)",
+                                                    }}
+                                                />
+
+                                                <div>
+                                                    <h3
+                                                        className="font-semibold"
+                                                        style={{
+                                                            color:
+                                                                "var(--color-deep-plum,#3B0D5C)",
+                                                        }}
+                                                    >
+                                                        Your availability matters
+                                                    </h3>
+
+                                                    <p className="mt-2 text-sm leading-6 text-gray-600">
+                                                        Select all the periods
+                                                        when you may be
+                                                        available for delivery
+                                                        support. You can select
+                                                        more than one option.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* STEP 3 */}
+
+                                {registrationStep === 3 && (
+                                    <div className="space-y-10">
+                                        <div>
+                                            <div className="mb-5">
+                                                <h3
+                                                    className="font-display text-xl font-semibold"
+                                                    style={{
+                                                        color:
+                                                            "var(--color-deep-plum,#3B0D5C)",
+                                                    }}
+                                                >
+                                                    Partner requirements
+                                                </h3>
+
+                                                <p className="mt-1 text-sm text-gray-500">
+                                                    These questions help us
+                                                    understand your readiness
+                                                    for delivery work.
+                                                </p>
+                                            </div>
+
+                                            <div className="grid gap-5 md:grid-cols-2">
+                                                <Field
+                                                    id="hasSmartphone"
+                                                    label="Do you own a smartphone?"
+                                                    required
+                                                >
+                                                    <CustomSelect
+                                                        id="hasSmartphone"
+                                                        value={
+                                                            form.hasSmartphone
+                                                        }
+                                                        onChange={(value) =>
+                                                            update(
+                                                                "hasSmartphone",
+                                                                value
+                                                            )
+                                                        }
+                                                        options={[
+                                                            "Yes",
+                                                            "No",
+                                                        ]}
+                                                        placeholder="Select an option"
+                                                    />
+                                                </Field>
+
+                                                <Field
+                                                    id="hasDriversLicence"
+                                                    label="Do you have a valid driver's licence?"
+                                                    required
+                                                >
+                                                    <CustomSelect
+                                                        id="hasDriversLicence"
+                                                        value={
+                                                            form.hasDriversLicence
+                                                        }
+                                                        onChange={(value) =>
+                                                            update(
+                                                                "hasDriversLicence",
+                                                                value
+                                                            )
+                                                        }
+                                                        options={[
+                                                            "Yes",
+                                                            "No",
+                                                            "Not applicable",
+                                                        ]}
+                                                        placeholder="Select an option"
+                                                    />
+                                                </Field>
+
+                                                <Field
+                                                    id="hasVehicleLicence"
+                                                    label="Does your vehicle have a valid licence?"
+                                                    required
+                                                >
+                                                    <CustomSelect
+                                                        id="hasVehicleLicence"
+                                                        value={
+                                                            form.hasVehicleLicence
+                                                        }
+                                                        onChange={(value) =>
+                                                            update(
+                                                                "hasVehicleLicence",
+                                                                value
+                                                            )
+                                                        }
+                                                        options={[
+                                                            "Yes",
+                                                            "No",
+                                                            "Not applicable",
+                                                        ]}
+                                                        placeholder="Select an option"
+                                                    />
+                                                </Field>
+
+                                                <Field
+                                                    id="verificationConsent"
+                                                    label="Are you willing to complete identity and driver verification?"
+                                                    required
+                                                >
+                                                    <CustomSelect
+                                                        id="verificationConsent"
+                                                        value={
+                                                            form.verificationConsent
+                                                        }
+                                                        onChange={(value) =>
+                                                            update(
+                                                                "verificationConsent",
+                                                                value
+                                                            )
+                                                        }
+                                                        options={[
+                                                            "Yes",
+                                                            "No",
+                                                        ]}
+                                                        placeholder="Select an option"
+                                                    />
+                                                </Field>
+                                            </div>
+                                        </div>
+
+                                        <div
+                                            className="rounded-2xl border p-5"
+                                            style={{
+                                                borderColor:
+                                                    "var(--color-lavender-border,#E4D8F0)",
+                                                background:
+                                                    "var(--color-soft-lavender,#FAF7FC)",
+                                            }}
+                                        >
+                                            <label className="flex cursor-pointer items-start gap-3">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={
+                                                        form.consent
+                                                    }
+                                                    onChange={updateInput(
+                                                        "consent"
+                                                    )}
+                                                    className="mt-1 h-4 w-4 accent-[var(--color-vibrant-magenta,#C2185B)]"
+                                                />
+
+                                                <span className="text-sm leading-6 text-gray-600">
+                                                    I agree to the Evivi Terms
+                                                    and Privacy Policy and
+                                                    consent to Evivi contacting
+                                                    me about the Delivery
+                                                    Partner registration.
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* NAVIGATION */}
+
+                                <div className="mt-10 flex flex-col gap-4 border-t pt-7 sm:flex-row sm:items-center sm:justify-between">
                                     <div className="flex items-center gap-2 text-sm text-gray-500">
                                         <ShieldCheck size={17} />
-                                        Your information is submitted
-                                        securely.
+
+                                        <span>
+                                            Your information is submitted
+                                            securely.
+                                        </span>
                                     </div>
 
-                                    <button
-                                        type="submit"
-                                        className="btn-primary inline-flex items-center justify-center gap-2"
-                                    >
-                                        Join the Delivery Waitlist
-                                        <ChevronRight size={18} />
-                                    </button>
+                                    <div className="flex flex-col-reverse gap-3 sm:flex-row">
+                                        {registrationStep > 1 && (
+                                            <button
+                                                type="button"
+                                                onClick={handleBack}
+                                                className="btn-secondary inline-flex items-center justify-center"
+                                            >
+                                                Back
+                                            </button>
+                                        )}
+
+                                        {registrationStep < 3 ? (
+                                            <button
+                                                type="button"
+                                                onClick={handleContinue}
+                                                className="btn-primary inline-flex items-center justify-center gap-2"
+                                            >
+                                                Continue
+                                                <ChevronRight size={18} />
+                                            </button>
+                                        ) : (
+                                            <button
+                                                type="submit"
+                                                className="btn-primary inline-flex items-center justify-center gap-2"
+                                            >
+                                                Complete Registration
+                                                <Check size={18} />
+                                            </button>
+                                        )}
+                                    </div>
                                 </div>
                             </form>
                         )}
@@ -1849,9 +2081,7 @@ export default function DeliveryPartnersPage() {
                 </div>
             </section>
 
-            {/* =====================================================
-                FINAL CTA
-            ===================================================== */}
+            {/* FINAL CTA */}
 
             <section className="px-6 pb-20 pt-8 lg:px-8 lg:pb-28">
                 <div
@@ -1871,20 +2101,19 @@ export default function DeliveryPartnersPage() {
                     </h2>
 
                     <p className="mx-auto mt-4 max-w-2xl leading-7 text-pink-100">
-                        Join the early Evivi delivery partner network and
-                        tell us where and when you can provide delivery
-                        support.
+                        Register as an Evivi delivery partner and tell us where
+                        and when you can provide delivery support.
                     </p>
 
                     <a
                         href="#register"
                         className="mt-7 inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 font-semibold text-[var(--color-deep-plum,#3B0D5C)] transition hover:opacity-90"
                     >
-                        Join the Delivery Partner Waitlist
+                        Start Registration
                         <ChevronRight size={18} />
                     </a>
                 </div>
             </section>
-        </main>
+        </div>
     );
 }

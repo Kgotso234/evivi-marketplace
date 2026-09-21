@@ -15,12 +15,6 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 
-// export const metadata = {
-//     title: "Sell Your Gifts on Evivi | Grow Your Business",
-//     description:
-//         "List your flowers, hampers, chocolates and Valentine gift packages on Evivi.",
-// };
-
 const sellerBenefits = [
     {
         icon: Users,
@@ -428,6 +422,7 @@ function CategorySelect({ value, onChange, required = false }) {
 function SellerRegistrationForm() {
     const [step, setStep] = useState(1);
     const [form, setForm] = useState(initialForm);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const update = (key, value) => {
         setForm((current) => {
@@ -458,50 +453,72 @@ function SellerRegistrationForm() {
         }));
     };
 
-    const handleSubmit = (event) => {
+    const goToStepTwo = (event) => {
+        event.preventDefault();
+        setStep(2);
+    };
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
-        // Connect this to the real seller registration endpoint later.
-        setStep(2);
+        if (isSubmitting) return;
+
+        setIsSubmitting(true);
+
+        // Simulates the submission while the real backend is not connected.
+        await new Promise((resolve) => setTimeout(resolve, 1200));
+
+        setIsSubmitting(false);
+        setStep(3);
+    };
+
+    const resetForm = () => {
+        setForm(initialForm);
+        setStep(1);
+        setIsSubmitting(false);
     };
 
     const availableCities = form.province
         ? provincesAndCities[form.province] || []
         : [];
 
-    if (step === 2) {
+    /*
+     * STEP 3
+     * Success state
+     */
+    if (step === 3) {
         return (
-            <div className="flex flex-col items-center py-10 text-center">
-                <span
-                    className="mb-4 flex h-14 w-14 items-center justify-center rounded-full"
+            <div className="flex flex-col items-center py-12 text-center">
+                <div
+                    className="mb-5 flex size-16 items-center justify-center rounded-full"
                     style={{
-                        background:
-                            "var(--color-success)",
+                        background: "var(--color-success)",
+                        animation: "sellerSuccessPop 0.45s ease-out",
                     }}
                 >
                     <Check
-                        size={24}
+                        size={28}
                         color="#fff"
                         strokeWidth={3}
+                        style={{
+                            animation: "sellerCheck 0.35s ease-out 0.15s both",
+                        }}
                     />
-                </span>
+                </div>
 
-                <h4 className="font-display text-xl font-semibold text-[var(--color-deep-plum)]">
+                <h4 className="font-display text-2xl font-semibold text-[var(--color-deep-plum)]">
                     You're on the list
                 </h4>
 
-                <p className="mt-2 max-w-[340px] text-sm text-[var(--color-muted-purple)]">
+                <p className="mt-3 max-w-md text-sm leading-6 text-[var(--color-muted-purple)]">
                     Thanks for applying to sell on Evivi. We'll be in touch with
                     next steps as launch gets closer.
                 </p>
 
                 <button
                     type="button"
-                    onClick={() => {
-                        setForm(initialForm);
-                        setStep(1);
-                    }}
-                    className="btn-secondary mt-6"
+                    onClick={resetForm}
+                    className="btn-secondary mt-7"
                 >
                     Submit another response
                 </button>
@@ -510,201 +527,393 @@ function SellerRegistrationForm() {
     }
 
     return (
-        <form
-            onSubmit={handleSubmit}
-            className="space-y-6"
-        >
-            <div className="grid gap-5 sm:grid-cols-2">
-                <Field
-                    label="Business name"
-                    required
+        <>
+            {/* Step indicator */}
+            <div className="mb-8 flex items-center justify-center">
+                <div className="flex items-center">
+                    <div className="flex items-center gap-2">
+                        <span
+                            className={`flex size-8 items-center justify-center rounded-full text-sm font-semibold transition-all duration-300 ${
+                                step >= 1
+                                    ? "bg-[var(--color-vibrant-magenta)] text-white"
+                                    : "border text-[var(--color-muted-purple)]"
+                            }`}
+                            style={
+                                step >= 1
+                                    ? {}
+                                    : {
+                                          borderColor:
+                                              "var(--color-lavender-border)",
+                                      }
+                            }
+                        >
+                            {step > 1 ? (
+                                <Check size={16} strokeWidth={3} />
+                            ) : (
+                                "1"
+                            )}
+                        </span>
+
+                        <span
+                            className={`hidden text-sm font-medium sm:block ${
+                                step === 1
+                                    ? "text-[var(--color-deep-plum)]"
+                                    : "text-[var(--color-muted-purple)]"
+                            }`}
+                        >
+                            General details
+                        </span>
+                    </div>
+
+                    <div
+                        className="mx-3 h-px w-12 transition-all duration-500 sm:w-20"
+                        style={{
+                            background:
+                                step >= 2
+                                    ? "var(--color-vibrant-magenta)"
+                                    : "var(--color-lavender-border)",
+                        }}
+                    />
+
+                    <div className="flex items-center gap-2">
+                        <span
+                            className={`flex size-8 items-center justify-center rounded-full text-sm font-semibold transition-all duration-300 ${
+                                step >= 2
+                                    ? "bg-[var(--color-vibrant-magenta)] text-white"
+                                    : "border text-[var(--color-muted-purple)]"
+                            }`}
+                            style={
+                                step >= 2
+                                    ? {}
+                                    : {
+                                          borderColor:
+                                              "var(--color-lavender-border)",
+                                      }
+                            }
+                        >
+                            2
+                        </span>
+
+                        <span
+                            className={`hidden text-sm font-medium sm:block ${
+                                step === 2
+                                    ? "text-[var(--color-deep-plum)]"
+                                    : "text-[var(--color-muted-purple)]"
+                            }`}
+                        >
+                            Business details
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            {/* Step 1 */}
+            {step === 1 && (
+                <form
+                    onSubmit={goToStepTwo}
+                    className="seller-step-enter space-y-6"
                 >
-                    <input
-                        type="text"
-                        value={form.businessName}
-                        onChange={updateInput("businessName")}
-                        required
-                        placeholder="Your business name"
-                        className="w-full rounded-xl border bg-white px-4 py-3 text-sm outline-none transition focus:border-[var(--color-vibrant-magenta)]"
-                        style={{
-                            borderColor:
-                                "var(--color-lavender-border)",
-                        }}
-                    />
-                </Field>
+                    <div>
+                        <h4 className="font-display text-xl font-semibold text-[var(--color-deep-plum)]">
+                            Tell us about yourself
+                        </h4>
 
-                <Field
-                    label="Contact name"
-                    required
+                        <p className="mt-1 text-sm text-[var(--color-muted-purple)]">
+                            Start with your basic contact information.
+                        </p>
+                    </div>
+
+                    <div className="grid gap-5 sm:grid-cols-2">
+                        <Field label="Business name" required>
+                            <input
+                                type="text"
+                                value={form.businessName}
+                                onChange={updateInput("businessName")}
+                                required
+                                placeholder="Your business name"
+                                className="w-full rounded-xl border bg-white px-4 py-3 text-sm outline-none transition focus:border-[var(--color-vibrant-magenta)]"
+                                style={{
+                                    borderColor:
+                                        "var(--color-lavender-border)",
+                                }}
+                            />
+                        </Field>
+
+                        <Field label="Contact name" required>
+                            <input
+                                type="text"
+                                value={form.contactName}
+                                onChange={updateInput("contactName")}
+                                required
+                                placeholder="Your full name"
+                                className="w-full rounded-xl border bg-white px-4 py-3 text-sm outline-none transition focus:border-[var(--color-vibrant-magenta)]"
+                                style={{
+                                    borderColor:
+                                        "var(--color-lavender-border)",
+                                }}
+                            />
+                        </Field>
+
+                        <Field label="Email address" required>
+                            <input
+                                type="email"
+                                value={form.email}
+                                onChange={updateInput("email")}
+                                required
+                                placeholder="you@example.com"
+                                className="w-full rounded-xl border bg-white px-4 py-3 text-sm outline-none transition focus:border-[var(--color-vibrant-magenta)]"
+                                style={{
+                                    borderColor:
+                                        "var(--color-lavender-border)",
+                                }}
+                            />
+                        </Field>
+
+                        <Field label="Phone number" required>
+                            <input
+                                type="tel"
+                                value={form.phone}
+                                onChange={updateInput("phone")}
+                                required
+                                placeholder="+27 ..."
+                                className="w-full rounded-xl border bg-white px-4 py-3 text-sm outline-none transition focus:border-[var(--color-vibrant-magenta)]"
+                                style={{
+                                    borderColor:
+                                        "var(--color-lavender-border)",
+                                }}
+                            />
+                        </Field>
+                    </div>
+
+                    <div className="flex justify-end border-t pt-6">
+                        <button
+                            type="submit"
+                            className="btn-primary inline-flex min-w-[140px] items-center justify-center gap-2"
+                        >
+                            Next
+                            <span aria-hidden="true">→</span>
+                        </button>
+                    </div>
+                </form>
+            )}
+
+            {/* Step 2 */}
+            {step === 2 && (
+                <form
+                    onSubmit={handleSubmit}
+                    className="seller-step-enter space-y-6"
                 >
-                    <input
-                        type="text"
-                        value={form.contactName}
-                        onChange={updateInput("contactName")}
-                        required
-                        placeholder="Your full name"
-                        className="w-full rounded-xl border bg-white px-4 py-3 text-sm outline-none transition focus:border-[var(--color-vibrant-magenta)]"
-                        style={{
-                            borderColor:
-                                "var(--color-lavender-border)",
-                        }}
-                    />
-                </Field>
-            </div>
+                    <div className="flex items-start justify-between gap-4">
+                        <div>
+                            <h4 className="font-display text-xl font-semibold text-[var(--color-deep-plum)]">
+                                Tell us about your business
+                            </h4>
 
-            <div className="grid gap-5 sm:grid-cols-2">
-                <Field label="Email address" required>
-                    <input
-                        type="email"
-                        value={form.email}
-                        onChange={updateInput("email")}
-                        required
-                        placeholder="you@example.com"
-                        className="w-full rounded-xl border bg-white px-4 py-3 text-sm outline-none transition focus:border-[var(--color-vibrant-magenta)]"
-                        style={{
-                            borderColor:
-                                "var(--color-lavender-border)",
-                        }}
-                    />
-                </Field>
+                            <p className="mt-1 text-sm text-[var(--color-muted-purple)]">
+                                Help us understand what you create and where you operate.
+                            </p>
+                        </div>
 
-                <Field label="Phone number" required>
-                    <input
-                        type="tel"
-                        value={form.phone}
-                        onChange={updateInput("phone")}
-                        required
-                        placeholder="+27 ..."
-                        className="w-full rounded-xl border bg-white px-4 py-3 text-sm outline-none transition focus:border-[var(--color-vibrant-magenta)]"
-                        style={{
-                            borderColor:
-                                "var(--color-lavender-border)",
-                        }}
-                    />
-                </Field>
-            </div>
+                        <button
+                            type="button"
+                            onClick={() => setStep(1)}
+                            className="text-sm font-medium text-[var(--color-vibrant-magenta)] transition hover:opacity-70"
+                        >
+                            Back
+                        </button>
+                    </div>
 
-            <div className="grid gap-5 sm:grid-cols-2">
-                <SelectField
-                    label="Business type"
-                    value={form.businessType}
-                    onChange={(value) =>
-                        update("businessType", value)
+                    <div className="grid gap-5 sm:grid-cols-2">
+                        <SelectField
+                            label="Business type"
+                            value={form.businessType}
+                            onChange={(value) =>
+                                update("businessType", value)
+                            }
+                            options={businessTypes}
+                            placeholder="Select business type"
+                            required
+                        />
+
+                        <SelectField
+                            label="Province"
+                            value={form.province}
+                            onChange={(value) =>
+                                update("province", value)
+                            }
+                            options={Object.keys(provincesAndCities)}
+                            placeholder="Select province"
+                            required
+                        />
+
+                        <SelectField
+                            label="City"
+                            value={form.city}
+                            onChange={(value) =>
+                                update("city", value)
+                            }
+                            options={availableCities}
+                            placeholder={
+                                form.province
+                                    ? "Select city"
+                                    : "Select province first"
+                            }
+                            required
+                            disabled={!form.province}
+                        />
+
+                        <CategorySelect
+                            value={form.categories}
+                            onChange={(value) =>
+                                update("categories", value)
+                            }
+                            required
+                        />
+                    </div>
+
+                    <Field
+                        label="Tell us about your business"
+                        required
+                    >
+                        <textarea
+                            value={form.description}
+                            onChange={updateInput("description")}
+                            required
+                            rows={5}
+                            placeholder="Tell us about your products, customers and what makes your business special."
+                            className="w-full resize-none rounded-xl border bg-white px-4 py-3 text-sm outline-none transition focus:border-[var(--color-vibrant-magenta)]"
+                            style={{
+                                borderColor:
+                                    "var(--color-lavender-border)",
+                            }}
+                        />
+                    </Field>
+
+                    <div className="grid gap-5 sm:grid-cols-2">
+                        <Field label="Website">
+                            <input
+                                type="url"
+                                value={form.website}
+                                onChange={updateInput("website")}
+                                placeholder="https://..."
+                                className="w-full rounded-xl border bg-white px-4 py-3 text-sm outline-none transition focus:border-[var(--color-vibrant-magenta)]"
+                                style={{
+                                    borderColor:
+                                        "var(--color-lavender-border)",
+                                }}
+                            />
+                        </Field>
+
+                        <Field label="Instagram">
+                            <input
+                                type="text"
+                                value={form.instagram}
+                                onChange={updateInput("instagram")}
+                                placeholder="@yourbusiness"
+                                className="w-full rounded-xl border bg-white px-4 py-3 text-sm outline-none transition focus:border-[var(--color-vibrant-magenta)]"
+                                style={{
+                                    borderColor:
+                                        "var(--color-lavender-border)",
+                                }}
+                            />
+                        </Field>
+                    </div>
+
+                    <label className="flex items-start gap-3 rounded-xl border p-4">
+                        <input
+                            type="checkbox"
+                            checked={form.acceptsTerms}
+                            onChange={updateInput("acceptsTerms")}
+                            required
+                            className="mt-1 h-4 w-4 accent-[var(--color-vibrant-magenta)]"
+                        />
+
+                        <span className="text-sm leading-relaxed text-[var(--color-muted-purple)]">
+                            I confirm that the information provided is accurate
+                            and I would like to be considered for selling on Evivi.
+                        </span>
+                    </label>
+
+                    <div className="flex flex-col-reverse gap-3 border-t pt-6 sm:flex-row sm:items-center sm:justify-between">
+                        <button
+                            type="button"
+                            onClick={() => setStep(1)}
+                            disabled={isSubmitting}
+                            className="text-sm font-medium text-[var(--color-muted-purple)] transition hover:text-[var(--color-deep-plum)] disabled:opacity-50"
+                        >
+                            ← Back
+                        </button>
+
+                        <button
+                            type="submit"
+                            disabled={isSubmitting}
+                            className="btn-primary relative inline-flex min-h-[50px] min-w-[210px] items-center justify-center gap-2 overflow-hidden"
+                        >
+                            {isSubmitting ? (
+                                <>
+                                    <span
+                                        className="size-4 animate-spin rounded-full border-2 border-white/40 border-t-white"
+                                        aria-hidden="true"
+                                    />
+                                    <span>Submitting...</span>
+                                </>
+                            ) : (
+                                <>
+                                    <span>Apply to Sell on Evivi</span>
+                                    <span aria-hidden="true">→</span>
+                                </>
+                            )}
+                        </button>
+                    </div>
+                </form>
+            )}
+
+            <style jsx>{`
+                @keyframes sellerStepEnter {
+                    from {
+                        opacity: 0;
+                        transform: translateY(8px);
                     }
-                    options={businessTypes}
-                    placeholder="Select business type"
-                    required
-                />
 
-                <SelectField
-                    label="Province"
-                    value={form.province}
-                    onChange={(value) =>
-                        update("province", value)
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
                     }
-                    options={Object.keys(
-                        provincesAndCities
-                    )}
-                    placeholder="Select province"
-                    required
-                />
-            </div>
-
-            <SelectField
-                label="City"
-                value={form.city}
-                onChange={(value) =>
-                    update("city", value)
                 }
-                options={availableCities}
-                placeholder={
-                    form.province
-                        ? "Select city"
-                        : "Select province first"
+
+                @keyframes sellerSuccessPop {
+                    0% {
+                        opacity: 0;
+                        transform: scale(0.7);
+                    }
+
+                    70% {
+                        transform: scale(1.08);
+                    }
+
+                    100% {
+                        opacity: 1;
+                        transform: scale(1);
+                    }
                 }
-                required
-                disabled={!form.province}
-            />
 
-            <CategorySelect
-                value={form.categories}
-                onChange={(value) =>
-                    update("categories", value)
+                @keyframes sellerCheck {
+                    from {
+                        opacity: 0;
+                        transform: scale(0.5);
+                    }
+
+                    to {
+                        opacity: 1;
+                        transform: scale(1);
+                    }
                 }
-                required
-            />
 
-            <Field
-                label="Tell us about your business"
-                required
-            >
-                <textarea
-                    value={form.description}
-                    onChange={updateInput("description")}
-                    required
-                    rows={5}
-                    placeholder="Tell us about your products, customers and what makes your business special."
-                    className="w-full resize-none rounded-xl border bg-white px-4 py-3 text-sm outline-none transition focus:border-[var(--color-vibrant-magenta)]"
-                    style={{
-                        borderColor:
-                            "var(--color-lavender-border)",
-                    }}
-                />
-            </Field>
-
-            <div className="grid gap-5 sm:grid-cols-2">
-                <Field label="Website">
-                    <input
-                        type="url"
-                        value={form.website}
-                        onChange={updateInput("website")}
-                        placeholder="https://..."
-                        className="w-full rounded-xl border bg-white px-4 py-3 text-sm outline-none transition focus:border-[var(--color-vibrant-magenta)]"
-                        style={{
-                            borderColor:
-                                "var(--color-lavender-border)",
-                        }}
-                    />
-                </Field>
-
-                <Field label="Instagram">
-                    <input
-                        type="text"
-                        value={form.instagram}
-                        onChange={updateInput("instagram")}
-                        placeholder="@yourbusiness"
-                        className="w-full rounded-xl border bg-white px-4 py-3 text-sm outline-none transition focus:border-[var(--color-vibrant-magenta)]"
-                        style={{
-                            borderColor:
-                                "var(--color-lavender-border)",
-                        }}
-                    />
-                </Field>
-            </div>
-
-            <label className="flex items-start gap-3">
-                <input
-                    type="checkbox"
-                    checked={form.acceptsTerms}
-                    onChange={updateInput("acceptsTerms")}
-                    required
-                    className="mt-1 h-4 w-4 accent-[var(--color-vibrant-magenta)]"
-                />
-
-                <span className="text-sm leading-relaxed text-[var(--color-muted-purple)]">
-                    I confirm that the information provided is
-                    accurate and I would like to be considered
-                    for selling on Evivi.
-                </span>
-            </label>
-
-            <button
-                type="submit"
-                className="btn-primary w-full"
-            >
-                Apply to Sell on Evivi
-            </button>
-        </form>
+                .seller-step-enter {
+                    animation: sellerStepEnter 0.3s ease-out;
+                }
+            `}</style>
+        </>
     );
 }
 
@@ -713,10 +922,10 @@ export default function SellersPage() {
         <>
             <section
                 id="hero"
-                className="relative flex min-h-[80vh] items-center overflow-hidden text-white"
+                className="relative flex min-h-[68vh] items-center overflow-hidden text-white"
             >
                 <Image
-                    src="/images/seller-hero.jpg"
+                    src="/images/seller-hero.png"
                     alt=""
                     fill
                     priority
@@ -726,12 +935,12 @@ export default function SellersPage() {
 
                 <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-deep-plum)]/90 via-[var(--color-deep-plum)]/50 to-[var(--color-deep-plum)]/20" />
 
-                <div className="relative z-10 mx-auto w-full max-w-6xl px-5 py-24 sm:px-8">
+                <div className="relative z-10 mx-auto w-full max-w-6xl px-5 py-20 sm:px-8">
                     <p className="text-sm font-semibold uppercase tracking-[0.22em] text-white/70">
                         How to sell on Evivi
                     </p>
 
-                    <h1 className="mt-2 max-w-xl font-display text-4xl font-bold leading-[1.05] sm:text-6xl">
+                    <h1 className="mt-2 max-w-xl font-display text-3xl font-bold leading-[1.05] sm:text-5xl">
                         Turn what you create into something worth celebrating.
                     </h1>
 
@@ -832,9 +1041,9 @@ export default function SellersPage() {
                 className="px-5 py-8 sm:px-8"
             >
                 <div className="mx-auto grid max-w-6xl overflow-hidden rounded-[2rem] bg-white shadow-soft lg:grid-cols-2">
-                    <div className="relative hidden h-[440px] lg:block">
+                    <div className="relative hidden h-[360px] lg:block">
                         <Image
-                            src="/images/seller-craft.jpg"
+                            src="/images/seller-craft.png"
                             alt="A gift seller creating and preparing a celebration gift"
                             fill
                             className="object-cover"
@@ -875,9 +1084,9 @@ export default function SellersPage() {
                     </div>
 
                     <div className="mt-8 grid gap-6 lg:grid-cols-2 lg:items-center">
-                        <div className="relative aspect-[4/3] overflow-hidden rounded-[2rem] shadow-soft">
+                        <div className="relative aspect-[16/10] overflow-hidden rounded-[2rem] shadow-soft">
                             <Image
-                                src="/images/seller-gifts.jpg"
+                                src="/images/seller-gifts.png"
                                 alt="Beautifully prepared Valentine's gift packages"
                                 fill
                                 className="object-cover"

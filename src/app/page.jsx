@@ -15,9 +15,9 @@ import {
 import { CTA } from "@/constants/copy";
 
 export const metadata = {
-    title: "Evivi — Find the Right Gift, Make the Moment Happen",
+    title: "Evivi | Find the Right Gift, Make the Moment Happen",
     description:
-        "Evivi is a marketplace for gifts and celebrations, connecting buyers with local sellers, delivery partners, and event professionals.",
+        "Discover Valentine gifts from local sellers on Evivi. Find the right gift, choose delivery or collection, and make the moment happen.",
 };
 
 const HOW_IT_WORKS_ACCENT = "#E91E63";
@@ -56,7 +56,7 @@ const PERSONAS = [
     {
         title: "Sellers",
         description: "List your gifts and reach more Valentine buyers.",
-        href: "/sellers",
+        href: "/seller",
         icon: Store,
         accent: "var(--color-royal-purple)",
     },
@@ -91,7 +91,7 @@ export default function HomePage() {
                    once the user scrolls past it. */}
             <section
                 id="hero"
-                className="relative overflow-hidden min-h-[92vh] md:min-h-screen flex items-center text-white"
+                className="relative overflow-hidden min-h-[78vh] md:min-h-[86vh] flex items-center text-white"
             >
                 <Image
                     src="/images/hero-image.jpg"
@@ -112,7 +112,7 @@ export default function HomePage() {
 
                 <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-deep-plum)]/85 via-[var(--color-deep-plum)]/45 to-[var(--color-deep-plum)]/10" />
 
-                <div className="relative z-10 mx-auto max-w-[1280px] w-full px-5 md:px-8 py-32 md:py-40">
+                <div className="relative z-10 mx-auto max-w-[1280px] w-full px-5 md:px-8 py-24 md:py-32">
                     <div className="max-w-xl">
                         <span
                             className="section-eyebrow mb-4"
@@ -120,13 +120,13 @@ export default function HomePage() {
                         >
                             Launching with Valentine gifting
                         </span>
-                        <h1 className="font-display text-3xl md:text-5xl font-bold leading-[1.05] mt-4 mb-5">
+                        <h1 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.08] mt-4 mb-5">
                             Find the right gift.
                             <br />
                             Make the moment happen.
                         </h1>
                         <p className="text-white/85 text-lg md:text-xl max-w-md mb-10">
-                            Evivi is a marketplace for gifts and celebrations. It connects people looking for gifts with local gift sellers, making it easier to find and buy gifts today. As Evivi grows, we plan to bring Event Planners & Coordinators and Event Suppliers onto the platform as well.
+                            Evivi connects gift buyers with local sellers, making it easier to discover, choose and send meaningful gifts.
                         </p>
                         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                             <Link href={CTA.buyer.href} className="btn-primary text-lg px-9 py-4">
@@ -377,15 +377,21 @@ export default function HomePage() {
                         <p className="text-[var(--color-muted-purple)] text-lg mb-6 max-w-lg mx-auto">
                             Join Evivi early to discover what's coming and shape a better way to celebrate.
                         </p>
-                        <Link href={CTA.buyer.href} className="btn-primary text-lg px-9 py-4">
-                            {CTA.buyer.label}
-                        </Link>
-                        <Link
-                            href={CTA.seller.href}
-                            className="btn-secondary text-lg px-9 py-4 bg-transparent border-white/40 text-white hover:bg-white/10"
-                        >
-                            {CTA.seller.label}
-                        </Link>
+                        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                            <Link
+                                href={CTA.buyer.href}
+                                className="btn-primary text-lg px-9 py-4"
+                            >
+                                {CTA.buyer.label}
+                            </Link>
+
+                            <Link
+                                href={CTA.seller.href}
+                                className="btn-secondary text-lg px-9 py-4"
+                            >
+                                {CTA.seller.label}
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </section>
