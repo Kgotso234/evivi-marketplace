@@ -12,7 +12,7 @@ import {
     CalendarCheck,
     Package,
 } from "lucide-react";
-import { CTA, selectSellerRole } from "@/constants/copy";
+import { CTA } from "@/constants/copy";
 
 export const metadata = {
     title: "Evivi — Find the Right Gift, Make the Moment Happen",
@@ -135,7 +135,6 @@ export default function HomePage() {
                             </Link>
                             <Link
                                 href={CTA.seller.href}
-                                onClick={selectSellerRole}
                                 className="btn-secondary text-lg px-9 py-4 bg-transparent border-white/40 text-white hover:bg-white/10"
                             >
                                 {CTA.seller.label}

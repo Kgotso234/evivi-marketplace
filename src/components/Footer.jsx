@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { CTA, selectSellerRole } from "@/constants/copy";
@@ -31,11 +33,23 @@ const socials = [
     { Icon: IconTikTok, label: "Evivi on TikTok", href: "#" },
     { Icon: IconX, label: "Evivi on X", href: "#" },
 ];
+
+/**
+ * Every link below points at a page or section that actually exists in the
+ * current build. Removed vs. the old version:
+ *  - "Apply to Sell" (duplicated "Sell on Evivi" — same href, same role)
+ *  - "Our Vision" (that content now lives ON /about, so it's a duplicate link)
+ *  - "Seller FAQ" / "Partner FAQ" (no dedicated FAQ per role — /faq covers all of it)
+ *  - "Careers" (no page built, no near-term plan for one — dropped instead of
+ *    left as a placeholder link that goes nowhere)
+ *  - "Contact Us" (no page built yet — re-add once one exists, e.g. mailto or /contact)
+ * "Event Suppliers" was added (a real page that the old footer was missing).
+ */
 const columns = [
     {
         title: "Shop",
         links: [
-            { label: "Valentine Gifts", href: "/#valentine" },
+            { label: "Valentine Gifts", href: "/#how-it-works" },
             { label: "How it Works", href: "/#how-it-works" },
             { label: "Early Access", href: CTA.buyer.href },
             { label: "FAQs", href: "/faq" },
@@ -65,6 +79,9 @@ const columns = [
     {
         title: "Legal",
         links: [
+            // Still placeholders — no legal pages built yet. Kept visible since
+            // a live registration flow generally expects these to exist; swap
+            // hrefs in once the pages are ready.
             { label: "Terms & Conditions", href: "#" },
             { label: "Privacy Policy", href: "#" },
             { label: "Seller Agreement", href: "#" },
