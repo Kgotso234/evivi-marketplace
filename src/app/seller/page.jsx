@@ -15,11 +15,11 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 
-export const metadata = {
-    title: "Sell Your Gifts on Evivi | Grow Your Business",
-    description:
-        "List your flowers, hampers, chocolates and Valentine gift packages on Evivi.",
-};
+// export const metadata = {
+//     title: "Sell Your Gifts on Evivi | Grow Your Business",
+//     description:
+//         "List your flowers, hampers, chocolates and Valentine gift packages on Evivi.",
+// };
 
 const sellerBenefits = [
     {
