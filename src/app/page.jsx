@@ -120,14 +120,13 @@ export default function HomePage() {
                         >
                             Launching with Valentine gifting
                         </span>
-                        <h1 className="font-display text-5xl md:text-7xl font-bold leading-[1.05] mt-4 mb-5">
+                        <h1 className="font-display text-3xl md:text-5xl font-bold leading-[1.05] mt-4 mb-5">
                             Find the right gift.
                             <br />
                             Make the moment happen.
                         </h1>
                         <p className="text-white/85 text-lg md:text-xl max-w-md mb-10">
-                            Evivi connects gift buyers with local sellers, delivery partners, and event
-                            professionals — all in one place.
+                            Evivi is a marketplace for gifts and celebrations. It connects people looking for gifts with local gift sellers, making it easier to find and buy gifts today. As Evivi grows, we plan to bring Event Planners & Coordinators and Event Suppliers onto the platform as well.
                         </p>
                         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                             <Link href={CTA.buyer.href} className="btn-primary text-lg px-9 py-4">
