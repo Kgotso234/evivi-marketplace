@@ -93,6 +93,16 @@ const columns = [
                 label: "About Evivi",
                 href: "/about",
             },
+            {
+                label: "Terms & Conditions",
+                href: "#"
+            },{
+                label: "Privacy Policy",
+                href: "#"
+            },{
+                label: "Contact Us",
+                href: "#"
+            }
         ],
     },
 ];

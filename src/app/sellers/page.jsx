@@ -922,7 +922,7 @@ export default function SellersPage() {
         <>
             <section
                 id="hero"
-                className="relative flex min-h-[68vh] items-center overflow-hidden text-white"
+                className="relative flex min-h-[78vh] items-center overflow-hidden text-white"
             >
                 <Image
                     src="/images/seller-hero.png"
