@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Plus } from "lucide-react";
 
 export const metadata = {
-    title: "FAQs | Evivi",
+    title: "FAQs - Evivi",
     description:
         "Answers to common questions about Evivi — what it is, when it launches, and how buyers, sellers and partners can get involved.",
 };
@@ -13,7 +13,7 @@ const faqGroups = [
         items: [
             {
                 q: "What is Evivi?",
-                a: "Evivi is a marketplace for gifts and celebrations. We're launching with Valentine gifting, connecting gift buyers with local sellers, delivery partners, and — over time — event planners and suppliers.",
+                a: "Evivi is a marketplace for gifts and celebrations. We're launching with Valentine gifting, connecting gift buyers with local sellers, delivery partners, and over time event planners and suppliers.",
             },
             {
                 q: "When does Evivi launch?",
@@ -33,12 +33,17 @@ const faqGroups = [
             },
         ],
     },
+
     {
         title: "For Buyers",
         items: [
             {
                 q: "How do I get early access?",
-                a: "Use the \"Get Valentine Early Access\" button on the homepage to join the list — we'll let you know as soon as you can start browsing and ordering.",
+                a: 'Use the "Get Valentine Early Access" button on the homepage to join the list. We\'ll let you know as soon as you can start browsing and ordering.',
+                link: {
+                    href: "/buyers",
+                    label: "Get Valentine Early Access",
+                },
             },
             {
                 q: "How will delivery work?",
@@ -50,27 +55,63 @@ const faqGroups = [
             },
         ],
     },
+
     {
-        title: "For Sellers & Partners",
+        title: "For Sellers",
         items: [
             {
                 q: "How do I apply to sell on Evivi?",
-                a: "Head to our Sellers page and fill in the application form with your business details. We'll follow up with next steps if you're selected.",
-                link: { href: "/sellers", label: "Apply to sell" },
+                a: "Head to our seller page and fill in the application form with your business details. We'll follow up with next steps if you're selected.",
+                link: {
+                    href: "/seller",
+                    label: "Apply to sell",
+                },
+            },
+            {
+                q: "What can I sell on Evivi?",
+                a: "Evivi is preparing to support gift businesses offering products such as flowers, gift hampers, baked goods, chocolates, personalised gifts, balloons and décor, jewellery and accessories, and other eligible gift products.",
             },
             {
                 q: "What fees does Evivi charge sellers?",
                 a: "Fee details will be shared with selected sellers as part of onboarding, before you list anything on the marketplace.",
             },
             {
+                q: "When will sellers start receiving orders?",
+                a: "Sellers will be able to receive customer orders once the relevant marketplace offerings are live. Selected sellers will receive updates as launch approaches.",
+            },
+        ],
+    },
+
+    {
+        title: "For Partners",
+        items: [
+            {
                 q: "How do I become a delivery partner?",
-                a: "Delivery partner applications open as Evivi grows. Join the waitlist to be notified when applications become available.",
-                link: { href: "/delivery-partners", label: "Join the waitlist" },
+                a: "Delivery partners can join the Evivi waitlist to express their interest. We'll provide updates as delivery opportunities become available.",
+                link: {
+                    href: "/delivery-partners",
+                    label: "Join the delivery partner waitlist",
+                },
             },
             {
-                q: "When can event planners and suppliers join?",
-                a: "Event planning, coordination and supplier onboarding are part of Evivi's longer-term vision, beyond the Valentine 2027 launch. Join the relevant waitlist to be notified.",
-                link: { href: "/event-planners", label: "Event Planners waitlist" },
+                q: "When can event suppliers join Evivi?",
+                a: "Event suppliers are part of Evivi's longer term marketplace vision beyond the Valentine 2027 launch. Join the supplier waitlist to be notified when opportunities become available.",
+                link: {
+                    href: "/suppliers",
+                    label: "Join the supplier waitlist",
+                },
+            },
+            {
+                q: "When can event planners and coordinators join?",
+                a: "Event planning and coordination are part of Evivi's longer term marketplace vision beyond the Valentine 2027 launch. Join the planner waitlist to receive updates when opportunities become available.",
+                link: {
+                    href: "/event-planners",
+                    label: "Join the planner waitlist",
+                },
+            },
+            {
+                q: "Will partners be able to offer services through Evivi?",
+                a: "The goal is to create opportunities for delivery partners, event planners, coordinators and suppliers to participate as Evivi expands beyond its initial Valentine marketplace.",
             },
         ],
     },
@@ -97,34 +138,46 @@ export default function FaqPage() {
 
             {/* FAQ groups */}
             <section data-navbar-theme="light" className="px-5 sm:px-8 py-16 md:py-24">
-                <div className="mx-auto max-w-3xl space-y-12">
+                <div className="mx-auto max-w-6xl space-y-16">
                     {faqGroups.map((group) => (
                         <div key={group.title}>
-                            <h2 className="font-display text-2xl text-plum-deep mb-4">
-                                {group.title}
-                            </h2>
-                            <div className="rounded-[var(--radius-card)] border border-border/70 bg-card divide-y divide-border/70 overflow-hidden">
+                            <div className="mb-5">
+                                <h2 className="font-display text-2xl font-semibold text-plum-deep md:text-3xl">
+                                    {group.title}
+                                </h2>
+                            </div>
+
+                            <div className="grid gap-4 md:grid-cols-2">
                                 {group.items.map((item) => (
-                                    <details key={item.q} className="group px-5 py-4 sm:px-6">
-                                        <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-medium text-plum-deep">
-                                            {item.q}
+                                    <details
+                                        key={item.q}
+                                        className="group rounded-2xl border border-border/70 bg-card shadow-sm transition-shadow hover:shadow-md"
+                                    >
+                                        <summary className="flex cursor-pointer list-none items-center justify-between gap-5 px-5 py-5 font-medium text-plum-deep sm:px-6">
+                                            <span>{item.q}</span>
+
                                             <Plus
-                                                size={18}
+                                                size={19}
                                                 className="shrink-0 text-magenta transition-transform duration-200 group-open:rotate-45"
                                                 aria-hidden="true"
                                             />
                                         </summary>
-                                        <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                                            {item.a}
-                                        </p>
-                                        {item.link && (
-                                            <Link
-                                                href={item.link.href}
-                                                className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-magenta"
-                                            >
-                                                {item.link.label} →
-                                            </Link>
-                                        )}
+
+                                        <div className="px-5 pb-5 sm:px-6">
+                                            <p className="text-sm leading-relaxed text-muted-foreground">
+                                                {item.a}
+                                            </p>
+
+                                            {item.link && (
+                                                <Link
+                                                    href={item.link.href}
+                                                    className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-magenta"
+                                                >
+                                                    {item.link.label}
+                                                    <span aria-hidden="true">→</span>
+                                                </Link>
+                                            )}
+                                        </div>
                                     </details>
                                 ))}
                             </div>
