@@ -1,30 +1,40 @@
+export const ROUTES = {
+    home: "/",
+    buyer: "/buyer",
+    seller: "/seller",
+    deliveryPartner: "/delivery-partner",
+    eventPlanner: "/event-planner", 
+    eventSupplier: "/event-supplier",
+    about: "/about",
+    faq: "/faq",
+};
+
 // Primary navbar CTAs
 export const CTA = {
     buyer: {
         label: "Get Valentine Early Access",
-        href: "/buyer",
+        href: ROUTES.buyer, 
     },
     seller: {
         label: "Sell Gifts on Evivi",
-        href: "/sellers",
+        href: ROUTES.seller, 
     },
 };
 
 /**
- * Main nav links, left to right.
- * "children" creates a dropdown (desktop: hover menu, mobile: accordion).
+ * Main nav links
  */
 export const NAV_LINKS = [
-    { href: "/about", label: "About" },
+    { href: ROUTES.about, label: "About" }, 
     {
         label: "For Partners",
         children: [
-            { href: "/delivery-partners", label: "Delivery Partners" },
-            { href: "/event-planners", label: "Event Planner & Coordinator" },
-            { href: "/event-suppliers", label: "Event Suppliers" },
+            { href: ROUTES.deliveryPartner, label: "Delivery Partner" },
+            { href: ROUTES.eventPlanner, label: "Event Planner & Coordinator" },
+            { href: ROUTES.eventSupplier, label: "Event Suppliers" },
         ],
     },   
-    { href: "/faq", label: "FAQ" },
+    { href: ROUTES.faq, label: "FAQ" },
 ];
 
 export function selectSellerRole() {

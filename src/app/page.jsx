@@ -1,8 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Search, Gift, Truck, ClipboardCheck, ChevronRight, Heart, 
-    Store, Bike, CalendarCheck, Package, } from "lucide-react";
-import { CTA } from "@/constants/copy";
+import {
+    Search,
+    Gift,
+    Truck,
+    ClipboardCheck,
+    ChevronRight,
+    Heart,
+    Store,
+    Bike,
+    CalendarCheck,
+    Package,
+} from "lucide-react";
+import { CTA, ROUTES } from "@/constants/copy";
 
 export const metadata = {
     title: "Evivi - Find the Right Gift, Make the Moment Happen",
@@ -39,35 +49,35 @@ const PERSONAS = [
     {
         title: "Buyers",
         description: "Find and send the right gift, delivered where it needs to be.",
-        href: "/buyer",
+        href: ROUTES.buyer,
         icon: Gift,
         accent: "var(--color-vibrant-magenta)",
     },
     {
         title: "Sellers",
         description: "List your gifts and reach more Valentine buyers.",
-        href: "/seller",
+        href: ROUTES.seller,
         icon: Store,
         accent: "var(--color-royal-purple)",
     },
     {
         title: "Delivery Partners",
         description: "Earn from local deliveries on your own schedule.",
-        href: "/delivery-partners",
+        href: ROUTES.deliveryPartner,
         icon: Bike,
         accent: "var(--color-coral-rose)",
     },
     {
         title: "Event Planners",
         description: "Coordinate events and connect with trusted suppliers.",
-        href: "/event-planners",
+        href: ROUTES.eventPlanner,
         icon: CalendarCheck,
         accent: "var(--color-deep-plum)",
     },
     {
         title: "Suppliers",
         description: "Supply the products and services behind every celebration.",
-        href: "/event-suppliers",
+        href: ROUTES.eventSupplier,
         icon: Package,
         accent: "var(--color-muted-purple)",
     },
