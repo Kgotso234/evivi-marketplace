@@ -1,4 +1,4 @@
-// Primary navbar CTAs
+wq// Primary navbar CTAs
 export const CTA = {
     buyer: {
         label: "Get Valentine Early Access",
