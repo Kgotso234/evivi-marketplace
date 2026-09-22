@@ -14,6 +14,7 @@ import {
     ChevronDown,
 } from "lucide-react";
 import { useState } from "react";
+import SellerRegistrationForm from "@/components/registration/SellerRegistrationForm";
 
 const sellerBenefits = [
     {
