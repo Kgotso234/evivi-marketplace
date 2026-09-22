@@ -17,7 +17,10 @@ export default function Navbar() {
     const [partnersOpen, setPartnersOpen] = useState(false);
     const [mobilePartnersOpen, setMobilePartnersOpen] = useState(false);
 
+    // Theme & intersection observer update
     useEffect(() => {
+        if (typeof window === "undefined") return;
+
         const updateNavbarTheme = () => {
             const hero = document.getElementById("hero");
 
@@ -39,8 +42,7 @@ export default function Navbar() {
                 entries.forEach((entry) => {
                     if (!entry.isIntersecting) return;
 
-                    const theme =
-                        entry.target.getAttribute("data-navbar-theme");
+                    const theme = entry.target.getAttribute("data-navbar-theme");
 
                     if (theme) {
                         setNavTheme(theme);
@@ -63,7 +65,10 @@ export default function Navbar() {
         return () => observer.disconnect();
     }, [pathname]);
 
+    // Scroll listener
     useEffect(() => {
+        if (typeof window === "undefined") return;
+
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 10);
         };
@@ -79,8 +84,9 @@ export default function Navbar() {
         };
     }, []);
 
+    // Mobile menu overflow & key listeners
     useEffect(() => {
-        if (!open) return;
+        if (typeof window === "undefined" || !open) return;
 
         const handleKeyDown = (event) => {
             if (event.key === "Escape") {
@@ -97,6 +103,7 @@ export default function Navbar() {
         };
     }, [open]);
 
+    // Close menus on route change
     useEffect(() => {
         setOpen(false);
         setPartnersOpen(false);
@@ -111,7 +118,6 @@ export default function Navbar() {
 
     const isActiveRoute = (href) => {
         if (!href || href === "#") return false;
-
         return pathname === href || pathname.startsWith(`${href}/`);
     };
 

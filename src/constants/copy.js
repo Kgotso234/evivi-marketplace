@@ -38,6 +38,7 @@ export const NAV_LINKS = [
 ];
 
 export function selectSellerRole() {
+    // Check if running on the client (browser) before accessing localStorage/window
     if (typeof window === "undefined") return;
 
     try {
