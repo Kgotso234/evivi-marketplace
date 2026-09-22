@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import SellerRegistrationForm from "@/components/registration/SellerRegistrationForm";
+import { SELLER_DISPLAY_CATEGORIES } from "@/data/registration";
 
 const sellerBenefits = [
     {
@@ -255,7 +256,7 @@ export default function SellersPage() {
                         </div>
 
                         <div className="grid gap-2 sm:grid-cols-2">
-                            {sellerCategories.map((category) => (
+                            {SELLER_DISPLAY_CATEGORIES.map((category) => (
                                 <div
                                     key={category}
                                     className="rounded-xl border bg-white px-4 py-3 text-sm font-medium text-[var(--color-deep-plum)]"
