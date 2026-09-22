@@ -57,10 +57,11 @@ export default function SellerRegistrationForm() {
         event.preventDefault();
 
         if (
-            !form.businessName ||
             !form.contactName ||
             !form.email ||
-            !form.phone
+            !form.phone ||
+            !form.province ||
+            !form.city
         ) {
             return;
         }
@@ -77,9 +78,8 @@ export default function SellerRegistrationForm() {
         event.preventDefault();
 
         if (
+            !form.businessName ||
             !form.businessType ||
-            !form.province ||
-            !form.city ||
             form.categories.length === 0 ||
             !form.agree
         ) {
@@ -104,15 +104,26 @@ export default function SellerRegistrationForm() {
     const resetForm = () => {
         setForm(initialForm);
         setStep(1);
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        });
+    };
+
+    const stepTitles = {
+        1: "Personal details",
+        2: "Business details",
+        3: "Registration complete",
     };
 
     /*
      * STEP 3
-     * Success state
      */
+
     if (step === 3) {
         return (
-            <div className="rounded-3xl border border-black/5 bg-white p-6 shadow-sm sm:p-8 lg:p-10">
+            <div className="rounded-[24px] border bg-white p-6 md:p-8">
                 <div className="mx-auto max-w-2xl text-center">
                     <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-[var(--color-soft-lilac)]">
                         <CheckCircle2
@@ -121,11 +132,11 @@ export default function SellerRegistrationForm() {
                         />
                     </div>
 
-                    <p className="mb-3 text-sm font-semibold uppercase tracking-[0.14em] text-[var(--color-vibrant-magenta)]">
+                    <p className="text-sm font-semibold uppercase tracking-[0.14em] text-[var(--color-vibrant-magenta)]">
                         Registration received
                     </p>
 
-                    <h2 className="font-display text-3xl font-bold text-[var(--color-deep-plum)] sm:text-4xl">
+                    <h2 className="mt-2 font-display text-3xl font-bold text-[var(--color-deep-plum)] sm:text-4xl">
                         You&apos;re on the list!
                     </h2>
 
@@ -192,68 +203,64 @@ export default function SellerRegistrationForm() {
     }
 
     return (
-        <div className="rounded-3xl border border-black/5 bg-white p-6 shadow-sm sm:p-8 lg:p-10">
+        <div>
             {/* Progress */}
-            <div className="mb-8">
+            <div className="mb-10">
                 <div className="flex items-center justify-between">
                     <span className="text-sm font-semibold text-[var(--color-deep-plum)]">
-                        Step {step} of 2
+                        Step {step} of 3
                     </span>
 
                     <span className="text-sm text-black/45">
-                        {step === 1
-                            ? "Business details"
-                            : "Seller details"}
+                        {stepTitles[step]}
                     </span>
                 </div>
 
-                <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-[var(--color-soft-lilac)]">
+                <div className="mt-4 h-1.5 overflow-hidden rounded-full bg-black/5">
                     <div
                         className="h-full rounded-full bg-[var(--color-vibrant-magenta)] transition-all duration-300"
                         style={{
-                            width: step === 1 ? "50%" : "100%",
+                            width:
+                                step === 1
+                                    ? "33.333%"
+                                    : "66.666%",
                         }}
                     />
                 </div>
+
+                <div className="mt-4 flex items-center justify-between">
+                    {[1, 2, 3].map((number) => (
+                        <div
+                            key={number}
+                            className={`flex h-9 w-9 items-center justify-center rounded-full text-sm font-semibold ${
+                                number === step
+                                    ? "bg-[var(--color-vibrant-magenta)] text-white"
+                                    : number < step
+                                    ? "bg-[var(--color-soft-lilac)] text-[var(--color-deep-plum)]"
+                                    : "bg-black/5 text-black/35"
+                            }`}
+                        >
+                            {number}
+                        </div>
+                    ))}
+                </div>
             </div>
 
+            {/* STEP 1 */}
             {step === 1 && (
                 <form onSubmit={goToStepTwo}>
                     <div className="mb-8">
-                        <h2 className="font-display text-2xl font-bold text-[var(--color-deep-plum)]">
-                            Tell us about your business
+                        <h2 className="font-display text-2xl font-semibold text-[var(--color-deep-plum)]">
+                            Personal details
                         </h2>
 
-                        <p className="mt-2 text-sm leading-6 text-black/55">
-                            Start with your basic business and contact
-                            details.
+                        <p className="mt-2 text-sm text-[var(--color-muted-purple)]">
+                            Basic information we can use to contact you.
                         </p>
                     </div>
 
-                    <div className="space-y-5">
-                        <Field
-                            label="Business name"
-                            required
-                        >
-                            <input
-                                type="text"
-                                value={form.businessName}
-                                onChange={(event) =>
-                                    update(
-                                        "businessName",
-                                        event.target.value
-                                    )
-                                }
-                                className={inputClass}
-                                placeholder="Enter your business name"
-                                required
-                            />
-                        </Field>
-
-                        <Field
-                            label="Contact name"
-                            required
-                        >
+                    <div className="grid gap-5 md:grid-cols-2">
+                        <Field label="Full name" required>
                             <input
                                 type="text"
                                 value={form.contactName}
@@ -269,10 +276,7 @@ export default function SellerRegistrationForm() {
                             />
                         </Field>
 
-                        <Field
-                            label="Email address"
-                            required
-                        >
+                        <Field label="Email address" required>
                             <input
                                 type="email"
                                 value={form.email}
@@ -288,10 +292,7 @@ export default function SellerRegistrationForm() {
                             />
                         </Field>
 
-                        <Field
-                            label="Phone number"
-                            required
-                        >
+                        <Field label="Mobile number" required>
                             <input
                                 type="tel"
                                 value={form.phone}
@@ -302,57 +303,24 @@ export default function SellerRegistrationForm() {
                                     )
                                 }
                                 className={inputClass}
-                                placeholder="Enter your phone number"
+                                placeholder="e.g. 082 123 4567"
                                 required
                             />
                         </Field>
                     </div>
 
-                    <button
-                        type="submit"
-                        className="mt-8 flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--color-deep-plum)] px-5 py-3.5 text-sm font-semibold text-white transition hover:opacity-90"
-                    >
-                        Continue
-                        <ArrowRight size={18} />
-                    </button>
-                </form>
-            )}
+                    <div className="mt-10">
+                        <h3 className="font-display text-xl font-semibold text-[var(--color-deep-plum)]">
+                            Location
+                        </h3>
 
-            {step === 2 && (
-                <form onSubmit={handleSubmit}>
-                    <div className="mb-8">
-                        <h2 className="font-display text-2xl font-bold text-[var(--color-deep-plum)]">
-                            Tell us more about what you sell
-                        </h2>
-
-                        <p className="mt-2 text-sm leading-6 text-black/55">
-                            These details help us understand your business
-                            and what you offer.
+                        <p className="mt-2 text-sm text-[var(--color-muted-purple)]">
+                            Tell us where your business operates.
                         </p>
                     </div>
 
-                    <div className="space-y-5">
-                        <Field
-                            label="Business type"
-                            required
-                        >
-                            <CustomSelect
-                                value={form.businessType}
-                                onChange={(value) =>
-                                    update(
-                                        "businessType",
-                                        value
-                                    )
-                                }
-                                options={SELLER_BUSINESS_TYPES}
-                                placeholder="Select business type"
-                            />
-                        </Field>
-
-                        <Field
-                            label="Province"
-                            required
-                        >
+                    <div className="mt-5 grid gap-5 md:grid-cols-2">
+                        <Field label="Province" required>
                             <CustomSelect
                                 value={form.province}
                                 onChange={(value) => {
@@ -366,10 +334,7 @@ export default function SellerRegistrationForm() {
                             />
                         </Field>
 
-                        <Field
-                            label="City"
-                            required
-                        >
+                        <Field label="City / Area" required>
                             <CustomSelect
                                 value={form.city}
                                 onChange={(value) =>
@@ -384,11 +349,64 @@ export default function SellerRegistrationForm() {
                                 disabled={!form.province}
                             />
                         </Field>
+                    </div>
 
-                        <Field
-                            label="What do you sell?"
-                            required
-                        >
+                    <button
+                        type="submit"
+                        className="mt-8 flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--color-deep-plum)] px-5 py-3.5 text-sm font-semibold text-white transition hover:opacity-90"
+                    >
+                        Continue
+                        <ArrowRight size={18} />
+                    </button>
+                </form>
+            )}
+
+            {/* STEP 2 */}
+            {step === 2 && (
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-8">
+                        <h2 className="font-display text-2xl font-semibold text-[var(--color-deep-plum)]">
+                            Business details
+                        </h2>
+
+                        <p className="mt-2 text-sm text-[var(--color-muted-purple)]">
+                            Tell us more about your business and what you
+                            sell.
+                        </p>
+                    </div>
+
+                    <div className="space-y-5">
+                        <Field label="Business name" required>
+                            <input
+                                type="text"
+                                value={form.businessName}
+                                onChange={(event) =>
+                                    update(
+                                        "businessName",
+                                        event.target.value
+                                    )
+                                }
+                                className={inputClass}
+                                placeholder="Enter your business name"
+                                required
+                            />
+                        </Field>
+
+                        <Field label="Business type" required>
+                            <CustomSelect
+                                value={form.businessType}
+                                onChange={(value) =>
+                                    update(
+                                        "businessType",
+                                        value
+                                    )
+                                }
+                                options={SELLER_BUSINESS_TYPES}
+                                placeholder="Select business type"
+                            />
+                        </Field>
+
+                        <Field label="What do you sell?" required>
                             <MultiSelect
                                 value={form.categories}
                                 onChange={(value) =>
@@ -419,35 +437,37 @@ export default function SellerRegistrationForm() {
                             />
                         </Field>
 
-                        <Field label="Website">
-                            <input
-                                type="url"
-                                value={form.website}
-                                onChange={(event) =>
-                                    update(
-                                        "website",
-                                        event.target.value
-                                    )
-                                }
-                                className={inputClass}
-                                placeholder="https://yourwebsite.com"
-                            />
-                        </Field>
+                        <div className="grid gap-5 md:grid-cols-2">
+                            <Field label="Website">
+                                <input
+                                    type="url"
+                                    value={form.website}
+                                    onChange={(event) =>
+                                        update(
+                                            "website",
+                                            event.target.value
+                                        )
+                                    }
+                                    className={inputClass}
+                                    placeholder="https://yourwebsite.com"
+                                />
+                            </Field>
 
-                        <Field label="Instagram">
-                            <input
-                                type="text"
-                                value={form.instagram}
-                                onChange={(event) =>
-                                    update(
-                                        "instagram",
-                                        event.target.value
-                                    )
-                                }
-                                className={inputClass}
-                                placeholder="@yourbusiness"
-                            />
-                        </Field>
+                            <Field label="Instagram">
+                                <input
+                                    type="text"
+                                    value={form.instagram}
+                                    onChange={(event) =>
+                                        update(
+                                            "instagram",
+                                            event.target.value
+                                        )
+                                    }
+                                    className={inputClass}
+                                    placeholder="@yourbusiness"
+                                />
+                            </Field>
+                        </div>
 
                         <label className="flex items-start gap-3 pt-2">
                             <input
@@ -495,7 +515,7 @@ export default function SellerRegistrationForm() {
                                 </>
                             ) : (
                                 <>
-                                    Join as a Seller
+                                    Continue
                                     <ArrowRight size={18} />
                                 </>
                             )}
