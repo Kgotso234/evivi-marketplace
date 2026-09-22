@@ -1,21 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import {
-    Search,
-    Gift,
-    Truck,
-    ClipboardCheck,
-    ChevronRight,
-    Heart,
-    Store,
-    Bike,
-    CalendarCheck,
-    Package,
-} from "lucide-react";
+import { Search, Gift, Truck, ClipboardCheck, ChevronRight, Heart, 
+    Store, Bike, CalendarCheck, Package, } from "lucide-react";
 import { CTA } from "@/constants/copy";
 
 export const metadata = {
-    title: "Evivi | Find the Right Gift, Make the Moment Happen",
+    title: "Evivi - Find the Right Gift, Make the Moment Happen",
     description:
         "Discover Valentine gifts from local sellers on Evivi. Find the right gift, choose delivery or collection, and make the moment happen.",
 };
@@ -49,7 +39,7 @@ const PERSONAS = [
     {
         title: "Buyers",
         description: "Find and send the right gift, delivered where it needs to be.",
-        href: "/#hero",
+        href: "/buyer",
         icon: Gift,
         accent: "var(--color-vibrant-magenta)",
     },
@@ -86,12 +76,9 @@ const PERSONAS = [
 export default function HomePage() {
     return (
         <>
-            {/* 1. Hero — id="hero" is what Navbar checks; no data-navbar-theme needed,
-                   Navbar treats #hero as transparent by default, then flips to "light"
-                   once the user scrolls past it. */}
             <section
                 id="hero"
-                className="relative overflow-hidden min-h-[78vh] md:min-h-[86vh] flex items-center text-white"
+                className="relative overflow-hidden min-h-[92vh] md:min-h-screen flex items-center text-white"
             >
                 <Image
                     src="/images/hero-image.jpg"
@@ -115,12 +102,12 @@ export default function HomePage() {
                 <div className="relative z-10 mx-auto max-w-[1280px] w-full px-5 md:px-8 py-24 md:py-32">
                     <div className="max-w-xl">
                         <span
-                            className="section-eyebrow mb-4"
+                            className="section-eyebrow mb-6"
                             style={{ background: "rgba(255,255,255,0.12)", color: "#fff", borderColor: "rgba(255,255,255,0.25)" }}
                         >
                             Launching with Valentine gifting
                         </span>
-                        <h1 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.08] mt-4 mb-5">
+                        <h1 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.08] mt-4 mb-6">
                             Find the right gift.
                             <br />
                             Make the moment happen.
@@ -144,7 +131,7 @@ export default function HomePage() {
             </section>
 
             {/* 2. How it works — embedded directly here, includes its own Valentine CTA card */}
-            <section id="how-it-works" data-navbar-theme="light" className="bg-soft-gradient px-5 sm:px-8 py-16 md:py-24">
+            <section id="how-it-works" data-navbar-theme="light" className="px-5 sm:px-8 pt-10 md:pt-16 pb-16 md:pb-24">
                 <div className="mx-auto max-w-6xl">
                     <div className="max-w-2xl">
                         <p
@@ -153,7 +140,7 @@ export default function HomePage() {
                         >
                             How Evivi works
                         </p>
-                        <h2 className="font-display mt-3 text-3xl md:text-5xl font-bold leading-[1.2] text-plum-deep">
+                        <h2 className="font-display mt-3 text-3xl md:text-4xl font-bold leading-[1.2] text-plum-deep">
                             Find, choose and send the perfect gift.{" "}
                             <Heart
                                 size={30}
@@ -162,7 +149,7 @@ export default function HomePage() {
                                 aria-hidden="true"
                             />
                         </h2>
-                        <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
+                        <p className="mt-4 text-base leading-relaxed text-muted-foreground">
                             From discovery to delivery, Evivi makes gifting easy and stress-free
                         </p>
                     </div>
@@ -194,7 +181,7 @@ export default function HomePage() {
                                     <h3 className="font-display mt-5 text-2xl leading-[1.3] text-plum-deep">
                                         {item.title}
                                     </h3>
-                                    <p className="mt-2 text-base leading-relaxed text-muted-foreground">{item.copy}</p>
+                                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.copy}</p>
                                 </div>
                             </div>
                         ))}
@@ -225,7 +212,7 @@ export default function HomePage() {
                                 <h3 className="font-display mt-5 text-2xl leading-[1.3] text-plum-deep">
                                     {item.title}
                                 </h3>
-                                <p className="mt-2 text-base leading-relaxed text-muted-foreground">{item.copy}</p>
+                                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.copy}</p>
                             </div>
                         ))}
                     </div>
@@ -304,10 +291,10 @@ export default function HomePage() {
                                     >
                                         <p.icon className="size-7" aria-hidden="true" />
                                     </span>
-                                    <h3 className="font-display mt-5 text-2xl leading-[1.3] text-plum-deep">
+                                    <h3 className="font-display mt-5 text-xl leading-[1.3] text-plum-deep">
                                         {p.title}
                                     </h3>
-                                    <p className="mt-2 text-base leading-relaxed text-muted-foreground">
+                                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                                         {p.description}
                                     </p>
                                 </div>
@@ -338,10 +325,10 @@ export default function HomePage() {
                                         {i + 1}
                                     </span>
                                 </div>
-                                <h3 className="font-display mt-5 text-2xl leading-[1.3] text-plum-deep">
+                                <h3 className="font-display mt-5 text-xl leading-[1.3] text-plum-deep">
                                     {p.title}
                                 </h3>
-                                <p className="mt-2 text-base leading-relaxed text-muted-foreground">
+                                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                                     {p.description}
                                 </p>
                             </Link>
@@ -371,7 +358,7 @@ export default function HomePage() {
             <section data-navbar-theme="light" className="bg-white pb-20">
                 <div className="mx-auto max-w-[1280px] px-5 md:px-8">
                     <div className="bg-soft-gradient rounded-[var(--radius-card)] px-6 py-12 text-center">
-                        <h3 className="font-display text-3xl md:text-4xl font-bold text-[var(--color-deep-plum)] mb-4">
+                        <h3 className="font-display text-2xl md:text-3xl font-bold text-[var(--color-deep-plum)] mb-4">
                             Be there from the beginning.
                         </h3>
                         <p className="text-[var(--color-muted-purple)] text-lg mb-6 max-w-lg mx-auto">
