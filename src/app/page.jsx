@@ -79,7 +79,8 @@ export default function HomePage() {
             <section
                 id="hero"
                 className="relative overflow-hidden min-h-[92vh] md:min-h-screen flex items-center text-white"
-            >
+                >
+                {/* Background Images with standard animation preserved */}
                 <Image
                     src="/images/hero-image.jpg"
                     alt=""
@@ -97,39 +98,55 @@ export default function HomePage() {
                     className="block md:hidden object-cover hero-bg-bounce"
                 />
 
-                <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-deep-plum)]/85 via-[var(--color-deep-plum)]/45 to-[var(--color-deep-plum)]/10" />
+                {/* Overall Dark Overlay for Background Image */}
+                <div className="absolute inset-0 bg-black/40 z-[1]" />
+
+                {/* Left Radial Dark Gradient to enhance text legibility */}
+                <div className="absolute inset-0 bg-radial-[at_left_center] from-black/80 via-black/40 to-transparent pointer-events-none z-[2]" />
 
                 <div className="relative z-10 mx-auto max-w-[1280px] w-full px-5 md:px-8 py-24 md:py-32">
-                    <div className="max-w-xl">
-                        <span
-                            className="section-eyebrow mb-6"
-                            style={{ background: "rgba(255,255,255,0.12)", color: "#fff", borderColor: "rgba(255,255,255,0.25)" }}
+                    {/* Text Card Container with frosted glass backdrop for ultra readability */}
+                    <div className="max-w-xl bg-black/30 backdrop-blur-md p-6 md:p-8 rounded-2xl border border-white/10 shadow-2xl">
+                    <span
+                        className="section-eyebrow mb-6 inline-block"
+                        style={{
+                        background: "rgba(255,255,255,0.15)",
+                        color: "#fff",
+                        borderColor: "rgba(255,255,255,0.3)",
+                        }}
+                    >
+                        Launching with Valentine gifting
+                    </span>
+                    <h1 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.08] mt-4 mb-6 drop-shadow-md">
+                        Find the right gift.
+                        <br />
+                        Make the moment happen.
+                    </h1>
+                    <p className="text-white/90 text-lg md:text-xl max-w-md mb-8 drop-shadow">
+                        Evivi connects gift buyers with local sellers, making it easier to discover, choose and send meaningful gifts.
+                    </p>
+                    
+                    {/* Primary (Buyer) vs. Secondary (Seller) CTAs */}
+                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+                        {/* High-Contrast Primary CTA */}
+                        <Link 
+                        href={CTA.buyer.href} 
+                        className="btn-primary text-lg px-8 py-4 text-center font-semibold bg-gradient-to-r from-pink-500 to-rose-600 hover:from-pink-600 hover:to-rose-700 text-white rounded-xl shadow-lg transition-all transform hover:-translate-y-0.5"
                         >
-                            Launching with Valentine gifting
-                        </span>
-                        <h1 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.08] mt-4 mb-6">
-                            Find the right gift.
-                            <br />
-                            Make the moment happen.
-                        </h1>
-                        <p className="text-white/85 text-lg md:text-xl max-w-md mb-10">
-                            Evivi connects gift buyers with local sellers, making it easier to discover, choose and send meaningful gifts.
-                        </p>
-                        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                            <Link href={CTA.buyer.href} className="btn-primary text-lg px-9 py-4">
-                                {CTA.buyer.label}
-                            </Link>
-                            <Link
-                                href={CTA.seller.href}
-                                className="btn-secondary text-lg px-9 py-4 bg-transparent border-white/40 text-white hover:bg-white/10"
-                            >
-                                {CTA.seller.label}
-                            </Link>
-                        </div>
+                        {CTA.buyer.label}
+                        </Link>
+                        
+                        {/* Solidified Secondary CTA (Sellers) */}
+                        <Link
+                        href={CTA.seller.href}
+                        className="btn-secondary text-lg px-8 py-4 text-center font-medium bg-white/20 hover:bg-white/30 text-white backdrop-blur-sm border border-white/30 rounded-xl transition-all"
+                        >
+                        {CTA.seller.label}
+                        </Link>
+                    </div>
                     </div>
                 </div>
-            </section>
-
+                </section>
             {/* 2. How it works — embedded directly here, includes its own Valentine CTA card */}
             <section id="how-it-works" data-navbar-theme="light" className="px-5 sm:px-8 pt-10 md:pt-16 pb-16 md:pb-24">
                 <div className="mx-auto max-w-6xl">
@@ -141,13 +158,7 @@ export default function HomePage() {
                             How Evivi works
                         </p>
                         <h2 className="font-display mt-3 text-3xl md:text-4xl font-bold leading-[1.2] text-plum-deep">
-                            Find, choose and send the perfect gift.{" "}
-                            <Heart
-                                size={30}
-                                fill="currentColor"
-                                className="inline text-[#ff8fa3] align-middle"
-                                aria-hidden="true"
-                            />
+                            Find, choose and send the perfect gift.
                         </h2>
                         <p className="mt-4 text-base leading-relaxed text-muted-foreground">
                             From discovery to delivery, Evivi makes gifting easy and stress-free
@@ -259,7 +270,7 @@ export default function HomePage() {
                         >
                             Who it's for
                         </p>
-                        <h2 className="font-display mt-3 text-3xl md:text-5xl font-bold leading-[1.2] text-plum-deep">
+                        <h2 className="font-display mt-3 text-3xl md:text-4xl font-bold leading-[1.2] text-plum-deep">
                             Who Evivi is for
                         </h2>
                         <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
