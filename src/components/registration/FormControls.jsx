@@ -4,7 +4,7 @@ import { useState } from "react";
 import { CheckCircle2, ChevronDown } from "lucide-react";
 
 const inputClass =
-    "w-full rounded-xl border bg-white px-4 py-3 text-sm text-[var(--color-deep-plum)] outline-none transition focus:border-[var(--color-vibrant-magenta)] focus:ring-2 focus:ring-[var(--color-vibrant-magenta)]/10";
+    "w-full rounded-lg border border-[#C9D4E5] bg-white px-4 py-3 text-sm text-[var(--color-deep-plum)] outline-none transition focus:border-[var(--color-vibrant-magenta)] focus:ring-2 focus:ring-[var(--color-vibrant-magenta)]/10";
 
 export function Field({ label, children, required = false }) {
     return (
@@ -43,7 +43,7 @@ export function CustomSelect({
                     disabled ? "cursor-not-allowed opacity-50" : ""
                 }`}
             >
-                <span className={value ? "" : "text-black/35"}>
+                <span className={value ? "" : "text-[#8A96A8]"}>
                     {value || placeholder}
                 </span>
 
@@ -56,7 +56,7 @@ export function CustomSelect({
             </button>
 
             {open && !disabled && (
-                <div className="absolute z-20 mt-2 max-h-60 w-full overflow-auto rounded-xl border bg-white p-1 shadow-xl">
+                <div className="absolute z-20 mt-2 max-h-60 w-full overflow-auto rounded-lg border border-[#C9D4E5] bg-white p-1 shadow-lg">
                     {options.map((option) => (
                         <button
                             key={option}
@@ -65,7 +65,7 @@ export function CustomSelect({
                                 onChange(option);
                                 setOpen(false);
                             }}
-                            className="flex w-full items-center rounded-lg px-3 py-2.5 text-left text-sm text-[var(--color-deep-plum)] hover:bg-[var(--color-soft-lilac)]"
+                            className="flex w-full items-center rounded-md px-3 py-2.5 text-left text-sm text-[var(--color-deep-plum)] hover:bg-[var(--color-soft-lilac)]"
                         >
                             {option}
                         </button>
@@ -110,7 +110,7 @@ export function MultiSelect({
                             </span>
                         ))
                     ) : (
-                        <span className="text-black/35">
+                        <span className="text-[#8A96A8]">
                             {placeholder}
                         </span>
                     )}
@@ -125,7 +125,7 @@ export function MultiSelect({
             </button>
 
             {open && (
-                <div className="absolute z-20 mt-2 w-full rounded-xl border bg-white p-2 shadow-xl">
+                <div className="absolute z-20 mt-2 max-h-60 w-full overflow-auto rounded-lg border border-[#C9D4E5] bg-white p-2 shadow-lg">
                     {options.map((option) => {
                         const selected = value.includes(option);
 
@@ -134,7 +134,7 @@ export function MultiSelect({
                                 key={option}
                                 type="button"
                                 onClick={() => toggle(option)}
-                                className="flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left text-sm text-[var(--color-deep-plum)] hover:bg-[var(--color-soft-lilac)]"
+                                className="flex w-full items-center justify-between rounded-md px-3 py-2.5 text-left text-sm text-[var(--color-deep-plum)] hover:bg-[var(--color-soft-lilac)]"
                             >
                                 <span>{option}</span>
 
@@ -152,3 +152,5 @@ export function MultiSelect({
         </div>
     );
 }
+
+export { inputClass };

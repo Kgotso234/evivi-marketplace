@@ -1,7 +1,11 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { ArrowRight, CheckCircle2, Loader2,} from "lucide-react";
+import {
+    ArrowRight,
+    CheckCircle2,
+    Loader2,
+} from "lucide-react";
 
 import {
     SHARED_FIELDS,
@@ -14,19 +18,16 @@ import {
     Field,
     CustomSelect,
     MultiSelect,
+    inputClass,
 } from "./FormControls";
-
-const inputClass =
-    "w-full rounded-xl border bg-white px-4 py-3 text-sm text-[var(--color-deep-plum)] outline-none transition focus:border-[var(--color-vibrant-magenta)] focus:ring-2 focus:ring-[var(--color-vibrant-magenta)]/10";
 
 function createInitialState(fields) {
     return fields.reduce((state, field) => {
-        state[field.name] = field.type === "multiselect" ? [] : false;
-
-        if (
-            field.type !== "multiselect" &&
-            field.type !== "checkbox"
-        ) {
+        if (field.type === "multiselect") {
+            state[field.name] = [];
+        } else if (field.type === "checkbox") {
+            state[field.name] = false;
+        } else {
             state[field.name] = "";
         }
 
@@ -116,9 +117,9 @@ export default function RegistrationForm({ role }) {
 
     if (submitted) {
         return (
-            <div className="rounded-3xl border border-black/5 bg-white p-6 shadow-sm sm:p-8 lg:p-10">
-                <div className="mx-auto max-w-2xl text-center">
-                    <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-[var(--color-soft-lilac)]">
+            <div className="w-full">
+                <div className="max-w-2xl">
+                    <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-[var(--color-soft-lilac)]">
                         <CheckCircle2
                             size={34}
                             className="text-[var(--color-vibrant-magenta)]"
@@ -133,7 +134,7 @@ export default function RegistrationForm({ role }) {
                         {config.successTitle}
                     </h2>
 
-                    <p className="mx-auto mt-4 max-w-xl text-base leading-7 text-black/60">
+                    <p className="mt-4 max-w-xl text-base leading-7 text-black/60">
                         {config.successMessage}
                     </p>
 
@@ -150,19 +151,19 @@ export default function RegistrationForm({ role }) {
     }
 
     return (
-        <div className="rounded-3xl border border-black/5 bg-white p-6 shadow-sm sm:p-8 lg:p-10">
-            <div className="mb-8">
-                <h2 className="font-display text-2xl font-bold text-[var(--color-deep-plum)]">
+        <div className="w-full">
+            <div className="mb-10">
+                <h2 className="font-display text-2xl font-bold text-[var(--color-deep-plum)] sm:text-3xl">
                     {config.heading}
                 </h2>
 
-                <p className="mt-2 text-sm leading-6 text-black/55">
+                <p className="mt-3 max-w-2xl text-sm leading-6 text-black/55">
                     {config.description}
                 </p>
             </div>
 
             <form onSubmit={handleSubmit}>
-                <div className="space-y-5">
+                <div className="grid grid-cols-1 gap-x-8 gap-y-6 md:grid-cols-2">
                     {fields.map((field) => {
                         const options = availableOptions(field);
 
@@ -170,7 +171,7 @@ export default function RegistrationForm({ role }) {
                             return (
                                 <label
                                     key={field.name}
-                                    className="flex items-start gap-3 pt-2"
+                                    className="flex items-start gap-3 pt-2 md:col-span-2"
                                 >
                                     <input
                                         type="checkbox"
@@ -183,7 +184,7 @@ export default function RegistrationForm({ role }) {
                                                 event.target.checked
                                             )
                                         }
-                                        className="mt-1 h-4 w-4 rounded border-gray-300 text-[var(--color-vibrant-magenta)] focus:ring-[var(--color-vibrant-magenta)]"
+                                        className="mt-1 h-5 w-5 rounded border-[#C9D4E5] text-[var(--color-vibrant-magenta)] focus:ring-[var(--color-vibrant-magenta)]"
                                         required={field.required}
                                     />
 
@@ -221,7 +222,9 @@ export default function RegistrationForm({ role }) {
                                         }}
                                         options={options}
                                         disabled={
-                                            field.dependsOn &&
+                                            Boolean(
+                                                field.dependsOn
+                                            ) &&
                                             !form[field.dependsOn]
                                         }
                                         placeholder={
@@ -261,24 +264,38 @@ export default function RegistrationForm({ role }) {
 
                         if (field.type === "textarea") {
                             return (
-                                <Field
+                                <div
                                     key={field.name}
-                                    label={field.label}
-                                    required={field.required}
+                                    className="md:col-span-2"
                                 >
-                                    <textarea
-                                        value={form[field.name]}
-                                        onChange={(event) =>
-                                            update(
-                                                field.name,
-                                                event.target.value
-                                            )
+                                    <Field
+                                        label={field.label}
+                                        required={
+                                            field.required
                                         }
-                                        rows={4}
-                                        className={`${inputClass} resize-none`}
-                                        required={field.required}
-                                    />
-                                </Field>
+                                    >
+                                        <textarea
+                                            value={
+                                                form[field.name]
+                                            }
+                                            onChange={(event) =>
+                                                update(
+                                                    field.name,
+                                                    event.target.value
+                                                )
+                                            }
+                                            rows={5}
+                                            className={`${inputClass} resize-none`}
+                                            required={
+                                                field.required
+                                            }
+                                            placeholder={
+                                                field.placeholder ||
+                                                ""
+                                            }
+                                        />
+                                    </Field>
+                                </div>
                             );
                         }
 
@@ -289,14 +306,7 @@ export default function RegistrationForm({ role }) {
                                 required={field.required}
                             >
                                 <input
-                                    type={
-                                        field.type === "tel"
-                                            ? "tel"
-                                            : field.type ===
-                                              "url"
-                                            ? "url"
-                                            : field.type
-                                    }
+                                    type={field.type}
                                     value={form[field.name]}
                                     onChange={(event) =>
                                         update(
@@ -306,32 +316,37 @@ export default function RegistrationForm({ role }) {
                                     }
                                     className={inputClass}
                                     required={field.required}
+                                    placeholder={
+                                        field.placeholder || ""
+                                    }
                                 />
                             </Field>
                         );
                     })}
                 </div>
 
-                <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="mt-8 flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--color-deep-plum)] px-5 py-3.5 text-sm font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
-                >
-                    {isSubmitting ? (
-                        <>
-                            <Loader2
-                                size={18}
-                                className="animate-spin"
-                            />
-                            Submitting...
-                        </>
-                    ) : (
-                        <>
-                            {config.submitLabel}
-                            <ArrowRight size={18} />
-                        </>
-                    )}
-                </button>
+                <div className="mt-8">
+                    <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="flex w-full items-center justify-center gap-2 rounded-lg bg-[var(--color-deep-plum)] px-6 py-3.5 text-sm font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+                    >
+                        {isSubmitting ? (
+                            <>
+                                <Loader2
+                                    size={18}
+                                    className="animate-spin"
+                                />
+                                Submitting...
+                            </>
+                        ) : (
+                            <>
+                                {config.submitLabel}
+                                <ArrowRight size={18} />
+                            </>
+                        )}
+                    </button>
+                </div>
             </form>
         </div>
     );
