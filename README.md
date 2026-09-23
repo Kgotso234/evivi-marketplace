@@ -1,36 +1,97 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Evivi
 
-## Getting Started
+> Connecting people, local businesses and event professionals around gifts, celebrations and life's special moments.
 
-First, run the development server:
+## Overview
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Evivi is a gifting and celebrations platform designed to make it easier for people to discover gifts, celebration services, and event professionals.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The platform brings together different participants within the gifting and celebrations ecosystem, including:
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- Buyers looking for gifts and celebration experiences
+- Sellers offering gifts and products
+- Delivery partners supporting fulfilment
+- Event planners providing planning and coordination services
+- Event suppliers providing products and services for events
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The current project focuses on establishing the frontend experience, introducing the different Evivi participant journeys, and preparing the foundation for future platform functionality.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Project Status
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Status:** Frontend Development
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The current application includes:
 
-## Deploy on Vercel
+- Evivi landing page
+- Buyer early access registration
+- Seller registration
+- Delivery partner registration
+- Event planner registration
+- Event supplier registration
+- Responsive layouts
+- Role specific experiences
+- Registration forms
+- Event service previews
+- Consistent Evivi visual design
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The platform is currently focused on the frontend experience. Backend services and production integrations will be introduced as development progresses.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## Technology Stack
+
+| Technology | Purpose |
+|------------|---------|
+| Next.js | Application framework |
+| React | User interface |
+| JavaScript | Application development |
+| Tailwind CSS | Styling and responsive layouts |
+| Lucide React | Interface icons |
+| Next/Image | Image optimisation |
+| Next.js App Router | Routing and page structure |
+
+---
+
+## Project Structure
+
+```text
+src/
+├── app/
+│   ├── layout.jsx
+│   ├── page.jsx
+│   │
+│   ├── buyer/
+│   │   ├── layout.jsx
+│   │   └── page.jsx
+│   │
+│   ├── seller/
+│   │   ├── layout.jsx
+│   │   └── page.jsx
+│   │
+│   ├── delivery-partners/
+│   │   ├── layout.jsx
+│   │   └── page.jsx
+│   │
+│   ├── event-planners/
+│   │   ├── layout.jsx
+│   │   └── page.jsx
+│   │
+│   └── suppliers/
+│       ├── layout.jsx
+│       └── page.jsx
+│
+├── components/
+│   └── registration/
+│       ├── Field.jsx
+│       ├── CustomSelect.jsx
+│       ├── MultiSelect.jsx
+│       ├── BuyerEarlyAccessForm.jsx
+│       ├── SellerRegistrationForm.jsx
+│       ├── DeliveryPartnerRegistrationForm.jsx
+│       ├── EventPlannerRegistrationForm.jsx
+│       └── EventSupplierRegistrationForm.jsx
+│
+└── data/
+    └── registration.js

@@ -6,11 +6,6 @@ import { Search, Gift, Truck, ClipboardCheck, Bell, Sparkles, CalendarClock,Cale
 import { useEffect, useState } from "react";
 import RegistrationForm from "@/components/registration/RegistrationForm";
 
-export const metadata = {
-    title: "Get Valentine Early Access | Evivi",
-    description:
-        "Be among the first to discover gifts and celebrations on Evivi for Valentine 2027.",
-};
 
 const [countdown, setCountdown] = useState({
     days: 0,
