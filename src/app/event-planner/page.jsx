@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Users2, Handshake, TrendingUp, CalendarHeart, PartyPopper, Gift } from "lucide-react";
+import RegistrationForm from "@/components/registration/RegistrationForm";
+
 
 export const metadata = {
     title: "Event Planners and Coordinators | Evivi",
@@ -176,6 +178,7 @@ export default function EventPlannersPage() {
 
                         <RegistrationForm role="planner" />
                     </div>
+                </div>
 
             </section>
         </>

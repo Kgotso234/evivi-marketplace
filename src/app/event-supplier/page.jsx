@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Users2, Store, HeartHandshake, Package, Wrench, Rocket } from "lucide-react";
+import RegistrationForm from "@/components/registration/RegistrationForm";
 
 export const metadata = {
     title: "Event Suppliers | Evivi",
@@ -180,6 +181,7 @@ export default function SuppliersPage() {
 
                         <RegistrationForm role="supplier" />
                     </div>
+                </div>
 
             </section>
         </>
