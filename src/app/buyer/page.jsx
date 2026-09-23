@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Search, Gift, Truck, ClipboardCheck, Bell, Sparkles, CalendarClock,CalendarHeart, Heart, Sparkles } from "lucide-react";
+import { Search, Gift, Truck, ClipboardCheck, Bell, Sparkles, CalendarClock,CalendarHeart, Heart} from "lucide-react";
 import { useEffect, useState } from "react";
 import RegistrationForm from "@/components/registration/RegistrationForm";
 
