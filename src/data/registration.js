@@ -89,7 +89,6 @@ export const SELLER_DISPLAY_CATEGORIES = [
     "Other eligible gift businesses",
 ];
 
-
 export const DELIVERY_VEHICLE_TYPES = [
     "Motorcycle",
     "Car",
@@ -350,7 +349,7 @@ export const ROLE_CONFIG = {
         heading: "Join Evivi as a Seller",
         description:
             "Tell us about your business and what you sell so we can prepare for the Evivi marketplace.",
-        submitLabel: "Join as a Seller",
+        submitLabel: "Register as Seller",
         successTitle: "You're on the list!",
         successMessage:
             "Thanks for registering your business with Evivi. We'll keep you updated as we prepare the marketplace for launch.",
@@ -360,7 +359,7 @@ export const ROLE_CONFIG = {
         heading: "Become a Delivery Partner",
         description:
             "Tell us about yourself and your delivery availability.",
-        submitLabel: "Join Delivery Waitlist",
+        submitLabel: "Register as Delivery Partner",
         successTitle: "You're on the list!",
         successMessage:
             "Thanks for registering your interest in becoming an Evivi delivery partner. We'll keep you updated as opportunities become available.",
@@ -370,7 +369,7 @@ export const ROLE_CONFIG = {
         heading: "Join the Event Planner Waitlist",
         description:
             "Tell us about your planning services and we'll keep you informed as Evivi expands into event services.",
-        submitLabel: "Join the Waitlist",
+        submitLabel: "Register as Event Planner",
         successTitle: "You're on the list!",
         successMessage:
             "Thanks for registering your interest. Event planning opportunities are part of Evivi's longer term offering and we'll keep you updated.",
@@ -380,7 +379,7 @@ export const ROLE_CONFIG = {
         heading: "Join the Event Supplier Waitlist",
         description:
             "Tell us about your products or services and we'll keep you informed as Evivi expands.",
-        submitLabel: "Register Interest",
+        submitLabel: "Register as Event Supplier",
         successTitle: "You're on the list!",
         successMessage:
             "Thanks for registering your interest. We'll keep you updated as supplier opportunities become available.",
@@ -390,7 +389,7 @@ export const ROLE_CONFIG = {
         heading: "Get Valentine Early Access",
         description:
             "Be among the first to discover gifts and celebrations when Evivi launches.",
-        submitLabel: "Get Early Access",
+        submitLabel: "Register as Buyer",
         successTitle: "You're on the list!",
         successMessage:
             "Thanks for joining Evivi. We'll let you know when Valentine 2027 early access becomes available.",

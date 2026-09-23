@@ -82,7 +82,7 @@ export default function SellersPage() {
         <>
             <section
                 id="hero"
-                className="relative overflow-hidden min-h-[92vh] md:min-h-screen flex items-center text-white"
+                className="relative flex min-h-[680px] items-center overflow-hidden text-white"
             >
                 <Image
                     src="/images/seller-hero.png"
@@ -90,12 +90,16 @@ export default function SellersPage() {
                     fill
                     priority
                     sizes="100vw"
-                    className="object-cover hero-bg-bounce"
+                    className="hero-bg-bounce object-cover"
                 />
 
-                <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-deep-plum)]/90 via-[var(--color-deep-plum)]/50 to-[var(--color-deep-plum)]/20" />
+                {/* Main image overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-deep-plum)]/75 via-[var(--color-deep-plum)]/35 to-[var(--color-deep-plum)]/10" />
 
-                <div className="relative z-10 mx-auto w-full max-w-6xl px-5 py-20 sm:px-8">
+                {/* Soft fade into the next section */}
+                <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-[var(--color-deep-plum)] via-[var(--color-deep-plum)]/80 to-transparent" />
+
+                <div className="relative z-10 mx-auto w-full max-w-6xl px-5 py-24 sm:px-8">
                     <p className="text-sm font-semibold uppercase tracking-[0.22em] text-white/70">
                         How to sell on Evivi
                     </p>
@@ -129,7 +133,7 @@ export default function SellersPage() {
 
             <section
                 data-navbar-theme="dark"
-                className="bg-[var(--color-deep-plum)] px-5 py-16 text-white sm:px-8"
+                className="relative bg-[var(--color-deep-plum)] px-5 py-16 text-white sm:px-8"
             >
                 <div className="mx-auto max-w-4xl text-center">
                     <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/60">
@@ -165,31 +169,73 @@ export default function SellersPage() {
                         </h2>
                     </div>
 
-                    <div className="mt-8 grid gap-0 border-t border-[var(--color-lavender-border)] md:grid-cols-2 lg:grid-cols-3">
+                    {/* Desktop */}
+                    <div className="mt-8 hidden grid-cols-3 border-t border-[var(--color-lavender-border)] md:grid">
                         {journeySteps.map((step, index) => (
                             <div
                                 key={step.num}
-                                className={`border-b border-[var(--color-lavender-border)] p-5 ${
-                                    index % 3 !== 2
-                                        ? "lg:border-r"
-                                        : ""
-                                } ${
-                                    index % 2 !== 1
-                                        ? "md:border-r lg:border-r-0"
+                                className={`p-5 ${
+                                    index !== journeySteps.length - 1
+                                        ? "border-r border-[var(--color-lavender-border)]"
                                         : ""
                                 }`}
                             >
-                                <span className="font-display text-2xl text-[var(--color-vibrant-magenta)]/70">
-                                    {step.num}
-                                </span>
+                                <div className="flex items-center gap-3">
+                                    <span
+                                        className="flex size-10 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white"
+                                        style={{
+                                            backgroundColor:
+                                                "var(--color-vibrant-magenta)",
+                                        }}
+                                    >
+                                        {index + 1}
+                                    </span>
 
-                                <h3 className="mt-2 font-display text-lg font-semibold text-[var(--color-deep-plum)]">
-                                    {step.title}
-                                </h3>
+                                    <h3 className="font-display text-lg font-semibold text-[var(--color-deep-plum)]">
+                                        {step.title}
+                                    </h3>
+                                </div>
 
-                                <p className="mt-1 text-sm text-[var(--color-muted-purple)]">
+                                <p className="mt-4 text-sm leading-relaxed text-[var(--color-muted-purple)]">
                                     {step.copy}
                                 </p>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Mobile */}
+                    <div className="mt-8 md:hidden">
+                        {journeySteps.map((step, index) => (
+                            <div
+                                key={step.num}
+                                className="relative flex gap-4 pb-6 last:pb-0"
+                            >
+                                {index < journeySteps.length - 1 && (
+                                    <span
+                                        className="absolute left-5 top-10 bottom-0 border-l-2 border-dashed border-[var(--color-lavender-border)]"
+                                        aria-hidden="true"
+                                    />
+                                )}
+
+                                <span
+                                    className="relative z-10 flex size-10 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white"
+                                    style={{
+                                        backgroundColor:
+                                            "var(--color-vibrant-magenta)",
+                                    }}
+                                >
+                                    {index + 1}
+                                </span>
+
+                                <div className="flex-1 rounded-2xl px-2 py-1">
+                                    <h3 className="font-display text-lg font-semibold text-[var(--color-deep-plum)]">
+                                        {step.title}
+                                    </h3>
+
+                                    <p className="mt-2 text-sm leading-relaxed text-[var(--color-muted-purple)]">
+                                        {step.copy}
+                                    </p>
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -380,7 +426,7 @@ export default function SellersPage() {
                     </div>
 
                     <div
-                        className="mt-10 rounded-[24px] border bg-white p-6 md:p-8"
+                        className="mt-10  p-6 md:p-8"
                     >
                         <h3 className="mb-6 font-display text-xl font-semibold text-[var(--color-deep-plum)]">
                             Tell us about your business

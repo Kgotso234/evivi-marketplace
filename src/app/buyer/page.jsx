@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Search, Gift, Truck, ClipboardCheck, Bell, Sparkles, CalendarClock } from "lucide-react";
+import { Search, Gift, Truck, ClipboardCheck, Bell, Sparkles, CalendarClock,CalendarHeart, Heart, Sparkles } from "lucide-react";
+import { useEffect, useState } from "react";
 import RegistrationForm from "@/components/registration/RegistrationForm";
 
 export const metadata = {
@@ -9,6 +10,50 @@ export const metadata = {
         "Be among the first to discover gifts and celebrations on Evivi for Valentine 2027.",
 };
 
+const [countdown, setCountdown] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+});
+
+useEffect(() => {
+    const target = new Date("2027-02-14T00:00:00");
+
+    const updateCountdown = () => {
+        const now = new Date();
+        const difference = target.getTime() - now.getTime();
+
+        if (difference <= 0) {
+            setCountdown({
+                days: 0,
+                hours: 0,
+                minutes: 0,
+                seconds: 0,
+            });
+            return;
+        }
+
+        setCountdown({
+            days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+            hours: Math.floor(
+                (difference / (1000 * 60 * 60)) % 24
+            ),
+            minutes: Math.floor(
+                (difference / (1000 * 60)) % 60
+            ),
+            seconds: Math.floor(
+                (difference / 1000) % 60
+            ),
+        });
+    };
+
+    updateCountdown();
+
+    const interval = setInterval(updateCountdown, 1000);
+
+    return () => clearInterval(interval);
+}, []);
 const steps = [
     { icon: Search, number: "01", title: "Discover", text: "Explore gifts and businesses available through Evivi." },
     { icon: Gift, number: "02", title: "Choose", text: "Find something that feels right for the person and occasion." },
@@ -26,7 +71,7 @@ export default function BuyersPage() {
     return (
         <>
             {/* Hero — id="hero" so the Navbar treats it the same as the homepage hero (transparent over photo) */}
-            <section id="hero" className="relative overflow-hidden min-h-[85vh] flex items-center text-white">
+            <section id="hero" className="relative overflow-hidden min-h-screen flex items-center text-white">
                 <Image
                     src="/images/hero-image.jpg"
                     alt=""
@@ -81,7 +126,61 @@ export default function BuyersPage() {
                         </p>
                     </div>
 
-                    <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+                    {/* Mobile: numbered rail with dashed connector */}
+                    <div className="mt-10 max-w-2xl md:hidden">
+                        {steps.map((step, i) => (
+                            <div
+                                key={step.number}
+                                className="relative flex gap-4 pb-5 last:pb-0"
+                            >
+                                {i < steps.length - 1 && (
+                                    <span
+                                        className="absolute left-[26px] top-12 bottom-0 border-l-2 border-dashed"
+                                        style={{
+                                            borderColor: "var(--color-lavender-border)",
+                                        }}
+                                        aria-hidden="true"
+                                    />
+                                )}
+
+                                {/* Number */}
+                                <span
+                                    className="relative z-10 flex size-12 shrink-0 items-center justify-center rounded-full text-base font-semibold"
+                                    style={{
+                                        backgroundColor: "var(--color-soft-lilac)",
+                                        color: "var(--color-vibrant-magenta)",
+                                    }}
+                                >
+                                    {String(i + 1).padStart(2, "0")}
+                                </span>
+
+                                {/* Card */}
+                                <div className="flex-1 rounded-2xl border border-border/70 bg-card px-4 py-4">
+                                    {/* Icon + title inline */}
+                                    <div className="flex items-center gap-3">
+                                        <span className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-secondary text-magenta">
+                                            <step.icon
+                                                className="size-6"
+                                                aria-hidden="true"
+                                            />
+                                        </span>
+
+                                        <h3 className="font-display text-xl leading-tight text-plum-deep">
+                                            {step.title}
+                                        </h3>
+                                    </div>
+
+                                    {/* Description */}
+                                    <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                                        {step.text}
+                                    </p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Desktop: keep existing version */}
+                    <div className="mt-10 hidden gap-5 md:grid md:grid-cols-2 lg:grid-cols-4">
                         {steps.map((step) => (
                             <div
                                 key={step.number}
@@ -89,20 +188,33 @@ export default function BuyersPage() {
                             >
                                 <div className="relative inline-flex">
                                     <span className="flex size-12 items-center justify-center rounded-xl bg-secondary text-magenta">
-                                        <step.icon className="size-6" aria-hidden="true" />
+                                        <step.icon
+                                            className="size-6"
+                                            aria-hidden="true"
+                                        />
                                     </span>
+
                                     <span
                                         className="absolute -left-2 -top-2 flex size-6 items-center justify-center rounded-full text-xs font-bold text-white"
-                                        style={{ backgroundColor: "var(--color-vibrant-magenta)" }}
+                                        style={{
+                                            backgroundColor: "var(--color-vibrant-magenta)",
+                                        }}
                                         aria-hidden="true"
                                     >
                                         {step.number.replace("0", "")}
                                     </span>
                                 </div>
-                                <h3 className="font-display mt-5 text-xl text-plum-deep">{step.title}</h3>
-                                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{step.text}</p>
+
+                                <h3 className="font-display mt-5 text-xl text-plum-deep">
+                                    {step.title}
+                                </h3>
+
+                                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                                    {step.text}
+                                </p>
                             </div>
                         ))}
+                    </div>
                     </div>
                 </div>
             </section>
@@ -110,9 +222,80 @@ export default function BuyersPage() {
             {/* Valentine 2027 */}
             <section data-navbar-theme="light" className="px-5 sm:px-8 py-16 md:py-24">
                 <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-2">
-                    <div className="relative min-h-[320px] overflow-hidden rounded-[var(--radius-card)] bg-soft-gradient flex items-center justify-center">
-                        {/* Replace with a real Valentine-launch photo once available */}
-                        <Gift size={56} className="text-magenta/50" aria-hidden="true" />
+                    <div className="relative min-h-[320px] overflow-hidden rounded-[var(--radius-card)] bg-soft-gradient flex items-center justify-center px-6">
+                        <div className="relative z-10 w-full max-w-md text-center">
+
+                            <div className="flex items-center justify-center gap-2 text-magenta">
+                                <CalendarHeart size={18} aria-hidden="true" />
+
+                                <p className="text-xs font-semibold uppercase tracking-[0.25em]">
+                                    Valentine’s Day
+                                </p>
+                            </div>
+
+                            <h3 className="mt-3 font-display text-3xl font-bold text-plum-deep">
+                                The countdown is on
+                            </h3>
+
+                            <p className="mt-2 text-sm text-muted-purple">
+                                Counting down to 14 February 2027
+                            </p>
+
+                            <div className="mt-7 grid grid-cols-4 gap-2 sm:gap-3">
+                                {[
+                                    { value: countdown.days, label: "Days" },
+                                    { value: countdown.hours, label: "Hours" },
+                                    { value: countdown.minutes, label: "Minutes" },
+                                    { value: countdown.seconds, label: "Seconds" },
+                                ].map((item) => (
+                                    <div key={item.label}>
+                                        <div className="flex h-16 items-center justify-center rounded-2xl border border-white/70 bg-white/75">
+                                            <span className="font-display text-xl font-bold text-plum-deep sm:text-2xl">
+                                                {String(item.value).padStart(2, "0")}
+                                            </span>
+                                        </div>
+
+                                        <span className="mt-2 block text-[10px] font-medium uppercase tracking-wider text-muted-purple sm:text-xs">
+                                            {item.label}
+                                        </span>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <div className="mt-6 flex items-center justify-center gap-2 text-muted-purple">
+                                <Heart
+                                    size={15}
+                                    className="text-magenta"
+                                    fill="currentColor"
+                                    aria-hidden="true"
+                                />
+
+                                <span className="text-xs">
+                                    Love, gifts and celebrations are coming
+                                </span>
+
+                                <Sparkles
+                                    size={15}
+                                    className="text-magenta"
+                                    aria-hidden="true"
+                                />
+                            </div>
+                        </div>
+
+                        {/* Subtle decorative elements */}
+                        <Heart
+                            size={90}
+                            className="absolute -left-8 -top-8 text-magenta/10"
+                            fill="currentColor"
+                            aria-hidden="true"
+                        />
+
+                        <Heart
+                            size={110}
+                            className="absolute -bottom-10 -right-8 text-magenta/10"
+                            fill="currentColor"
+                            aria-hidden="true"
+                        />
                     </div>
 
                     <div>
@@ -145,14 +328,78 @@ export default function BuyersPage() {
                         </p>
                     </div>
 
-                    <div className="mt-10 grid gap-5 md:grid-cols-3">
-                        {whyJoin.map((item) => (
-                            <div key={item.title} className="rounded-2xl border border-border/70 bg-card p-6">
-                                <span className="flex size-11 items-center justify-center rounded-xl bg-secondary text-magenta">
-                                    <item.icon size={20} aria-hidden="true" />
+                    {/* Mobile: numbered rail with dashed connector */}
+                    <div className="mt-10 max-w-2xl md:hidden">
+                        {whyJoin.map((item, i) => (
+                            <div
+                                key={item.title}
+                                className="relative flex gap-4 pb-5 last:pb-0"
+                            >
+                                {i < whyJoin.length - 1 && (
+                                    <span
+                                        className="absolute left-[26px] top-12 bottom-0 border-l-2 border-dashed"
+                                        style={{
+                                            borderColor: "var(--color-lavender-border)",
+                                        }}
+                                        aria-hidden="true"
+                                    />
+                                )}
+
+                                {/* Number */}
+                                <span
+                                    className="relative z-10 flex size-12 shrink-0 items-center justify-center rounded-full text-base font-semibold"
+                                    style={{
+                                        backgroundColor: "var(--color-soft-lilac)",
+                                        color: "var(--color-vibrant-magenta)",
+                                    }}
+                                >
+                                    {String(i + 1).padStart(2, "0")}
                                 </span>
-                                <h3 className="font-display mt-5 text-xl text-plum-deep">{item.title}</h3>
-                                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.text}</p>
+
+                                {/* Card */}
+                                <div className="flex-1 rounded-2xl border border-border/70 bg-card px-4 py-4">
+                                    {/* Icon + title inline */}
+                                    <div className="flex items-center gap-3">
+                                        <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-secondary text-magenta">
+                                            <item.icon size={20} aria-hidden="true" />
+                                        </span>
+
+                                        <h3 className="font-display text-xl leading-tight text-plum-deep">
+                                            {item.title}
+                                        </h3>
+                                    </div>
+
+                                    {/* Description */}
+                                    <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                                        {item.text}
+                                    </p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Desktop: keep 3-column layout */}
+                    <div className="mt-10 hidden gap-5 md:grid md:grid-cols-3">
+                        {whyJoin.map((item) => (
+                            <div
+                                key={item.title}
+                                className="rounded-2xl border border-border/70 bg-card p-6"
+                            >
+                                {/* Icon + title inline */}
+                                <div className="flex items-center gap-3">
+                                    <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-secondary text-magenta">
+                                        <item.icon size={20} aria-hidden="true" />
+                                    </span>
+
+                                    <h3 className="font-display text-xl leading-tight text-plum-deep">
+                                        {item.title}
+                                    </h3>
+                                </div>
+
+                                {/* Description */}
+                                <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                                    {item.text}
+                                </p>
                             </div>
                         ))}
                     </div>
@@ -176,7 +423,7 @@ export default function BuyersPage() {
                     </div>
 
                     <div
-                        className="mt-10 rounded-[24px] border bg-white p-6 md:p-8"
+                        className="mt-10  p-6 md:p-8"
                     >
                         {/* <h3 className="mb-6 font-display text-xl font-semibold text-[var(--color-deep-plum)]">
                             Tell us about your business

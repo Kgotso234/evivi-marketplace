@@ -359,33 +359,90 @@ export default function DeliveryPartnersPage() {
                         </p>
                     </div>
 
-                    <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-                        {JOURNEY_STEPS.map((step) => (
+                    <div className="mt-12">
+                    {/* Desktop */}
+                    <div className="hidden grid-cols-3 md:grid">
+                        {JOURNEY_STEPS.map((step, index) => (
                             <div
                                 key={step.num}
-                                className="rounded-2xl border bg-white p-6 shadow-sm"
-                                style={{ borderColor: "var(--color-lavender-border,#E4D8F0)" }}
+                                className={`p-5 ${
+                                    index !== JOURNEY_STEPS.length - 1
+                                        ? "border-r border-[var(--color-lavender-border,#E4D8F0)]"
+                                        : ""
+                                }`}
                             >
-                                <span
-                                    className="text-sm font-bold"
-                                    style={{ color: "var(--color-vibrant-magenta,#C2185B)" }}
-                                >
-                                    {step.num}
-                                </span>
+                                <div className="flex items-center gap-3">
+                                    <span
+                                        className="flex size-10 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white"
+                                        style={{
+                                            backgroundColor:
+                                                "var(--color-vibrant-magenta,#C2185B)",
+                                        }}
+                                    >
+                                        {index + 1}
+                                    </span>
 
-                                <h3
-                                    className="mt-3 text-lg font-semibold"
-                                    style={{ color: "var(--color-deep-plum,#3B0D5C)" }}
-                                >
-                                    {step.title}
-                                </h3>
+                                    <h3
+                                        className="font-display text-lg font-semibold"
+                                        style={{
+                                            color:
+                                                "var(--color-deep-plum,#3B0D5C)",
+                                        }}
+                                    >
+                                        {step.title}
+                                    </h3>
+                                </div>
 
-                                <p className="mt-2 text-sm leading-6 text-gray-600">
+                                <p className="mt-4 text-sm leading-6 text-gray-600">
                                     {step.copy}
                                 </p>
                             </div>
                         ))}
                     </div>
+
+                    {/* Mobile */}
+                    <div className="md:hidden">
+                        {JOURNEY_STEPS.map((step, index) => (
+                            <div
+                                key={step.num}
+                                className="relative flex gap-4 pb-6 last:pb-0"
+                            >
+                                {index < JOURNEY_STEPS.length - 1 && (
+                                    <span
+                                        className="absolute left-5 top-10 bottom-0 border-l-2 border-dashed border-[var(--color-lavender-border,#E4D8F0)]"
+                                        aria-hidden="true"
+                                    />
+                                )}
+
+                                <span
+                                    className="relative z-10 flex size-10 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white"
+                                    style={{
+                                        backgroundColor:
+                                            "var(--color-vibrant-magenta,#C2185B)",
+                                    }}
+                                >
+                                    {index + 1}
+                                </span>
+
+                                <div className="flex-1 px-2 py-1">
+                                    <h3
+                                        className="font-display text-lg font-semibold"
+                                        style={{
+                                            color:
+                                                "var(--color-deep-plum,#3B0D5C)",
+                                        }}
+                                    >
+                                        {step.title}
+                                    </h3>
+
+                                    <p className="mt-2 text-sm leading-6 text-gray-600">
+                                        {step.copy}
+                                    </p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
                 </div>
             </section>
 
@@ -762,7 +819,7 @@ export default function DeliveryPartnersPage() {
                         </p>
                     </div>
 
-                    <div className="mt-10 rounded-[24px] border bg-white p-6 md:p-8">
+                    <div className="mt-10  p-6 md:p-8">
                         <RegistrationForm role="delivery" />
                     </div>
                 </div>

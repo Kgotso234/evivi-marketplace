@@ -17,18 +17,27 @@ const whyJoin = [
 ];
 
 const futurePreviews = [
-    { icon: CalendarHeart, label: "Planner" },
-    { icon: PartyPopper, label: "Event" },
-    { icon: Gift, label: "Celebration" },
+    {
+        label: "Weddings",
+        image: "/images/coorporate-setup.jpeg",
+    },
+    {
+        label: "Parties & Celebrations",
+        image: "/images/download (1).jpeg",
+    },
+    {
+        label: "Corporate Events",
+        image: "/images/wedding-setup.jpeg",
+    },
 ];
 
 export default function EventPlannersPage() {
     return (
         <>
             {/* Hero — id="hero" so the Navbar treats it the same as other persona page heroes */}
-            <section id="hero" className="relative overflow-hidden min-h-[80vh] flex items-center text-white">
+            <section id="hero" className="relative overflow-hidden min-h-screen flex items-center text-white">
                 <Image
-                    src="/images/hero-image.jpg"
+                    src="/images/Event-Hero.jpeg"
                     alt=""
                     fill
                     priority
@@ -36,7 +45,7 @@ export default function EventPlannersPage() {
                     className="hidden md:block object-cover hero-bg-bounce"
                 />
                 <Image
-                    src="/images/hero-mobile.jpg"
+                    src="/images/Event-Hero.jpeg"
                     alt=""
                     fill
                     priority
@@ -76,16 +85,77 @@ export default function EventPlannersPage() {
                         Why planners may join Evivi
                     </h2>
 
-                    <div className="mt-10 grid gap-5 md:grid-cols-3">
-                        {whyJoin.map((item) => (
-                            <div key={item.title} className="rounded-2xl border border-border/70 bg-card p-6">
-                                <span className="flex size-11 items-center justify-center rounded-xl bg-secondary text-magenta">
-                                    <item.icon size={20} aria-hidden="true" />
-                                </span>
-                                <h3 className="font-display mt-5 text-xl text-plum-deep">{item.title}</h3>
-                                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.text}</p>
-                            </div>
-                        ))}
+                    <div className="mt-10">
+                        {/* Desktop */}
+                        <div className="hidden grid-cols-3 md:grid">
+                            {whyJoin.map((item, index) => (
+                                <div
+                                    key={item.title}
+                                    className={`p-5 ${
+                                        index !== whyJoin.length - 1
+                                            ? "border-r border-[var(--color-lavender-border,#E4D8F0)]"
+                                            : ""
+                                    }`}
+                                >
+                                    <div className="flex items-center gap-3">
+                                        <span
+                                            className="flex size-10 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white"
+                                            style={{
+                                                backgroundColor:
+                                                    "var(--color-vibrant-magenta,#C2185B)",
+                                            }}
+                                        >
+                                            {index + 1}
+                                        </span>
+
+                                        <h3 className="font-display text-xl leading-tight text-plum-deep">
+                                            {item.title}
+                                        </h3>
+                                    </div>
+
+                                    <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                                        {item.text}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Mobile */}
+                        <div className="md:hidden">
+                            {whyJoin.map((item, index) => (
+                                <div
+                                    key={item.title}
+                                    className="relative flex gap-4 pb-6 last:pb-0"
+                                >
+                                    {index < whyJoin.length - 1 && (
+                                        <span
+                                            className="absolute left-5 top-10 bottom-0 border-l-2 border-dashed border-[var(--color-lavender-border,#E4D8F0)]"
+                                            aria-hidden="true"
+                                        />
+                                    )}
+
+                                    <span
+                                        className="relative z-10 flex size-10 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white"
+                                        style={{
+                                            backgroundColor:
+                                                "var(--color-vibrant-magenta,#C2185B)",
+                                        }}
+                                    >
+                                        {index + 1}
+                                    </span>
+
+                                    <div className="flex-1 px-2 py-1">
+                                        <h3 className="font-display text-xl leading-tight text-plum-deep">
+                                            {item.title}
+                                        </h3>
+
+                                        <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                                            {item.text}
+                                        </p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </section>
@@ -110,11 +180,23 @@ export default function EventPlannersPage() {
                         {futurePreviews.map((item) => (
                             <div
                                 key={item.label}
-                                className="relative min-h-[220px] overflow-hidden rounded-2xl bg-soft-gradient flex flex-col items-center justify-center gap-2"
+                                className="relative min-h-[240px] overflow-hidden rounded-2xl"
                             >
-                                {/* Replace with a real photo once available */}
-                                <item.icon size={36} className="text-magenta/50" aria-hidden="true" />
-                                <span className="text-sm font-medium text-muted-foreground">{item.label}</span>
+                                <Image
+                                    src={item.image}
+                                    alt={item.label}
+                                    fill
+                                    sizes="(min-width: 768px) 33vw, 100vw"
+                                    className="object-cover transition-transform duration-500 hover:scale-105"
+                                />
+
+                                <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-deep-plum)]/85 via-[var(--color-deep-plum)]/25 to-transparent" />
+
+                                <div className="absolute inset-x-0 bottom-0 p-5">
+                                    <span className="text-sm font-semibold text-white">
+                                        {item.label}
+                                    </span>
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -145,12 +227,14 @@ export default function EventPlannersPage() {
                         coordinator applications become available.
                     </p>
                     {/* TODO: point to the real waitlist form once it's built */}
-                    <Link
-                        href="#"
-                        className="mt-7 inline-flex items-center justify-center rounded-full bg-white px-7 py-3.5 font-medium text-[var(--color-vibrant-magenta)] transition-transform hover:-translate-y-0.5"
-                    >
-                        Join the Waitlist
-                    </Link>
+                    <div className="flex flex-col gap-3 sm:flex-row">
+                        <Link
+                            href="#"
+                            className="mt-7 inline-flex items-center justify-center rounded-full bg-white px-7 py-3.5 font-medium text-[var(--color-vibrant-magenta)] transition-transform hover:-translate-y-0.5"
+                        >
+                            Join the Waitlist
+                        </Link>
+                    </div>
                 </div>
             </section>
             <section id="register" data-navbar-theme="light" className="px-5 py-16 sm:px-8 md:py-24">
@@ -170,7 +254,7 @@ export default function EventPlannersPage() {
                     </div>
 
                     <div
-                        className="mt-10 rounded-[24px] border bg-white p-6 md:p-8"
+                        className="mt-10  p-6 md:p-8"
                     >
                         {/* <h3 className="mb-6 font-display text-xl font-semibold text-[var(--color-deep-plum)]">
                             Tell us about your business

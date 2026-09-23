@@ -27,7 +27,7 @@ export default function SuppliersPage() {
             {/* Hero — id="hero" so the Navbar treats it the same as other persona page heroes */}
             <section id="hero" className="relative overflow-hidden min-h-[100vh] flex items-center text-white">
                 <Image
-                    src="/images/hero-image.jpg"
+                    src="/images/event-supHero.jpeg"
                     alt=""
                     fill
                     priority
@@ -35,7 +35,7 @@ export default function SuppliersPage() {
                     className="hidden md:block object-cover hero-bg-bounce"
                 />
                 <Image
-                    src="/images/hero-mobile.jpg"
+                    src="/images/event-supHero.jpeg"
                     alt=""
                     fill
                     priority
@@ -74,16 +74,93 @@ export default function SuppliersPage() {
                         Why suppliers may join Evivi
                     </h2>
 
-                    <div className="mt-10 grid gap-5 md:grid-cols-3">
-                        {whyJoin.map((item) => (
-                            <div key={item.title} className="rounded-2xl border border-border/70 bg-card p-6">
-                                <span className="flex size-11 items-center justify-center rounded-xl bg-secondary text-magenta">
-                                    <item.icon size={20} aria-hidden="true" />
-                                </span>
-                                <h3 className="font-display mt-5 text-xl text-plum-deep">{item.title}</h3>
-                                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.text}</p>
-                            </div>
-                        ))}
+                    <div className="mt-10">
+                        {/* Desktop */}
+                        <div className="hidden grid-cols-3 md:grid">
+                            {whyJoin.map((item, index) => (
+                                <div
+                                    key={item.title}
+                                    className={`p-5 ${
+                                        index !== whyJoin.length - 1
+                                            ? "border-r border-[var(--color-lavender-border,#E4D8F0)]"
+                                            : ""
+                                    }`}
+                                >
+                                    <div className="flex items-center gap-3">
+                                        <span
+                                            className="flex size-10 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white"
+                                            style={{
+                                                backgroundColor:
+                                                    "var(--color-vibrant-magenta,#C2185B)",
+                                            }}
+                                        >
+                                            {index + 1}
+                                        </span>
+
+                                        <div className="flex items-center gap-2">
+                                            <item.icon
+                                                size={19}
+                                                className="shrink-0 text-[var(--color-vibrant-magenta,#C2185B)]"
+                                                aria-hidden="true"
+                                            />
+
+                                            <h3 className="font-display text-xl leading-tight text-plum-deep">
+                                                {item.title}
+                                            </h3>
+                                        </div>
+                                    </div>
+
+                                    <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                                        {item.text}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Mobile */}
+                        <div className="md:hidden">
+                            {whyJoin.map((item, index) => (
+                                <div
+                                    key={item.title}
+                                    className="relative flex gap-4 pb-6 last:pb-0"
+                                >
+                                    {index < whyJoin.length - 1 && (
+                                        <span
+                                            className="absolute bottom-0 left-5 top-10 border-l-2 border-dashed border-[var(--color-lavender-border,#E4D8F0)]"
+                                            aria-hidden="true"
+                                        />
+                                    )}
+
+                                    <span
+                                        className="relative z-10 flex size-10 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white"
+                                        style={{
+                                            backgroundColor:
+                                                "var(--color-vibrant-magenta,#C2185B)",
+                                        }}
+                                    >
+                                        {index + 1}
+                                    </span>
+
+                                    <div className="flex-1 px-2 py-1">
+                                        <div className="flex items-center gap-2">
+                                            <item.icon
+                                                size={19}
+                                                className="shrink-0 text-[var(--color-vibrant-magenta,#C2185B)]"
+                                                aria-hidden="true"
+                                            />
+
+                                            <h3 className="font-display text-xl leading-tight text-plum-deep">
+                                                {item.title}
+                                            </h3>
+                                        </div>
+
+                                        <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                                            {item.text}
+                                        </p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </section>
@@ -111,12 +188,23 @@ export default function SuppliersPage() {
 
                         <div className="mt-7 grid gap-5 md:grid-cols-3">
                             {futureOpportunities.map((item) => (
-                                <div key={item.title} className="rounded-2xl bg-secondary p-6">
-                                    <span className="flex size-10 items-center justify-center rounded-lg bg-white text-magenta">
-                                        <item.icon size={18} aria-hidden="true" />
-                                    </span>
-                                    <h4 className="mt-4 font-medium text-plum-deep">{item.title}</h4>
-                                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.text}</p>
+                                <div
+                                    key={item.title}
+                                    className="rounded-2xl bg-secondary p-6"
+                                >
+                                    <div className="flex items-center gap-3">
+                                        <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-white text-magenta">
+                                            <item.icon size={18} aria-hidden="true" />
+                                        </span>
+
+                                        <h4 className="font-medium text-plum-deep">
+                                            {item.title}
+                                        </h4>
+                                    </div>
+
+                                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                                        {item.text}
+                                    </p>
                                 </div>
                             ))}
                         </div>
@@ -173,7 +261,7 @@ export default function SuppliersPage() {
                     </div>
 
                     <div
-                        className="mt-10 rounded-[24px] border bg-white p-6 md:p-8"
+                        className="mt-10  p-6 md:p-8"
                     >
                         {/* <h3 className="mb-6 font-display text-xl font-semibold text-[var(--color-deep-plum)]">
                             Tell us about your business
