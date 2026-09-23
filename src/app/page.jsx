@@ -385,7 +385,10 @@ export default function HomePage() {
                         <p className="text-[var(--color-muted-purple)] text-lg mb-6 max-w-lg mx-auto">
                             Join Evivi early to discover what's coming and shape a better way to celebrate.
                         </p>
-                        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                        {/* <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                            
+                        </div> */}
+                        <div className="flex flex-col gap-3 sm:flex-row">
                             <Link
                                 href={CTA.buyer.href}
                                 className="btn-primary text-lg px-9 py-4"
