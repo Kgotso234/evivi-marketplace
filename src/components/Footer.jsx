@@ -74,15 +74,15 @@ const columns = [
         links: [
             {
                 label: "Delivery Partners",
-                href: "/delivery-partners",
+                href: "/delivery-partner",
             },
             {
                 label: "Event Planners & Coordinators",
-                href: "/event-planners",
+                href: "/event-planner",
             },
             {
                 label: "Event Suppliers",
-                href: "/event-suppliers",
+                href: "/event-supplier",
             },
         ],
     },
@@ -209,9 +209,7 @@ export default function Footer() {
                                     "var(--color-muted-purple, #6B5B7B)",
                             }}
                         >
-                            A celebration marketplace connecting people with
-                            gifts, local sellers, delivery partners and event
-                            professionals.
+                            A place for gifts, celebrations and meaningful moments, connecting people with local sellers, delivery partners and event professionals.
                         </p>
 
                         {/* Social Links */}

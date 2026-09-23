@@ -51,7 +51,10 @@ export default function AboutPage() {
     return (
         <>
             {/* Hero — mission statement, no CTA needed here */}
-            <section id="hero" className="relative overflow-hidden bg-brand-gradient text-white">
+            <section
+                id="hero"
+                className="relative overflow-hidden min-h-screen flex items-center bg-brand-gradient text-white"
+            >
                 <div className="mx-auto max-w-6xl px-5 sm:px-8 py-28 md:py-36 text-center">
                     <p className="text-sm font-semibold uppercase tracking-[0.22em] text-white/70">
                         Beyond Valentine

@@ -236,14 +236,14 @@ export default function DeliveryPartnersPage() {
                     </div>
 
                     <div className="relative">
-                        <div className="overflow-hidden rounded-[2rem] shadow-soft">
+                        <div className="overflow-hidden rounded-[2rem] shadow-soft lg:max-h-[480px]">
                             <Image
                                 src="/images/delivery-hero.png"
                                 alt="Evivi delivery partner delivering gifts"
                                 width={900}
                                 height={600}
                                 priority
-                                className="h-auto w-full object-cover"
+                                className="h-full w-full object-cover"
                             />
                         </div>
 
