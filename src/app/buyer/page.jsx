@@ -183,6 +183,7 @@ export default function BuyersPage() {
 
                         <RegistrationForm role="buyer" />
                     </div>
+                </div>
 
             </section>
 
