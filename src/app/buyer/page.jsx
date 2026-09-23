@@ -215,7 +215,7 @@ export default function BuyersPage() {
                             </div>
                         ))}
                     </div>
-                    </div>
+                    
                 </div>
             </section>
 
