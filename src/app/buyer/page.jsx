@@ -7,56 +7,6 @@ import { useEffect, useState } from "react";
 import RegistrationForm from "@/components/registration/RegistrationForm";
 
 
-const [countdown, setCountdown] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-});
-
-useEffect(() => {
-    const target = new Date("2027-02-14T00:00:00");
-
-    const updateCountdown = () => {
-        const now = new Date();
-        const difference = target.getTime() - now.getTime();
-
-        if (difference <= 0) {
-            setCountdown({
-                days: 0,
-                hours: 0,
-                minutes: 0,
-                seconds: 0,
-            });
-            return;
-        }
-
-        setCountdown({
-            days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-            hours: Math.floor(
-                (difference / (1000 * 60 * 60)) % 24
-            ),
-            minutes: Math.floor(
-                (difference / (1000 * 60)) % 60
-            ),
-            seconds: Math.floor(
-                (difference / 1000) % 60
-            ),
-        });
-    };
-
-    updateCountdown();
-
-    const interval = setInterval(updateCountdown, 1000);
-
-    return () => clearInterval(interval);
-}, []);
-const steps = [
-    { icon: Search, number: "01", title: "Discover", text: "Explore gifts and businesses available through Evivi." },
-    { icon: Gift, number: "02", title: "Choose", text: "Find something that feels right for the person and occasion." },
-    { icon: Truck, number: "03", title: "Arrange", text: "Choose the available delivery or collection option." },
-    { icon: ClipboardCheck, number: "04", title: "Celebrate", text: "Let the gift become part of a meaningful moment." },
-];
 
 const whyJoin = [
     { icon: Bell, title: "Launch updates", text: "Receive important updates as Evivi gets closer to launch." },
@@ -65,6 +15,57 @@ const whyJoin = [
 ];
 
 export default function BuyersPage() {
+    const [countdown, setCountdown] = useState({
+        days: 0,
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
+    });
+
+    useEffect(() => {
+        const target = new Date("2027-02-14T00:00:00");
+
+        const updateCountdown = () => {
+            const now = new Date();
+            const difference = target.getTime() - now.getTime();
+
+            if (difference <= 0) {
+                setCountdown({
+                    days: 0,
+                    hours: 0,
+                    minutes: 0,
+                    seconds: 0,
+                });
+                return;
+            }
+
+            setCountdown({
+                days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+                hours: Math.floor(
+                    (difference / (1000 * 60 * 60)) % 24
+                ),
+                minutes: Math.floor(
+                    (difference / (1000 * 60)) % 60
+                ),
+                seconds: Math.floor(
+                    (difference / 1000) % 60
+                ),
+            });
+        };
+
+        updateCountdown();
+
+        const interval = setInterval(updateCountdown, 1000);
+
+        return () => clearInterval(interval);
+    }, []);
+    const steps = [
+        { icon: Search, number: "01", title: "Discover", text: "Explore gifts and businesses available through Evivi." },
+        { icon: Gift, number: "02", title: "Choose", text: "Find something that feels right for the person and occasion." },
+        { icon: Truck, number: "03", title: "Arrange", text: "Choose the available delivery or collection option." },
+        { icon: ClipboardCheck, number: "04", title: "Celebrate", text: "Let the gift become part of a meaningful moment." },
+    ];
+
     return (
         <>
             {/* Hero — id="hero" so the Navbar treats it the same as the homepage hero (transparent over photo) */}
