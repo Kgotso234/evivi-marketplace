@@ -381,10 +381,6 @@ export default function SellersPage() {
 
                     <div
                         className="mt-10 rounded-[24px] border bg-white p-6 md:p-8"
-                        style={{
-                            borderColor:
-                                "var(--color-lavender-border)",
-                        }}
                     >
                         <h3 className="mb-6 font-display text-xl font-semibold text-[var(--color-deep-plum)]">
                             Tell us about your business

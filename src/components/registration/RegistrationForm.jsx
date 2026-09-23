@@ -36,6 +36,10 @@ function createInitialState(fields) {
     }, {});
 }
 
+// Only 2 sections now. Any field whose original `step` in the data file
+// is 2 or higher (i.e. previously "Business details" or "Additional
+// details") is folded into step 2, so the form doesn't stretch across
+// three separate pages.
 const STEPS = [
     {
         number: 1,
@@ -45,21 +49,26 @@ const STEPS = [
     {
         number: 2,
         title: "Business details",
-        description: "Tell us more about your business.",
-    },
-    {
-        number: 3,
-        title: "Additional details",
-        description: "Complete the remaining information.",
+        description:
+            "Tell us more about your business and complete the remaining details.",
     },
 ];
+
+function normalizeStep(fields) {
+    return fields.map((field) => {
+        const rawStep = field.step || 1;
+        const step = Math.min(rawStep, STEPS.length);
+
+        return { ...field, step };
+    });
+}
 
 export default function RegistrationForm({ role }) {
     const config = ROLE_CONFIG[role];
     const roleFields = ROLE_FIELDS[role] || [];
 
     const fields = useMemo(
-        () => [...SHARED_FIELDS, ...roleFields],
+        () => normalizeStep([...SHARED_FIELDS, ...roleFields]),
         [roleFields]
     );
 
@@ -108,7 +117,7 @@ export default function RegistrationForm({ role }) {
 
     const currentStepFields = useMemo(() => {
         return fields.filter(
-            (field) => (field.step || 1) === currentStep
+            (field) => field.step === currentStep
         );
     }, [fields, currentStep]);
 

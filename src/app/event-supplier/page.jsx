@@ -24,7 +24,7 @@ export default function SuppliersPage() {
     return (
         <>
             {/* Hero — id="hero" so the Navbar treats it the same as other persona page heroes */}
-            <section id="hero" className="relative overflow-hidden min-h-[80vh] flex items-center text-white">
+            <section id="hero" className="relative overflow-hidden min-h-[100vh] flex items-center text-white">
                 <Image
                     src="/images/hero-image.jpg"
                     alt=""
@@ -154,6 +154,33 @@ export default function SuppliersPage() {
                         Join the Waitlist
                     </Link>
                 </div>
+            </section>
+            <section id="register" data-navbar-theme="light" className="px-5 py-16 sm:px-8 md:py-24">
+                <div className="mx-auto max-w-3xl">
+                    <div className="mx-auto max-w-xl text-center">
+                        <p className="text-sm font-semibold uppercase tracking-[0.22em] text-[var(--color-vibrant-magenta)]">
+                            Event suppliers
+                        </p>
+
+                        <h2 className="mt-2 font-display text-3xl font-bold text-[var(--color-deep-plum)] md:text-4xl">
+                            Put your event products and services in front of more opportunities.
+                        </h2>
+
+                        <p className="mt-3 text-[var(--color-muted-purple)]">
+                            Register your interest with Evivi and become part of a growing network of suppliers supporting celebrations and events.
+                        </p>
+                    </div>
+
+                    <div
+                        className="mt-10 rounded-[24px] border bg-white p-6 md:p-8"
+                    >
+                        {/* <h3 className="mb-6 font-display text-xl font-semibold text-[var(--color-deep-plum)]">
+                            Tell us about your business
+                        </h3> */}
+
+                        <RegistrationForm role="supplier" />
+                    </div>
+
             </section>
         </>
     );

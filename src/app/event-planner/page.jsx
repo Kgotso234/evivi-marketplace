@@ -151,6 +151,33 @@ export default function EventPlannersPage() {
                     </Link>
                 </div>
             </section>
+            <section id="register" data-navbar-theme="light" className="px-5 py-16 sm:px-8 md:py-24">
+                <div className="mx-auto max-w-3xl">
+                    <div className="mx-auto max-w-xl text-center">
+                        <p className="text-sm font-semibold uppercase tracking-[0.22em] text-[var(--color-vibrant-magenta)]">
+                            Event planners
+                        </p>
+
+                        <h2 className="mt-2 font-display text-3xl font-bold text-[var(--color-deep-plum)] md:text-4xl">
+                            Bring your next celebration to life with Evivi.
+                        </h2>
+
+                        <p className="mt-3 text-[var(--color-muted-purple)]">
+                            Join the Evivi network and connect with opportunities to support celebrations, events, and memorable experiences.
+                        </p>
+                    </div>
+
+                    <div
+                        className="mt-10 rounded-[24px] border bg-white p-6 md:p-8"
+                    >
+                        {/* <h3 className="mb-6 font-display text-xl font-semibold text-[var(--color-deep-plum)]">
+                            Tell us about your business
+                        </h3> */}
+
+                        <RegistrationForm role="planner" />
+                    </div>
+
+            </section>
         </>
     );
 }
