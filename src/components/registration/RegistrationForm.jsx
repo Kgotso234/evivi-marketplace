@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import {
+    ArrowLeft,
     ArrowRight,
     CheckCircle2,
     Loader2,
@@ -35,6 +36,24 @@ function createInitialState(fields) {
     }, {});
 }
 
+const STEPS = [
+    {
+        number: 1,
+        title: "Personal details",
+        description: "Tell us about yourself and where you are based.",
+    },
+    {
+        number: 2,
+        title: "Business details",
+        description: "Tell us more about your business.",
+    },
+    {
+        number: 3,
+        title: "Additional details",
+        description: "Complete the remaining information.",
+    },
+];
+
 export default function RegistrationForm({ role }) {
     const config = ROLE_CONFIG[role];
     const roleFields = ROLE_FIELDS[role] || [];
@@ -48,6 +67,7 @@ export default function RegistrationForm({ role }) {
         createInitialState(fields)
     );
 
+    const [currentStep, setCurrentStep] = useState(1);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
 
@@ -86,6 +106,42 @@ export default function RegistrationForm({ role }) {
         return Boolean(value);
     };
 
+    const currentStepFields = useMemo(() => {
+        return fields.filter(
+            (field) => (field.step || 1) === currentStep
+        );
+    }, [fields, currentStep]);
+
+    const validateCurrentStep = () => {
+        return currentStepFields.every(isFieldValid);
+    };
+
+    const handleContinue = () => {
+        if (!validateCurrentStep()) {
+            return;
+        }
+
+        setCurrentStep((previous) =>
+            Math.min(previous + 1, STEPS.length)
+        );
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        });
+    };
+
+    const handleBack = () => {
+        setCurrentStep((previous) =>
+            Math.max(previous - 1, 1)
+        );
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        });
+    };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -112,6 +168,7 @@ export default function RegistrationForm({ role }) {
 
     const resetForm = () => {
         setForm(createInitialState(fields));
+        setCurrentStep(1);
         setSubmitted(false);
     };
 
@@ -163,8 +220,24 @@ export default function RegistrationForm({ role }) {
             </div>
 
             <form onSubmit={handleSubmit}>
+                {/* Current section heading */}
+                <div className="mb-8">
+                    <p className="text-sm font-semibold text-[var(--color-vibrant-magenta)]">
+                        Step {currentStep} of {STEPS.length}
+                    </p>
+
+                    <h3 className="mt-1 text-lg font-semibold text-[var(--color-deep-plum)]">
+                        {STEPS[currentStep - 1].title}
+                    </h3>
+
+                    <p className="mt-1 text-sm text-black/55">
+                        {STEPS[currentStep - 1].description}
+                    </p>
+                </div>
+
+                {/* Existing form layout remains unchanged */}
                 <div className="grid grid-cols-1 gap-x-8 gap-y-6 md:grid-cols-2">
-                    {fields.map((field) => {
+                    {currentStepFields.map((field) => {
                         const options = availableOptions(field);
 
                         if (field.type === "checkbox") {
@@ -246,9 +319,7 @@ export default function RegistrationForm({ role }) {
                                     required={field.required}
                                 >
                                     <MultiSelect
-                                        value={
-                                            form[field.name]
-                                        }
+                                        value={form[field.name]}
                                         onChange={(value) =>
                                             update(
                                                 field.name,
@@ -325,27 +396,50 @@ export default function RegistrationForm({ role }) {
                     })}
                 </div>
 
-                <div className="mt-8">
-                    <button
-                        type="submit"
-                        disabled={isSubmitting}
-                        className="flex w-full items-center justify-center gap-2 rounded-lg bg-[var(--color-deep-plum)] px-6 py-3.5 text-sm font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
-                    >
-                        {isSubmitting ? (
-                            <>
-                                <Loader2
-                                    size={18}
-                                    className="animate-spin"
-                                />
-                                Submitting...
-                            </>
-                        ) : (
-                            <>
-                                {config.submitLabel}
-                                <ArrowRight size={18} />
-                            </>
-                        )}
-                    </button>
+                {/* Navigation */}
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+                    {currentStep > 1 && (
+                        <button
+                            type="button"
+                            onClick={handleBack}
+                            className="flex items-center justify-center gap-2 rounded-lg border border-[var(--color-deep-plum)] px-6 py-3.5 text-sm font-semibold text-[var(--color-deep-plum)] transition hover:bg-black/5"
+                        >
+                            <ArrowLeft size={18} />
+                            Back
+                        </button>
+                    )}
+
+                    {currentStep < STEPS.length ? (
+                        <button
+                            type="button"
+                            onClick={handleContinue}
+                            className="flex items-center justify-center gap-2 rounded-lg bg-[var(--color-deep-plum)] px-6 py-3.5 text-sm font-semibold text-white transition hover:opacity-90"
+                        >
+                            Continue
+                            <ArrowRight size={18} />
+                        </button>
+                    ) : (
+                        <button
+                            type="submit"
+                            disabled={isSubmitting}
+                            className="flex items-center justify-center gap-2 rounded-lg bg-[var(--color-deep-plum)] px-6 py-3.5 text-sm font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+                        >
+                            {isSubmitting ? (
+                                <>
+                                    <Loader2
+                                        size={18}
+                                        className="animate-spin"
+                                    />
+                                    Submitting...
+                                </>
+                            ) : (
+                                <>
+                                    {config.submitLabel}
+                                    <ArrowRight size={18} />
+                                </>
+                            )}
+                        </button>
+                    )}
                 </div>
             </form>
         </div>
