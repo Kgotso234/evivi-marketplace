@@ -35,7 +35,7 @@ export default function BuyersPage() {
                     className="hidden md:block object-cover hero-bg-bounce"
                 />
                 <Image
-                    src="/images/hero-mobile.jpg"
+                    src="/images/Hero-mobile.jpg"
                     alt=""
                     fill
                     priority
