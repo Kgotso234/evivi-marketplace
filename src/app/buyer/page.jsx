@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Search, Gift, Truck, ClipboardCheck, Bell, Sparkles, CalendarClock } from "lucide-react";
+import RegistrationForm from "@/components/registration/RegistrationForm";
 
 export const metadata = {
     title: "Get Valentine Early Access | Evivi",
