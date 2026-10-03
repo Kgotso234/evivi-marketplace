@@ -1,64 +1,30 @@
-export const PROVINCES_AND_CITIES = {
-    "Eastern Cape": [
-        "Gqeberha",
-        "East London",
-        "Makhanda",
-        "Mthatha",
-        "Komani",
-    ],
-    "Free State": [
-        "Bloemfontein",
-        "Welkom",
-        "Bethlehem",
-        "Phuthaditjhaba",
-    ],
-    Gauteng: [
-        "Johannesburg",
-        "Pretoria",
-        "Soweto",
-        "Centurion",
-        "Midrand",
-        "Sandton",
-    ],
-    "KwaZulu-Natal": [
-        "Durban",
-        "Pietermaritzburg",
-        "Richards Bay",
-        "Ballito",
-        "Newcastle",
-    ],
-    Limpopo: [
-        "Polokwane",
-        "Thohoyandou",
-        "Tzaneen",
-        "Mokopane",
-    ],
-    Mpumalanga: [
-        "Mbombela",
-        "Emalahleni",
-        "Secunda",
-        "Middelburg",
-    ],
-    "Northern Cape": [
-        "Kimberley",
-        "Upington",
-        "Kuruman",
-        "Springbok",
-    ],
-    "North West": [
-        "Mahikeng",
-        "Rustenburg",
-        "Potchefstroom",
-        "Klerksdorp",
-    ],
-    "Western Cape": [
-        "Cape Town",
-        "Stellenbosch",
-        "Paarl",
-        "George",
-        "Knysna",
-    ],
-};
+// data/registration.js
+import zaData from "@/data/za.json";
+import { CTA } from "@/constants/copy";
+
+// Dynamically generate PROVINCES_AND_CITIES mapping from za.json.
+// CONFIRM: run `console.log(zaData[0])` once and check that `admin_name`
+// actually holds the province (e.g. "Gauteng"), not the country. If it's
+// wrong, swap in the correct field name from your dataset.
+export const PROVINCES_AND_CITIES = zaData.reduce((acc, item) => {
+    const province = item.admin_name || item.province;
+    const city = item.city || item.name;
+
+    if (!province || !city) return acc;
+
+    if (!acc[province]) {
+        acc[province] = [];
+    }
+
+    if (!acc[province].includes(city)) {
+        acc[province].push(city);
+    }
+
+    return acc;
+}, {});
+
+// Sorted array of South Africa provinces derived directly from za.json
+export const SA_PROVINCES = Object.keys(PROVINCES_AND_CITIES).sort();
 
 export const SELLER_BUSINESS_TYPES = [
     "Registered business",
@@ -124,6 +90,13 @@ export const EVENT_SUPPLIER_SERVICE_CATEGORIES = [
     "Other",
 ];
 
+// CHANGED: removed the "country" field and the province's dependsOn:
+// "country" chain. RegistrationForm.jsx's availableOptions() only special-
+// cases dependsOn === "province" — a dependsOn: "country" step silently
+// returned an empty options array for every field, so province could never
+// be populated. You're only serving South Africa right now (per the FAQ:
+// "We're starting in South Africa"), so province now has its own static
+// options list and no dependency.
 export const SHARED_FIELDS = [
     {
         name: "fullName",
@@ -147,14 +120,14 @@ export const SHARED_FIELDS = [
         name: "province",
         label: "Province",
         type: "select",
-        options: Object.keys(PROVINCES_AND_CITIES),
+        options: SA_PROVINCES, // CHANGED: was dependsOn: "country" with no options
         required: true,
     },
     {
         name: "city",
         label: "City / Area",
         type: "select",
-        dependsOn: "province",
+        dependsOn: "province", // unchanged — this one actually works
         required: true,
     },
 ];
@@ -184,14 +157,14 @@ export const ROLE_FIELDS = {
         {
             name: "offersDelivery",
             label: "Do you offer delivery?",
-            type: "select",
+            type: "radio",
             options: ["Yes", "No"],
             required: true,
         },
         {
             name: "offersCollection",
             label: "Do you offer collection?",
-            type: "select",
+            type: "radio",
             options: ["Yes", "No"],
             required: true,
         },
@@ -215,7 +188,15 @@ export const ROLE_FIELDS = {
         },
         {
             name: "agree",
-            label: "I agree to the Evivi terms and privacy policy.",
+            // CHANGED: was plain text with no link. RegistrationForm.jsx
+            // renders checkbox labels as plain text via `{field.label}`, so a
+            // string can't contain a real <Link>. Two options: (a) leave this
+            // as plain text and add a separate static line with real links
+            // just below the checkbox in the page, or (b) extend
+            // RegistrationForm.jsx to render this one field's label as JSX.
+            // Marking as a TODO rather than silently fixing it, since it
+            // needs a component change, not just a data change.
+            label: "I agree to the Evivi terms and privacy policy.", // TODO: link "terms" and "privacy policy"
             type: "checkbox",
             required: true,
         },
@@ -239,31 +220,35 @@ export const ROLE_FIELDS = {
         {
             name: "hasSmartphone",
             label: "Do you have your own smartphone?",
-            type: "select",
+            type: "radio",
             options: ["Yes", "No"],
             required: true,
         },
         {
             name: "hasDriversLicence",
             label: "Do you have a valid driver's licence?",
-            type: "select",
+            type: "radio",
             options: ["Yes", "No"],
             required: true,
         },
         {
             name: "hasVehicleLicence",
             label: "Do you have a valid vehicle licence?",
-            type: "select",
+            type: "radio",
             options: ["Yes", "No", "Not applicable"],
             required: true,
         },
         {
             name: "verificationConsent",
             label: "Do you consent to identity and driver verification?",
-            type: "select",
+            type: "radio",
             options: ["Yes", "No"],
             required: true,
         },
+        // NOTE: no "agree" checkbox in your delivery role fields — every
+        // other role has one. Confirm this is intentional (maybe consent
+        // is implied by "verificationConsent" above) or add a matching
+        // terms/privacy checkbox for consistency.
     ],
 
     planner: [
@@ -294,7 +279,7 @@ export const ROLE_FIELDS = {
         },
         {
             name: "agree",
-            label: "I agree to the Evivi terms and privacy policy.",
+            label: "I agree to the Evivi terms and privacy policy.", // TODO: link
             type: "checkbox",
             required: true,
         },
@@ -328,7 +313,7 @@ export const ROLE_FIELDS = {
         },
         {
             name: "agree",
-            label: "I agree to the Evivi terms and privacy policy.",
+            label: "I agree to the Evivi terms and privacy policy.", // TODO: link
             type: "checkbox",
             required: true,
         },
@@ -344,13 +329,15 @@ export const ROLE_FIELDS = {
     ],
 };
 
+// CHANGED: submitLabel wording brought in line with what each role can
+// actually do right now (see the table below for reasoning).
 export const ROLE_CONFIG = {
     seller: {
         heading: "Join Evivi as a Seller",
         description:
             "Tell us about your business and what you sell so we can prepare for the Evivi marketplace.",
-        submitLabel: "Register as Seller",
-        successTitle: "You're on the list!",
+        submitLabel: "Apply to Sell", // CHANGED from "Join as a Seller" — applications are open and reviewed now
+        successTitle: "Application received",
         successMessage:
             "Thanks for registering your business with Evivi. We'll keep you updated as we prepare the marketplace for launch.",
     },
@@ -359,8 +346,8 @@ export const ROLE_CONFIG = {
         heading: "Become a Delivery Partner",
         description:
             "Tell us about yourself and your delivery availability.",
-        submitLabel: "Register as Delivery Partner",
-        successTitle: "You're on the list!",
+        submitLabel: "Complete Registration", // CHANGED from "Join Delivery Waitlist" — applications are open and reviewed now, not a waitlist
+        successTitle: "Registration submitted",
         successMessage:
             "Thanks for registering your interest in becoming an Evivi delivery partner. We'll keep you updated as opportunities become available.",
     },
@@ -369,8 +356,8 @@ export const ROLE_CONFIG = {
         heading: "Join the Event Planner Waitlist",
         description:
             "Tell us about your planning services and we'll keep you informed as Evivi expands into event services.",
-        submitLabel: "Register as Event Planner",
-        successTitle: "You're on the list!",
+        submitLabel: CTA.submitPartner, // "Join the waitlist" pre-launch, "Register" once live
+        successTitle: "You're on the waitlist",
         successMessage:
             "Thanks for registering your interest. Event planning opportunities are part of Evivi's longer term offering and we'll keep you updated.",
     },
@@ -379,8 +366,8 @@ export const ROLE_CONFIG = {
         heading: "Join the Event Supplier Waitlist",
         description:
             "Tell us about your products or services and we'll keep you informed as Evivi expands.",
-        submitLabel: "Register as Event Supplier",
-        successTitle: "You're on the list!",
+        submitLabel: CTA.submitPartner, // CHANGED from "Register Interest" — now matches planner's identical situation
+        successTitle: "You're on the waitlist",
         successMessage:
             "Thanks for registering your interest. We'll keep you updated as supplier opportunities become available.",
     },
@@ -389,7 +376,7 @@ export const ROLE_CONFIG = {
         heading: "Get Valentine Early Access",
         description:
             "Be among the first to discover gifts and celebrations when Evivi launches.",
-        submitLabel: "Register as Buyer",
+        submitLabel: CTA.submitPartner, // CHANGED from "Get Early Access" — matches planner/supplier phrasing; revert if you'd rather keep buyer distinct
         successTitle: "You're on the list!",
         successMessage:
             "Thanks for joining Evivi. We'll let you know when Valentine 2027 early access becomes available.",
