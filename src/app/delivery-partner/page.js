@@ -1,22 +1,20 @@
 import Image from "next/image";
 import Link from "next/link";
-import { 
-    Heart, 
-    Truck, 
-    Bike, 
-    Check, 
-    ChevronRight, 
-    ShieldCheck, 
-    Clock3, 
-    Car, 
-    ArrowRight 
-} from "lucide-react";
 import { getIcon } from "@/data/icons";
 import { CONTENT } from "@/data/content";
 import { ROUTES } from "@/constants/copy";
 import RegistrationForm from "@/components/registration/RegistrationForm";
 
 const c = CONTENT.deliveryPartner;
+
+const Heart = getIcon("Heart");
+const Truck = getIcon("Truck");
+const Bike = getIcon("Bike");
+const Check = getIcon("Check");
+const ChevronRight = getIcon("ChevronRight");
+const ShieldCheck = getIcon("ShieldCheck");
+const Clock3 = getIcon("Clock3");
+const Car = getIcon("Car");
 
 export const metadata = {
     title: "Become a Delivery Partner | Evivi",
@@ -27,8 +25,8 @@ export default function DeliveryPartnersPage() {
     return (
         <main className="min-h-screen bg-background text-foreground">
             {/* 1. HERO HEADER */}
-            <header className="relative border-b border-border/30 bg-brand-gradient text-white overflow-hidden">
-                <div className="mx-auto max-w-6xl px-5 sm:px-8 pt-16 pb-12 md:pt-20 md:pb-16 relative z-10">
+            <section id="hero" className="relative bg-brand-gradient text-white overflow-hidden">
+                <div className="mx-auto max-w-6xl px-5 sm:px-8 pt-16 pb-44 md:pt-40 md:pb-45 relative z-10">
                     {/* Spatial Navigation Anchor / Breadcrumbs */}
                     <nav className="flex items-center gap-2 text-xs text-white/70 uppercase tracking-widest font-medium mb-6">
                         <Link href="/" className="hover:text-white transition-colors">Home</Link>
@@ -105,10 +103,33 @@ export default function DeliveryPartnersPage() {
                         </div>
                     </div>
                 </div>
-            </header>
+                {/* Tall, eased fade into the dark Ecosystem section (plum-deep #3B0D5C) */}
+                <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-44">
+                    <div
+                        className="absolute inset-0 backdrop-blur-sm"
+                        style={{
+                            WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 100%)",
+                            maskImage: "linear-gradient(to bottom, transparent 0%, black 100%)",
+                        }}
+                    />
+                    <div
+                        className="absolute inset-0"
+                        style={{
+                            background: `linear-gradient(to bottom,
+                                rgba(59,13,92,0) 0%,
+                                rgba(59,13,92,0.04) 15%,
+                                rgba(59,13,92,0.15) 35%,
+                                rgba(59,13,92,0.40) 55%,
+                                rgba(59,13,92,0.70) 75%,
+                                rgba(59,13,92,0.92) 90%,
+                                rgba(59,13,92,1) 100%)`,
+                        }}
+                    />
+                </div>
+            </section>
 
             {/* 2. ECOSYSTEM SHOWCASE */}
-            <section data-navbar-theme="dark" className="bg-plum-deep text-white px-5 sm:px-8 py-16 md:py-20 border-b border-border/30">
+            <section data-navbar-theme="dark" className="bg-plum-deep text-white px-5 sm:px-8 py-16 md:py-16 ">
                 <div className="mx-auto max-w-6xl">
                     <div className="max-w-2xl mx-auto text-center mb-12">
                         <span className="text-xs font-bold uppercase tracking-[0.25em] text-magenta">
@@ -135,13 +156,14 @@ export default function DeliveryPartnersPage() {
                                         <p className="mt-2 text-xs sm:text-sm text-purple-100/70 leading-relaxed">{item.copy}</p>
                                     </div>
                                     {index < c.ecosystemFlow.length - 1 && (
-                                        <ChevronRight size={20} className="absolute -right-3 top-1/2 hidden -translate-y-1/2 text-white/30 md:block z-10" />
+                                        <ChevronRight size={20} className="absolute -right-5 top-1/2 hidden -translate-y-1/2 text-white/30 md:block z-10" />
                                     )}
                                 </div>
                             );
                         })}
                     </div>
                 </div>
+                
             </section>
 
             {/* 3. DELIVERY JOURNEY */}
@@ -316,7 +338,7 @@ export default function DeliveryPartnersPage() {
                         className="inline-flex shrink-0 items-center gap-2 rounded-full border border-border/80 bg-secondary px-6 py-3 text-xs sm:text-sm font-bold text-plum-deep hover:bg-magenta hover:text-white transition-all"
                     >
                         Become a Seller
-                        <ArrowRight size={16} />
+                        <ChevronRight size={16} />
                     </Link>
                 </div>
             </section>

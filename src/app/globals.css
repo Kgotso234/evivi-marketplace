@@ -162,3 +162,33 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* === Page loader === */
+.loader-pulse {
+    animation: loaderPulse 1.4s ease-in-out infinite;
+}
+
+@keyframes loaderPulse {
+    0%, 100% { opacity: 0.6; transform: scale(0.96); }
+    50%      { opacity: 1;   transform: scale(1.04); }
+}
+
+.loader-bar {
+    position: relative;
+    overflow: hidden;
+}
+
+.loader-bar::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 40%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #6A1B9A, #C2185B, #E8607E);
+    animation: loaderSlide 1.2s ease-in-out infinite;
+}
+
+@keyframes loaderSlide {
+    0%   { transform: translateX(-100%); }
+    100% { transform: translateX(250%); }
+}

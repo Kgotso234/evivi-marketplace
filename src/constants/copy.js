@@ -30,9 +30,10 @@ export const ROUTES = {
     eventSupplier: "/event-supplier",
     about: "/about",
     faq: "/faq",
-    // NEW: placeholder — CTA.shop below points here once IS_LIVE is true.
-    // Build this route before flipping LAUNCH_PHASE to "live", or point it
-    // at ROUTES.buyer instead until it exists.
+    terms: "/terms",
+    privacy: "#",          // TODO: "/privacy" when the page exists
+    sellerAgreement: "#",  // TODO: "/seller-agreement" when the page exists
+    contact: "#",   
     shop: "/shop",
 };
 

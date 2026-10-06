@@ -7,7 +7,7 @@ import {
     Star, TrendingUp, Sparkles, Bell, CalendarClock, Check, ChevronDown,
     Clock3, Car, Users2, Handshake, CalendarHeart, PartyPopper,
     HeartHandshake, Wrench, Rocket, Cake, Baby, Gem, GraduationCap,
-    Compass, Loader2, CheckCircle2, Plus
+    Compass, Loader2, CheckCircle2, Plus, HelpCircle, Mail
 } from "lucide-react";
 
 export const ICONS = {
@@ -16,7 +16,7 @@ export const ICONS = {
     Star, TrendingUp, Sparkles, Bell, CalendarClock, Check, ChevronDown,
     Clock3, Car, Users2, Handshake, CalendarHeart, PartyPopper,
     HeartHandshake, Wrench, Rocket, Cake, Baby, Gem, GraduationCap,
-    Compass, Loader2, CheckCircle2, Plus, 
+    Compass, Loader2, CheckCircle2, Plus, HelpCircle, Mail
 };
 
 // Helper so pages don't need `ICONS[name] || FallbackIcon` everywhere.

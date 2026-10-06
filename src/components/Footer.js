@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
-import { CTA, selectSellerRole } from "@/constants/copy";
+import { CTA,CLOSING_BAND, selectSellerRole, ROUTES } from "@/constants/copy";
 
 const TikTokIcon = (props) => (
   <svg viewBox="0 0 640 640" width="1em" height="1em" fill="currentColor" {...props}>
@@ -45,64 +45,32 @@ const columns = [
     {
         title: "Shop",
         links: [
-            {
-                label: "How it Works",
-                href: "/#how-it-works",
-            },
-            {
-                label: "Early Access",
-                href: CTA.buyer.href,
-            },
-            {
-                label: "FAQs",
-                href: "/faq",
-            },
+            { label: "How it Works", href: `${ROUTES.home}#how-it-works` },
+            { label: "Early Access", href: CTA.buyer.href },
+            { label: "FAQs", href: ROUTES.faq },
         ],
     },
     {
         title: "Sell",
         links: [
-            {
-                label: "Sell on Evivi",
-                href: CTA.seller.href,
-                onClick: selectSellerRole,
-            },
+            { label: "Sell on Evivi", href: CTA.seller.href, onClick: selectSellerRole },
         ],
     },
     {
         title: "Partners",
         links: [
-            {
-                label: "Delivery Partners",
-                href: "/delivery-partner",
-            },
-            {
-                label: "Event Planners & Coordinators",
-                href: "/event-planner",
-            },
-            {
-                label: "Event Suppliers",
-                href: "/event-supplier",
-            },
+            { label: "Delivery Partners", href: ROUTES.deliveryPartner },
+            { label: "Event Planners & Coordinators", href: ROUTES.eventPlanner },
+            { label: "Event Suppliers", href: ROUTES.eventSupplier },
         ],
     },
     {
         title: "Company",
         links: [
-            {
-                label: "About Evivi",
-                href: "/about",
-            },
-            {
-                label: "Terms & Conditions",
-                href: "#"
-            },{
-                label: "Privacy Policy",
-                href: "#"
-            },{
-                label: "Contact Us",
-                href: "#"
-            }
+            { label: "About Evivi", href: ROUTES.about },
+            { label: "Terms & Conditions", href: ROUTES.terms },
+            { label: "Privacy Policy", href: ROUTES.privacy },
+            { label: "Contact Us", href: ROUTES.contact },
         ],
     },
 ];
@@ -157,26 +125,18 @@ export default function Footer() {
                                         "var(--color-muted-purple, #6B5B7B)",
                                 }}
                             >
-                                Discover meaningful gifts, support local
-                                sellers and bring celebrations together.
+                                {CLOSING_BAND.body}
                             </p>
                         </div>
 
                         <div className="flex flex-col gap-3 sm:flex-row">
-                            <Link
-                                href={CTA.buyer.href}
-                                className="btn-primary inline-flex items-center justify-center gap-2"
-                            >
-                                Shop Gifts
+                            <Link href={CTA.buyer.href} className="btn-primary inline-flex items-center justify-center gap-2">
+                                {CTA.buyer.label}
                                 <ChevronRight size={17} />
                             </Link>
 
-                            <Link
-                                href={CTA.seller.href}
-                                onClick={selectSellerRole}
-                                className="btn-secondary inline-flex items-center justify-center gap-2"
-                            >
-                                Sell on Evivi
+                            <Link href={CTA.seller.href} onClick={selectSellerRole} className="btn-secondary inline-flex items-center justify-center gap-2">
+                                {CTA.seller.label}
                                 <ChevronRight size={17} />
                             </Link>
                         </div>
@@ -288,24 +248,13 @@ export default function Footer() {
                     </p>
 
                     <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-                        <Link
-                            href="#"
-                            className="transition-colors hover:text-[var(--color-vibrant-magenta,#C2185B)]"
-                        >
+                        <Link href={ROUTES.terms} className="transition-colors hover:text-[var(--color-vibrant-magenta,#C2185B)]">
                             Terms & Conditions
                         </Link>
-
-                        <Link
-                            href="#"
-                            className="transition-colors hover:text-[var(--color-vibrant-magenta,#C2185B)]"
-                        >
+                        <Link href={ROUTES.privacy} className="transition-colors hover:text-[var(--color-vibrant-magenta,#C2185B)]">
                             Privacy Policy
                         </Link>
-
-                        <Link
-                            href="#"
-                            className="transition-colors hover:text-[var(--color-vibrant-magenta,#C2185B)]"
-                        >
+                        <Link href={ROUTES.sellerAgreement} className="transition-colors hover:text-[var(--color-vibrant-magenta,#C2185B)]">
                             Seller Agreement
                         </Link>
                     </div>

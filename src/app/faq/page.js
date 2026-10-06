@@ -2,11 +2,18 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ChevronRight, Plus, Search, HelpCircle, Mail } from "lucide-react";
+//import { ChevronRight, Plus, Search, HelpCircle, Mail } from "lucide-react";
+import { getIcon } from "@/data/icons";
 import { CONTENT } from "@/data/content";
 import { ROUTES } from "@/constants/copy";
 
 const c = CONTENT.faq;
+
+const ChevronRight = getIcon("ChevronRight");
+const Search = getIcon("Search");
+const Plus = getIcon("Plus");
+const HelpCircle = getIcon("HelpCircle");
+const Mail = getIcon("Mail");
 
 export default function FaqPage() {
     const [searchQuery, setSearchQuery] = useState("");
@@ -26,28 +33,29 @@ export default function FaqPage() {
     return (
         <main className="min-h-screen bg-background text-foreground">
             {/* 1. HERO HEADER */}
-            <header className="relative border-b border-border/30 bg-brand-gradient text-white overflow-hidden">
-                <div className="mx-auto max-w-6xl px-5 sm:px-8 pt-16 pb-12 md:pt-20 md:pb-16 relative z-10">
+            <section id="hero" className="relative overflow-hidden bg-brand-gradient text-white">
+                {/* Content sits above the fade; extra top padding clears the fixed, transparent navbar */}
+                <div className="relative z-10 mx-auto max-w-6xl px-5 sm:px-8 pt-28 pb-44 md:pt-50 md:pb-60">
                     {/* Breadcrumbs */}
-                    <nav className="flex items-center gap-2 text-xs text-white/70 uppercase tracking-widest font-medium mb-6">
+                    <nav className="flex items-center justify-center gap-2 text-xs text-white/70 uppercase tracking-widest font-medium mb-6">
                         <Link href="/" className="hover:text-white transition-colors">Home</Link>
                         <ChevronRight size={14} className="text-white/40" />
                         <span className="text-white font-semibold">FAQ</span>
                     </nav>
 
-                    <div className="max-w-3xl">
+                    <div className="mx-auto max-w-3xl text-center">
                         <span className="inline-block rounded-full bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-white/90 backdrop-blur-sm border border-white/20 mb-4">
                             Support & Knowledge Base
                         </span>
                         <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold leading-tight">
                             {c.heading}
                         </h1>
-                        <p className="mt-4 text-base sm:text-lg text-white/85 max-w-2xl leading-relaxed">
+                        <p className="mt-4 mx-auto text-base sm:text-lg text-white/85 max-w-2xl leading-relaxed">
                             {c.intro}
                         </p>
 
                         {/* Quick Search Bar */}
-                        <div className="mt-8 relative max-w-xl">
+                        <div className="mt-8 relative max-w-xl mx-auto">
                             <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground z-10" />
                             <input
                                 type="text"
@@ -59,7 +67,31 @@ export default function FaqPage() {
                         </div>
                     </div>
                 </div>
-            </header>
+
+                {/* Tall, eased fade into the FAQ section (starts at --color-warm-lilac #F9F0F7) */}
+                <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-44 md:h-60">
+                    <div
+                        className="absolute inset-0 backdrop-blur-md"
+                        style={{
+                            WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 100%)",
+                            maskImage: "linear-gradient(to bottom, transparent 0%, black 100%)",
+                        }}
+                    />
+                    <div
+                        className="absolute inset-0"
+                        style={{
+                            background: `linear-gradient(to bottom,
+                                rgba(249,240,247,0) 0%,
+                                rgba(249,240,247,0.04) 15%,
+                                rgba(249,240,247,0.15) 35%,
+                                rgba(249,240,247,0.40) 55%,
+                                rgba(249,240,247,0.70) 75%,
+                                rgba(249,240,247,0.92) 90%,
+                                rgba(249,240,247,1) 100%)`,
+                        }}
+                    />
+                </div>
+            </section>
 
             {/* 2. FAQ ACCORDION GROUPS */}
             <section data-navbar-theme="light" className="px-5 sm:px-8 py-16 md:py-20 bg-soft-gradient min-h-[50vh]">
@@ -95,7 +127,7 @@ export default function FaqPage() {
                                                             className="mt-4 inline-flex items-center gap-1.5 font-bold text-magenta hover:underline"
                                                         >
                                                             <span>{item.linkLabel}</span>
-                                                            <span aria-hidden="true">→</span>
+                                                            <span aria-hidden="true"><ChevronRight size={14}  /></span>
                                                         </Link>
                                                     )}
                                                 </div>

@@ -155,7 +155,7 @@ export const CONTENT = {
         hero: {
             eyebrow: "Beyond Valentine",
             heading: "Valentine is where we start. Celebrations are where we're going.",
-            body: "Evivi is being built to connect gift buyers, sellers and event professionals with the businesses and services that help meaningful moments happen.",
+            body: "Evivi connects gift buyers, sellers and event professionals with the businesses and services behind meaningful moments. We’re starting with Valentine gifting, then growing into a celebration marketplace for birthdays, anniversaries, weddings and every occasion in between.",
         },
         vision: {
             eyebrow: "Our vision",
@@ -173,7 +173,7 @@ export const CONTENT = {
         moreWaysToHelp: {
             eyebrow: "More ways Evivi can help",
             heading: "From a single gift to a full celebration",
-            body: "Evivi is being built to bring the whole journey together — the gift, the planning, and everything in between.",
+            body: "Evivi is being built to bring the whole journey together, the gift, the planning, and everything in between.",
             // CHANGED: "Plan a celebration" (href: "/") dropped — no real
             // destination, overlapped with Event Planners right next to it.
             items: [
@@ -459,6 +459,183 @@ export const CONTENT = {
                     { q: "When can event suppliers join Evivi?", a: "Event suppliers are part of Evivi's longer term marketplace vision beyond the Valentine 2027 launch. Join the supplier waitlist to be notified when opportunities become available.", linkRouteKey: "eventSupplier", linkLabel: "Join the supplier waitlist" },
                     { q: "When can event planners and coordinators join?", a: "Event planning and coordination are part of Evivi's longer term marketplace vision beyond the Valentine 2027 launch. Join the planner waitlist to receive updates when opportunities become available.", linkRouteKey: "eventPlanner", linkLabel: "Join the planner waitlist" },
                     { q: "Will partners be able to offer services through Evivi?", a: "The goal is to create opportunities for delivery partners, event planners, coordinators and suppliers to participate as Evivi expands beyond its initial Valentine marketplace." },
+                ],
+            },
+        ],
+    },
+    terms: {
+        hero: {
+            eyebrow: "Legal",
+            heading: "Terms & Conditions",
+            body: "The rules for using Evivi, written to be clear and fair to everyone who buys, sells, delivers or plans on our platform.",
+        },
+        lastUpdated: "[Month Year]",
+        intro: "Please read these Terms & Conditions carefully. By registering for, accessing or using Evivi, you confirm that you have read, understood and agree to be bound by them. If you don't agree, please don't use the platform.",
+        sections: [
+            {
+                id: "about",
+                title: "1. About Evivi",
+                body: [
+                    "Evivi is an online platform operated by Innerchild Events [(Pty) Ltd, registration number ___], based in [city], South Africa (\"Evivi\", \"we\", \"us\"). Evivi connects gift buyers, sellers, delivery partners, event planners and event suppliers.",
+                    "Evivi is a marketplace. Unless we say otherwise, we are not the seller, supplier or planner of the products and services listed, and the contract for a sale or service is between the buyer and the relevant seller or provider.",
+                ],
+            },
+            {
+                id: "eligibility",
+                title: "2. Who can use Evivi",
+                body: ["To use Evivi you must:"],
+                list: [
+                    "Be at least 18 years old (or have a parent or guardian's consent where the law allows).",
+                    "Have the legal capacity to enter into a binding agreement.",
+                    "Provide accurate, complete and current information when you register.",
+                    "If registering a business, have the authority to act on its behalf.",
+                ],
+            },
+            {
+                id: "early-access",
+                title: "3. Early access and pre-launch registration",
+                body: [
+                    "Evivi is launching in stages, starting with Valentine gifting. Registering your interest or applying to join gives you a place on our early-access list. It does not guarantee a place on the platform, a particular launch date, or access to any specific feature.",
+                    "Features, timelines, categories and areas of service may change as we build. We'll do our best to keep you informed.",
+                ],
+            },
+            {
+                id: "accounts",
+                title: "4. Your account and registration details",
+                list: [
+                    "You are responsible for the accuracy of the details you give us and for keeping them up to date.",
+                    "Keep your login details confidential. You are responsible for activity on your account.",
+                    "Tell us immediately if you suspect unauthorised use.",
+                    "We may verify the information you provide and may approve, decline or remove applications at our discretion, particularly for sellers, delivery partners, planners and suppliers.",
+                ],
+            },
+            {
+                id: "buyers",
+                title: "5. Terms for buyers",
+                list: [
+                    "Prices, availability, descriptions and delivery options are provided by sellers. We take reasonable steps to keep listings accurate but cannot guarantee that they are error-free.",
+                    "An order is only confirmed once payment is successful and the seller accepts it [adjust to your flow].",
+                    "Provide accurate delivery details. Delays or failed deliveries caused by wrong or incomplete details may not be eligible for a refund.",
+                    "Time-sensitive occasions (such as Valentine's Day) depend on ordering before the stated cut-off dates.",
+                ],
+            },
+            {
+                id: "sellers",
+                title: "6. Terms for sellers",
+                list: [
+                    "You must have the right to sell every item you list and must describe it honestly, including price, condition, ingredients or materials where relevant.",
+                    "You are responsible for the quality, safety, legality and fulfilment of your products, including compliance with food, health, labelling and consumer laws.",
+                    "You must fulfil accepted orders on time, or tell the buyer and Evivi promptly if you cannot.",
+                    "Fees: Evivi may charge a commission or service fee of [__%] on completed sales. Fees, payout timing and any deductions will be shown to you before you list [confirm].",
+                    "You are responsible for your own tax obligations, including VAT where applicable.",
+                ],
+            },
+            {
+                id: "delivery",
+                title: "7. Terms for delivery partners",
+                list: [
+                    "You are an independent contractor and not an employee, agent or partner of Evivi, unless a separate written agreement says otherwise.",
+                    "You must hold a valid driver's licence and any permits and insurance required for the vehicle you use, and follow all traffic and safety laws.",
+                    "Handle items with care, deliver to the correct recipient and keep deliveries confidential and secure.",
+                    "Payment rates, timing and how deliveries are assigned will be set out when you are onboarded [confirm].",
+                ],
+            },
+            {
+                id: "planners-suppliers",
+                title: "8. Terms for event planners and suppliers",
+                list: [
+                    "You must accurately describe your services, experience, availability and pricing.",
+                    "Any agreement for an event or service is between you and your customer. Evivi helps people find and connect with you but is not a party to that agreement unless we say so in writing.",
+                    "You are responsible for your own contracts, deposits, insurance, permits, licences and compliance with the law.",
+                ],
+            },
+            {
+                id: "payments",
+                title: "9. Pricing and payments",
+                body: [
+                    "All prices are shown in South African Rand (ZAR) and [include / exclude] VAT where applicable. Payments are processed by [payment provider]. We don't store your full card details.",
+                    "We may delay, hold or reverse payments where we reasonably suspect fraud, error or a breach of these Terms.",
+                ],
+            },
+            {
+                id: "cancellations",
+                title: "10. Cancellations, returns and refunds",
+                body: [
+                    "Your rights under the Consumer Protection Act 68 of 2008 and the Electronic Communications and Transactions Act 25 of 2002 are not limited by these Terms. Certain items, such as perishable goods, personalised or made-to-order gifts, and time-specific services, may be excluded from cancellation or return where the law allows.",
+                    "Our full cancellation and refund rules will be set out in our Refund Policy [link when published].",
+                ],
+            },
+            {
+                id: "conduct",
+                title: "11. Acceptable use",
+                body: ["You agree not to:"],
+                list: [
+                    "Provide false, misleading or fraudulent information.",
+                    "List or sell illegal, counterfeit, stolen, dangerous or prohibited items.",
+                    "Harass, abuse, discriminate against or threaten other users or our team.",
+                    "Take payments or arrangements off the platform to avoid fees [if applicable].",
+                    "Interfere with, scrape, reverse-engineer or attempt to gain unauthorised access to the platform.",
+                    "Use Evivi in any way that breaks the law or infringes anyone's rights.",
+                ],
+            },
+            {
+                id: "content",
+                title: "12. Content and intellectual property",
+                body: [
+                    "Evivi's name, logo, design and platform content belong to us or our licensors and may not be copied or used without permission.",
+                    "You keep ownership of the content you upload (such as photos, descriptions and reviews), but you give Evivi a non-exclusive, royalty-free licence to display and promote it on and in connection with the platform. You confirm that you have the right to share it.",
+                ],
+            },
+            {
+                id: "privacy",
+                title: "13. Privacy and your personal information",
+                body: [
+                    "We collect and process personal information in line with the Protection of Personal Information Act 4 of 2013 (POPIA). We use your information to run your account, process registrations and orders, communicate with you, and improve Evivi.",
+                    "More detail on what we collect, why, who we share it with and your rights will be set out in our Privacy Policy [link when published].",
+                ],
+            },
+            {
+                id: "third-parties",
+                title: "14. Third-party services and links",
+                body: [
+                    "Evivi may link to or rely on third-party services such as payment providers, maps or delivery tools. We aren't responsible for their content, availability or practices, and your use of them may be subject to their own terms.",
+                ],
+            },
+            {
+                id: "liability",
+                title: "15. Disclaimers and limitation of liability",
+                body: [
+                    "We work hard to keep Evivi reliable, but we provide the platform \"as is\" and cannot promise it will always be uninterrupted or error-free.",
+                    "To the fullest extent permitted by law, Evivi is not liable for indirect or consequential loss, or for the acts, omissions, products or services of sellers, delivery partners, planners, suppliers or other users. Where our liability can't be excluded, it is limited to [the amount you paid to Evivi in the 12 months before the claim / R___ ].",
+                    "Nothing in these Terms excludes liability that cannot lawfully be excluded, including under the Consumer Protection Act.",
+                ],
+            },
+            {
+                id: "termination",
+                title: "16. Suspension and termination",
+                body: [
+                    "We may suspend or end your access if you breach these Terms, put others at risk, or where required by law. You can close your account at any time by contacting us. Provisions that by nature should survive (such as liability, intellectual property and disputes) will continue after termination.",
+                ],
+            },
+            {
+                id: "changes",
+                title: "17. Changes to these Terms",
+                body: [
+                    "We may update these Terms as Evivi grows. When we make material changes, we'll update the \"last updated\" date and notify you where appropriate. Continued use of Evivi after changes take effect means you accept the updated Terms.",
+                ],
+            },
+            {
+                id: "law",
+                title: "18. Governing law and disputes",
+                body: [
+                    "These Terms are governed by the laws of the Republic of South Africa. We'd like to resolve any concern with you directly first. If we can't, the courts of South Africa have jurisdiction, and you may also approach the National Consumer Commission or another relevant body where the law allows.",
+                ],
+            },
+            {
+                id: "contact",
+                title: "19. Contact us",
+                body: [
+                    "Questions about these Terms? Email us at hello@evivi.com [confirm address].",
                 ],
             },
         ],

@@ -1,8 +1,10 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
 import { ChevronRight, CheckCircle2, Loader2 } from "lucide-react";
 
+import { ROUTES } from "@/constants/copy";
 import {
     SHARED_FIELDS,
     ROLE_FIELDS,
@@ -48,6 +50,10 @@ export default function RegistrationForm({ role }) {
     const [formError, setFormError] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
+
+    // Terms & Conditions consent
+    const [acceptedTerms, setAcceptedTerms] = useState(false);
+    const [termsError, setTermsError] = useState(false);
 
     const update = (name, value) => {
         setForm((previous) => ({
@@ -96,12 +102,16 @@ export default function RegistrationForm({ role }) {
             }
         });
 
-        if (Object.keys(nextErrors).length > 0) {
+        const termsMissing = !acceptedTerms;
+
+        if (Object.keys(nextErrors).length > 0 || termsMissing) {
             setErrors(nextErrors);
+            setTermsError(termsMissing);
             setFormError("Please complete the highlighted fields before submitting.");
             return;
         }
 
+        setTermsError(false);
         setFormError("");
         setIsSubmitting(true);
 
@@ -109,10 +119,17 @@ export default function RegistrationForm({ role }) {
             // TODO: confirm/adjust this endpoint once the backend exists —
             // `role` is included so one endpoint can route buyer / seller /
             // delivery / planner / supplier submissions differently if needed.
+            // The server should reject submissions where acceptedTerms !== true
+            // and set its own acceptance timestamp.
             const response = await fetch("/api/registrations", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ role, ...form }),
+                body: JSON.stringify({
+                    role,
+                    ...form,
+                    acceptedTerms: true,
+                    termsAcceptedAt: new Date().toISOString(),
+                }),
             });
 
             if (!response.ok) throw new Error("Request failed");
@@ -130,6 +147,8 @@ export default function RegistrationForm({ role }) {
         setForm(createInitialState(fields));
         setErrors({});
         setFormError("");
+        setAcceptedTerms(false);
+        setTermsError(false);
         setSubmitted(false);
     };
 
@@ -355,10 +374,50 @@ export default function RegistrationForm({ role }) {
                     })}
                 </div>
 
+                {/* Terms & Conditions */}
+                <div className="mt-8">
+                    <label className="flex items-start gap-3">
+                        <input
+                            type="checkbox"
+                            checked={acceptedTerms}
+                            onChange={(event) => {
+                                setAcceptedTerms(event.target.checked);
+                                if (event.target.checked) setTermsError(false);
+                            }}
+                            aria-invalid={termsError}
+                            aria-describedby={termsError ? "terms-error" : undefined}
+                            className="mt-1 h-5 w-5 shrink-0 rounded border-[#C9D4E5] text-[var(--color-vibrant-magenta)] focus:ring-[var(--color-vibrant-magenta)]"
+                        />
+
+                        <span className="text-sm leading-6 text-black/60">
+                            I have read and agree to the{" "}
+                            <Link
+                                href={ROUTES.terms}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="font-semibold text-[var(--color-vibrant-magenta)] underline underline-offset-2 hover:opacity-80"
+                            >
+                                Terms &amp; Conditions
+                            </Link>
+                            .
+                        </span>
+                    </label>
+
+                    {termsError && (
+                        <p
+                            id="terms-error"
+                            role="alert"
+                            className="mt-2 text-sm text-[var(--color-vibrant-magenta)]"
+                        >
+                            You need to accept the Terms &amp; Conditions to continue.
+                        </p>
+                    )}
+                </div>
+
                 <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="btn-primary mt-8 flex w-full items-center justify-center gap-2 px-5 py-3.5 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-60 md:w-auto"
+                    className="btn-primary mt-6 flex w-full items-center justify-center gap-2 px-5 py-3.5 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-60 md:w-auto"
                 >
                     {isSubmitting ? (
                         <>
