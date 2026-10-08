@@ -4,11 +4,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 
-
 const INITIAL_MS = 900;       // splash on first visit
-const SHOW_DELAY_MS = 150;    // fast navigations never show the overlay (no flicker)
-const MIN_VISIBLE_MS = 600;   // once shown, stay at least this long
-const FADE_MS = 400;          // fade-out duration
+const MIN_VISIBLE_MS = 500;   // every navigation shows the loader at least this long
+const FADE_MS = 350;          // fade-out duration
 const MAX_WAIT_MS = 8000;     // safety: never stay stuck on screen
 
 export default function PageLoader() {
@@ -20,16 +18,13 @@ export default function PageLoader() {
 
     const shownAt = useRef(0);
     const isFirst = useRef(true);
-    const showTimer = useRef(null);
     const hideTimer = useRef(null);
     const safetyTimer = useRef(null);
 
     const hide = useCallback((minMs) => {
-        clearTimeout(showTimer.current);
-        showTimer.current = null;
         clearTimeout(safetyTimer.current);
 
-        // Overlay never appeared (fast navigation): nothing to hide
+        // Overlay isn't showing: nothing to hide
         if (!shownAt.current) return;
 
         const elapsed = Date.now() - shownAt.current;
@@ -50,21 +45,11 @@ export default function PageLoader() {
         clearTimeout(safetyTimer.current);
         safetyTimer.current = setTimeout(() => hide(0), MAX_WAIT_MS);
 
-        // Overlay is already up (or fading out): keep it
-        if (shownAt.current) {
-            clearTimeout(hideTimer.current);
-            setFading(false);
-            return;
-        }
-
-        if (showTimer.current) return;
-
-        showTimer.current = setTimeout(() => {
-            showTimer.current = null;
-            setFading(false);
-            setVisible(true);
-            shownAt.current = Date.now();
-        }, SHOW_DELAY_MS);
+        // Cancel any pending hide/fade and show right away
+        clearTimeout(hideTimer.current);
+        setFading(false);
+        setVisible(true);
+        shownAt.current = Date.now();
     }, [hide]);
 
     // First load: the overlay is already visible, so start the clock
@@ -78,7 +63,7 @@ export default function PageLoader() {
         isFirst.current = false;
     }, [pathname, hide]);
 
-    // Show the overlay when an internal link is clicked
+    // Show the overlay as soon as an internal link is clicked
     useEffect(() => {
         const onClick = (event) => {
             if (
@@ -100,13 +85,9 @@ export default function PageLoader() {
             const url = new URL(link.href, window.location.href);
             if (url.origin !== window.location.origin) return;
 
-            // Same page or hash-only link (e.g. "#" or "#register"): no loader
-            if (
-                url.pathname === window.location.pathname &&
-                url.search === window.location.search
-            ) {
-                return;
-            }
+            // Same page (including hash-only or query-only links such as
+            // "#register"): the pathname won't change, so no loader
+            if (url.pathname === window.location.pathname) return;
 
             show();
         };
@@ -119,7 +100,6 @@ export default function PageLoader() {
     // Clean up timers on unmount
     useEffect(() => {
         return () => {
-            clearTimeout(showTimer.current);
             clearTimeout(hideTimer.current);
             clearTimeout(safetyTimer.current);
         };

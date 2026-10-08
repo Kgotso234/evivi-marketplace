@@ -77,7 +77,7 @@ export default function DeliveryPartnersPage() {
                         </div>
 
                         {/* Visual Image Card Frame */}
-                        <div className="lg:col-span-5 relative hidden lg:block">
+                        <div className="lg:col-span-5 relative  lg:block">
                             <div className="relative h-72 w-full rounded-2xl overflow-hidden border border-white/20 shadow-xl">
                                 <Image 
                                     src={c.hero.image} 

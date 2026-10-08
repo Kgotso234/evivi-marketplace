@@ -640,4 +640,216 @@ export const CONTENT = {
             },
         ],
     },
+    privacy: {
+        hero: {
+            eyebrow: "Legal",
+            heading: "Privacy Policy",
+            body: "How Evivi collects, uses and protects your personal information, and the choices you have.",
+        },
+        lastUpdated: "[Month Year]",
+        intro: "Evivi respects your privacy and processes personal information in line with the Protection of Personal Information Act 4 of 2013 (POPIA). This policy explains what we collect, why, and your rights.",
+        sections: [
+            {
+                id: "who-we-are",
+                title: "1. Who we are",
+                body: [
+                    "Evivi is operated by Innerchild Events (Pty) Ltd [registration number ___], [address], South Africa. We are the \"responsible party\" for the personal information described here.",
+                    "Our Information Officer is [name], reachable at [privacy email].",
+                ],
+            },
+            {
+                id: "collect",
+                title: "2. What we collect",
+                list: [
+                    "Contact details: name, email address, phone number.",
+                    "Location details: province, city or area, and delivery addresses.",
+                    "Business details for sellers, delivery partners, planners and suppliers: business name, services, experience, social links, and vehicle details for delivery partners.",
+                    "Order and delivery information, once ordering is live.",
+                    "Messages you send us and the preferences you choose.",
+                    "Technical data: device, browser, pages visited and approximate location from your IP address.",
+                ],
+            },
+            {
+                id: "use",
+                title: "3. How we use your information",
+                list: [
+                    "To process your registration or early-access sign-up and run your account.",
+                    "To review and approve partner and seller applications.",
+                    "To process orders, payments and deliveries once the marketplace is live.",
+                    "To contact you about your account, orders, launch updates and support.",
+                    "To improve Evivi, keep it secure and prevent fraud.",
+                    "To meet our legal obligations.",
+                ],
+            },
+            {
+                id: "sharing",
+                title: "4. Who we share it with",
+                body: [
+                    "We don't sell your personal information. We share it only where needed to run Evivi:",
+                ],
+                list: [
+                    "Between users, to the extent needed to complete an order or service (for example, a seller and delivery partner receiving the delivery address).",
+                    "Service providers who work for us, such as hosting, email, analytics and payment providers [list].",
+                    "Authorities or advisers where the law requires it or to protect rights and safety.",
+                ],
+            },
+            {
+                id: "marketing",
+                title: "5. Marketing and early-access updates",
+                body: [
+                    "If you join the early-access list, we'll email or message you about the launch. You can opt out at any time using the unsubscribe link or by contacting us. We won't send unrelated marketing without your consent.",
+                ],
+            },
+            {
+                id: "cookies",
+                title: "6. Cookies and similar technologies",
+                body: [
+                    "We use cookies and local storage to keep the site working, remember your choices and understand how it's used [analytics tool]. You can block cookies in your browser, but parts of Evivi may not work properly.",
+                ],
+            },
+            {
+                id: "security",
+                title: "7. Security and storage",
+                body: [
+                    "We use reasonable technical and organisational measures to protect your information. No system is perfectly secure, and if a breach affects you we'll notify you and the Information Regulator as POPIA requires.",
+                    "Your information may be stored with providers outside South Africa. Where that happens, we take steps to make sure it's protected to a comparable standard.",
+                ],
+            },
+            {
+                id: "retention",
+                title: "8. How long we keep it",
+                body: [
+                    "We keep personal information only as long as needed for the purposes above, or as the law requires (for example, tax and accounting records). When it's no longer needed, we delete or anonymise it [confirm retention periods].",
+                ],
+            },
+            {
+                id: "rights",
+                title: "9. Your rights",
+                body: ["Under POPIA you may:"],
+                list: [
+                    "Ask what personal information we hold about you.",
+                    "Ask us to correct or delete information that is inaccurate, outdated or no longer needed.",
+                    "Object to processing, or withdraw consent you previously gave.",
+                    "Opt out of direct marketing at any time.",
+                ],
+            },
+            {
+                id: "children",
+                title: "10. Children",
+                body: [
+                    "Evivi is not intended for anyone under 18, and we don't knowingly collect children's information. If you believe a child has given us their details, contact us and we'll delete them.",
+                ],
+            },
+            {
+                id: "changes",
+                title: "11. Changes to this policy",
+                body: [
+                    "We may update this policy as Evivi grows. We'll change the \"last updated\" date and notify you of material changes where appropriate.",
+                ],
+            },
+            {
+                id: "contact",
+                title: "12. Contact and complaints",
+                body: [
+                    "To use your rights or ask a question, email [privacy email]. If you're unhappy with how we've handled your information, you may complain to the Information Regulator (South Africa) at inforeg.org.za [confirm current complaint contact].",
+                ],
+            },
+        ],
+    },
+
+    refunds: {
+        hero: {
+            eyebrow: "Legal",
+            heading: "Refund Policy",
+            body: "When you can cancel, return or get your money back, and how to ask.",
+        },
+        lastUpdated: "[Month Year]",
+        intro: "We want every celebration to go well. This policy explains cancellations, returns and refunds on Evivi. It sits alongside your rights under the Consumer Protection Act 68 of 2008 (CPA) and the Electronic Communications and Transactions Act 25 of 2002 (ECTA), which this policy does not limit.",
+        sections: [
+            {
+                id: "overview",
+                title: "1. How Evivi handles refunds",
+                body: [
+                    "Evivi is a marketplace. Products are sold by independent sellers, so a refund is usually agreed between you and the seller, with Evivi stepping in to help resolve it. [Adjust if Evivi will process refunds centrally.]",
+                    "During the pre-launch period no orders are taken, so no payments are made or refunded.",
+                ],
+            },
+            {
+                id: "cancel",
+                title: "2. Cancelling an order",
+                list: [
+                    "Before the seller starts preparing or dispatching your order: you can cancel for a full refund [confirm cut-off].",
+                    "After preparation or dispatch has started: cancellation may not be possible, particularly for perishable or made-to-order gifts.",
+                    "To cancel, contact us as soon as possible with your order number.",
+                ],
+            },
+            {
+                id: "non-returnable",
+                title: "3. Items that can't be returned",
+                body: ["Where the law allows, the following are not eligible for change-of-mind returns:"],
+                list: [
+                    "Perishable goods such as flowers, food and baked items.",
+                    "Personalised, engraved or made-to-order gifts.",
+                    "Services booked for a specific date that has passed.",
+                ],
+            },
+            {
+                id: "faulty",
+                title: "4. Faulty, damaged or incorrect items",
+                body: [
+                    "If your gift arrives damaged, defective, incorrect or not as described, contact us within [48 hours] of delivery with photos. You may be entitled to a replacement, repair or refund. Your statutory rights under the CPA apply regardless of this window.",
+                ],
+            },
+            {
+                id: "delivery",
+                title: "5. Late or failed delivery",
+                list: [
+                    "If your gift isn't delivered, or arrives so late that it misses the occasion because of the seller or delivery partner, you may be entitled to a refund.",
+                    "If delivery fails because of wrong or incomplete details, or no one was available to receive it, a refund may not apply.",
+                ],
+            },
+            {
+                id: "valentine",
+                title: "6. Valentine's Day and other fixed dates",
+                body: [
+                    "Time-sensitive occasions have order cut-off dates, shown at checkout. Orders placed after the cut-off aren't guaranteed to arrive in time.",
+                ],
+            },
+            {
+                id: "services",
+                title: "7. Event planners and suppliers",
+                body: [
+                    "Deposits, cancellations and refunds for event services are set by the planner or supplier in their own agreement with you. Please read it before paying. Evivi can help mediate but isn't a party to that agreement.",
+                ],
+            },
+            {
+                id: "request",
+                title: "8. How to request a refund",
+                list: [
+                    "Email [support email] with your order number, what went wrong, and photos where relevant.",
+                    "We'll acknowledge your request within [2 business days] and aim to resolve it within [7 business days].",
+                    "We may contact the seller or delivery partner to get the facts.",
+                ],
+            },
+            {
+                id: "paid",
+                title: "9. How refunds are paid",
+                body: [
+                    "Approved refunds go back to your original payment method. Your bank or card issuer may take [5 to 10 business days] to show it. Delivery fees are refundable where the delivery itself failed.",
+                ],
+            },
+            {
+                id: "rights",
+                title: "10. Your legal rights",
+                body: [
+                    "Nothing here limits your rights under South African consumer law. If we can't resolve a complaint, you may approach the National Consumer Commission or another relevant body.",
+                ],
+            },
+            {
+                id: "contact",
+                title: "11. Contact us",
+                body: ["Questions about a refund? Email [support email]."],
+            },
+        ],
+    },
 };

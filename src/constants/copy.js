@@ -31,10 +31,10 @@ export const ROUTES = {
     about: "/about",
     faq: "/faq",
     terms: "/terms",
-    privacy: "#",          // TODO: "/privacy" when the page exists
-    sellerAgreement: "#",  // TODO: "/seller-agreement" when the page exists
+    privacy: "/privacy",          // TODO: "/privacy" when the page exists
+    refunds: "/refunds",  // TODO: "/seller-agreement" when the page exists
     contact: "#",   
-    shop: "/shop",
+    // shop: "/shop",
 };
 
 // ---------------------------------------------------------------------------

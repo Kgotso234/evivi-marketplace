@@ -51,7 +51,7 @@ export default function BuyersPage() {
                         </div>
 
                         {/* Compact Visual Preview Framing */}
-                        <div className="lg:col-span-5 relative hidden lg:block">
+                        <div className="lg:col-span-5 relative  lg:block">
                             <div className="relative h-64 w-full rounded-2xl overflow-hidden border border-white/20 shadow-xl">
                                 <Image 
                                     src="/images/hero-image.jpg" 

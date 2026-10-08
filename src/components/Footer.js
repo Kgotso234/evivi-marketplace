@@ -254,8 +254,8 @@ export default function Footer() {
                         <Link href={ROUTES.privacy} className="transition-colors hover:text-[var(--color-vibrant-magenta,#C2185B)]">
                             Privacy Policy
                         </Link>
-                        <Link href={ROUTES.sellerAgreement} className="transition-colors hover:text-[var(--color-vibrant-magenta,#C2185B)]">
-                            Seller Agreement
+                        <Link href={ROUTES.refunds} className="transition-colors hover:text-[var(--color-vibrant-magenta,#C2185B)]">
+                            Refunds Policy 
                         </Link>
                     </div>
                 </div>
